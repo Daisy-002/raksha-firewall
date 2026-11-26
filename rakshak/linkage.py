@@ -4,14 +4,19 @@ from .normalization import normalize_text
 
 STRONG_ID_FIELDS = {
     "patientid",
-    "patient_id",
+    "patientref",
+    "patientreference",
     "uhid",
     "mrn",
     "medicalrecordnumber",
+    "medicalrecordno",
+    "hospitalnumber",
     "abhaid",
     "healthid",
     "registrationid",
     "registrationnumber",
+    "registrationno",
+    "regno",
 }
 
 
@@ -23,7 +28,7 @@ def canonical_patient_key(record: dict):
     candidates = []
 
     for key, value in record.items():
-        normalized_key = re.sub(r"[^a-z0-9_]", "", str(key).casefold())
+        normalized_key = re.sub(r"[^a-z0-9]", "", str(key).casefold())
 
         if normalized_key in STRONG_ID_FIELDS:
             if value is None:

@@ -62,6 +62,77 @@ class PipelineTests(unittest.TestCase):
             )
             self.assertEqual(report["counts"]["files_quarantined"], 1)
 
+    def test_regional_tsv_fields_are_sanitized(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "input"
+            output = root / "output"
+            source.mkdir()
+
+            (source / "patients.tsv").write_text(
+                "Reg No\tNaam\tPita/Pati ka Naam\tPata\tGaon\tMobile No\n"
+                "JJH-0077305\tKamala Nishad\tD/o Kishan Nishad\t"
+                "House 32, Barabanki\tAmarganj Khurd\t060062-72163\n",
+                encoding="utf-8",
+            )
+
+            run_pipeline(source, output)
+
+            result = (output / "sanitized" / "patients.tsv").read_text(
+                encoding="utf-8"
+            )
+            for value in (
+                "JJH-0077305", "Kamala Nishad", "Kishan Nishad",
+                "House 32", "Amarganj Khurd", "060062-72163",
+            ):
+                self.assertNotIn(value, result)
+            self.assertIn("PSN-", result)
+
+    def test_json_metadata_and_patient_reference_are_sanitized(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "input"
+            output = root / "output"
+            source.mkdir()
+            payload = {
+                "_export_meta": {
+                    "source_path": "D:/HIS/Jane_Doe_0077305/visits.json",
+                },
+                "patient_index": {
+                    "by_name": {"Jane Doe": "JJH-0077305"},
+                    "by_uhid": {"JJH-0077305": {"visits": 1}},
+                },
+                "visits": [{
+                    "patient_ref": "JJH-0077305",
+                    "visit_id": "OPD/26/05/00112",
+                    "patient": {
+                        "name": [{
+                            "use": "official",
+                            "family": "Nishad",
+                            "given": ["Kamala"],
+                            "text": "Kamala Nishad",
+                        }],
+                    },
+                }],
+            }
+            (source / "visits.json").write_text(
+                json.dumps(payload), encoding="utf-8"
+            )
+
+            run_pipeline(source, output)
+
+            result = (output / "sanitized" / "visits.json").read_text(
+                encoding="utf-8"
+            )
+            for value in (
+                "Jane Doe", "JJH-0077305", "D:/HIS/",
+                "Kamala Nishad", "Nishad", "Kamala",
+                "OPD/26/05/00112",
+            ):
+                self.assertNotIn(value, result)
+            self.assertIn("[REDACTED_METADATA]", result)
+            self.assertNotIn("by_name", result)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -16,6 +16,38 @@ class DetectionTests(unittest.TestCase):
         self.assertNotIn("9876543210", result)
         self.assertGreater(stats.identifiers, 0)
 
+    def test_leading_zero_phone_detection(self):
+        result = sanitize_value("notes", "Call 060062-72163")
+        self.assertNotIn("060062-72163", result)
+        self.assertIn("[REDACTED_PHONE]", result)
+        self.assertEqual(
+            sanitize_value("mobile", 9876543210), "[REDACTED_PHONE]"
+        )
+
+    def test_regional_fields_are_redacted(self):
+        self.assertEqual(
+            sanitize_value("Naam", "Kamala Nishad"), "[REDACTED_NAME]"
+        )
+        self.assertEqual(
+            sanitize_value("Pita/Pati ka Naam", "D/o Kishan Nishad"),
+            "[REDACTED_NAME]",
+        )
+        self.assertEqual(
+            sanitize_value("Pata", "House 32, Barabanki"),
+            "[GENERALIZED_LOCATION]",
+        )
+        self.assertEqual(
+            sanitize_value("Gaon", "Amarganj Khurd"),
+            "[GENERALIZED_LOCATION]",
+        )
+        self.assertEqual(
+            sanitize_value("PIN", "225127"), "[GENERALIZED_LOCATION]"
+        )
+        self.assertIn(
+            "[REDACTED_NAME]",
+            sanitize_value("notes", "Naam: Kamala Nishad"),
+        )
+
     def test_email_detection(self):
         stats = DummyStats()
         result = sanitize_value("notes", "Email abc@example.com", stats)

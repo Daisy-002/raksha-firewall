@@ -21,6 +21,11 @@ from .validation import find_residual_identifiers
 from .detection import sanitize_value
 
 
+PRIVATE_INDEX_FIELDS = {
+    "byname", "byuhid", "bypatientname", "bypatientid", "nameindex",
+}
+
+
 class PipelineStats:
     def __init__(self):
         self.identifiers = 0
@@ -49,7 +54,7 @@ def _safe_relative_path(relative: str, digest: str):
     return Path(*safe_parts)
 
 
-def _clean_record(record, patient_key, stats, maximum_shift):
+def _clean_record(record, patient_key, stats, maximum_shift, name_context=False):
     cleaned = {}
     patient_id = pseudonym(patient_key) if patient_key else None
 
@@ -57,23 +62,42 @@ def _clean_record(record, patient_key, stats, maximum_shift):
         key_string = str(key)
         normalized = re.sub(r"[^a-z]", "", key_string.casefold())
 
+        # These maps expose direct name-to-identifier relationships.
+        if normalized in PRIVATE_INDEX_FIELDS:
+            continue
+
+        safe_key = key_string
+        nested_name_context = name_context or normalized == "name"
+        field_to_clean = (
+            "name"
+            if name_context and normalized in {
+                "text", "given", "family", "prefix", "suffix"
+            }
+            else key_string
+        )
+
         if isinstance(value, dict):
-            value = _clean_record(value, patient_key, stats, maximum_shift)
+            value = _clean_record(
+                value, patient_key, stats, maximum_shift, nested_name_context
+            )
 
         elif isinstance(value, list):
             value = [
-                _clean_record(x, patient_key, stats, maximum_shift)
+                _clean_record(
+                    x, patient_key, stats, maximum_shift, nested_name_context
+                )
                 if isinstance(x, dict)
-                else sanitize_value(key_string, x, stats)
+                else sanitize_value(field_to_clean, x, stats)
                 for x in value
             ]
 
         elif isinstance(value, str):
             original = value
-            value = sanitize_value(key_string, value, stats)
+            value = sanitize_value(field_to_clean, value, stats)
 
             if patient_key and normalized in {
-                "date", "dob", "dateofbirth", "admissiondate",
+                "date", "dob", "dateofbirth", "birthdate",
+                "admissiondate", "janmtithi",
                 "dischargedate", "visitdate", "appointmentdate"
             }:
                 value = shift_date_string(value, patient_key, maximum_shift)
@@ -92,11 +116,13 @@ def _clean_record(record, patient_key, stats, maximum_shift):
         # Replace an existing strong patient identifier with its pseudonym.
         if patient_id and normalized in {
             "patientid", "uhid", "mrn", "medicalrecordnumber",
-            "registrationid", "registrationnumber", "healthid", "abhaid"
+            "patientref", "patientreference", "registrationid",
+            "registrationnumber", "registrationno", "regno",
+            "healthid", "abhaid"
         }:
             value = patient_id
 
-        cleaned[key] = value
+        cleaned[safe_key] = value
 
     return cleaned
 
@@ -142,7 +168,8 @@ def _process_csv(text, delimiter, relative, records, stats, maximum_shift):
         raise ValueError("empty_file")
 
     header = parsed[0]
-    output_rows = [header]
+    safe_header = header
+    output_rows = [safe_header]
 
     for index, row in enumerate(parsed[1:]):
         record = {
@@ -167,6 +194,7 @@ def _process_csv(text, delimiter, relative, records, stats, maximum_shift):
 
 def _process_json(text, relative, records, stats, maximum_shift):
     data = json.loads(text)
+    processed_top_fields = set()
 
     for locator, record in _extract_records(data):
         if record is None:
@@ -183,13 +211,17 @@ def _process_json(text, relative, records, stats, maximum_shift):
         # Replace the record in its original location.
         if locator == "doc":
             data = cleaned
+            if isinstance(data, dict):
+                processed_top_fields.update(data)
         elif locator.startswith("/entry/") and data.get("resourceType") == "Bundle":
             parts = locator.strip("/").split("/")
             data["entry"][int(parts[1])]["resource"] = cleaned
+            processed_top_fields.add("entry")
         elif isinstance(data, dict):
             parts = locator.strip("/").split("/")
             array_name = parts[0].replace("~1", "/").replace("~0", "~")
             data[array_name][int(parts[1])] = cleaned
+            processed_top_fields.add(array_name)
         elif isinstance(data, list):
             data[int(locator.strip("/"))] = cleaned
 
@@ -198,6 +230,13 @@ def _process_json(text, relative, records, stats, maximum_shift):
             "loc": locator,
             "patient": pseudonym(key) if key else None,
         })
+
+    if isinstance(data, dict):
+        for key, value in list(data.items()):
+            if key not in processed_top_fields:
+                data[key] = _clean_record(
+                    {key: value}, None, stats, maximum_shift
+                )[key]
 
     return write_json(data)
 

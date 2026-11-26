@@ -1,177 +1,289 @@
 import re
-from .normalization import normalize_text
+import unicodedata
+from collections import Counter
 
+# Deterministic, offline, CPU-only PII detection.
+# Field-aware rules are deliberately stronger than free-text rules.
 
-PATTERNS = [
-    (
-        "PHONE",
-        re.compile(
-            r"(?<!\d)(?:\+?91[\s.-]?)?[6-9]\d{4}[\s.-]?\d{5}(?!\d)"
-        ),
+PATTERNS = {
+    "PHONE": re.compile(
+        r"(?<![0-9०-९])(?:\+?(?:91|९१)[\s.-]?)?0?[6-9६-९][0-9०-९]{4}[\s.-]?[0-9०-९]{5}(?![0-9०-९])"
     ),
-    (
-        "AADHAAR",
-        re.compile(r"(?<!\d)\d{4}[\s-]?\d{4}[\s-]?\d{4}(?!\d)"),
+    "EMAIL": re.compile(
+        r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", re.I
     ),
-    (
-        "EMAIL",
-        re.compile(r"\b[\w.+-]+@[\w-]+(?:\.[\w-]+)+\b", re.I),
+    "AADHAAR": re.compile(
+        r"(?<!\d)(?:\d{4}[\s-]?){2}\d{4}(?!\d)"
     ),
-    (
-        "PAN",
-        re.compile(r"\b[A-Z]{5}\d{4}[A-Z]\b", re.I),
+    "AADHAAR_MASKED": re.compile(
+        r"(?<![A-Z0-9])(?:X{4}|[*]{4}|[X*]{4})[\s-]?\d{4}[\s-]?\d{4}(?!\d)",
+        re.I
     ),
-    (
-        "ABHA",
-        re.compile(r"\b\d{2}-\d{4}-\d{4}-\d{4}\b"),
-    ),
-]
-
-SENSITIVE_FIELD_HINTS = {
-    "patientname": "PATIENT_NAME",
-    "name": "PERSON_NAME",
-    "fullname": "PERSON_NAME",
-    "firstname": "PERSON_NAME",
-    "lastname": "PERSON_NAME",
-    "fathername": "RELATIVE_NAME",
-    "mothername": "RELATIVE_NAME",
-    "spousename": "RELATIVE_NAME",
-    "address": "ADDRESS",
-    "residentialaddress": "ADDRESS",
-    "homeaddress": "ADDRESS",
-    "streetaddress": "ADDRESS",
-    "email": "EMAIL",
-    "emailaddress": "EMAIL",
-    "mobilenumber": "PHONE",
-    "phonenumber": "PHONE",
-    "contactnumber": "PHONE",
-    "aadharnumber": "AADHAAR",
-    "aadhaar": "AADHAAR",
-    "pan": "PAN",
-    "pannumber": "PAN",
-    "abhanumber": "ABHA",
+    "PAN": re.compile(r"\b[A-Z]{5}\d{4}[A-Z]\b", re.I),
+    "ABHA": re.compile(r"\b\d{2}-\d{4}-\d{4}-\d{4}\b"),
+    "PIN": re.compile(r"(?<!\d)[1-9]\d{5}(?!\d)"),
 }
 
-# Avoid treating common clinical phrases as personal names.
-CLINICAL_ALLOWLIST = {
-    "parkinsons disease",
-    "alzheimers disease",
-    "blood pressure",
-    "heart rate",
-    "oxygen saturation",
-    "respiratory rate",
-    "temperature",
-    "dolo 650",
-    "crocin",
-    "metformin",
-    "insulin",
+# Field names are normalized before matching. Do not match generic
+# "patient" alone: FHIR Patient references must remain intact.
+FIELD_GROUPS = {
+    "name": {
+        "name", "patientname", "patientfullname", "fullname",
+        "firstname", "middlename", "lastname", "surname",
+        "beneficiaryname", "membername", "applicantname",
+        "insuredname", "attendername", "guardianname",
+        "fathername", "mothername", "spousename",
+        "husbandname", "wifeName".lower(), "relative",
+        "relative_name", "relativefullname", "nextofkin",
+        "nextofkinname", "contactpersonname"
+    },
+    "mrn": {
+        "mrn", "uhid", "patientid", "patient_id",
+        "medicalrecordnumber", "medicalrecordno",
+        "registrationid", "registrationnumber",
+        "registrationno", "healthid", "abhaid",
+        "hospitalnumber", "hospnumber", "opnumber",
+        "ipnumber", "visitid", "insuranceid",
+        "policyid", "memberid", "claimid"
+    },
+    "address": {
+        "address", "fulladdress", "residentialaddress",
+        "permanentaddress", "currentaddress", "house",
+        "houseno", "house_number", "street", "streetname",
+        "landmark", "locality", "mohalla", "colony",
+        "village", "villagename", "gram", "town",
+        "pincode", "pin", "postalcode", "zipcode",
+        "district", "ward", "tehsil"
+    },
+    "insurance": {
+        "insuranceid", "insurance_id", "policyid",
+        "policynumber", "insurancenumber",
+        "insurance_no", "membernumber", "claimnumber"
+    },
+    "dob": {
+        "dob", "dateofbirth", "birthdate",
+        "patientdob", "date_of_birth"
+    },
 }
 
+SENSITIVE_HINTS = {
+    "patientname", "fullname", "firstname", "lastname",
+    "fathername", "mothername", "spousename", "guardianname",
+    "relative_name", "relativefullname", "nextofkin",
+    "address", "fulladdress", "residentialaddress",
+    "permanentaddress", "currentaddress", "phone", "mobile",
+    "mobileno", "phonenumber", "email", "emailid",
+    "aadhaar", "aadhar", "pan", "abha", "passport",
+    "village", "villagename", "mohalla", "locality",
+    "landmark", "houseno", "house", "pincode", "postalcode",
+    "insuranceid", "policynumber", "claimnumber",
+}
 
-def _field_key(field):
-    return re.sub(r"[^a-z]", "", str(field).casefold())
+# Labels in English, Hindi and common Hinglish.
+LABELLED_VALUE = re.compile(
+    r"(?P<label>"
+    r"patient\s*name|name\s*of\s*patient|"
+    r"patient\s*naam|pita(?:\s*/\s*pati)?\s*ka\s*naam|"
+    r"naam|pata|gaon|gram|mohalla|tehsil|jila|zila|"
+    r"mobile(?:\s*(?:no|number))?|phone(?:\s*(?:no|number))?|"
+    r"father(?:'s)?\s*name|mother(?:'s)?\s*name|"
+    r"husband(?:'s)?\s*name|wife(?:'s)?\s*name|"
+    r"guardian(?:'s)?\s*name|relative\s*name|"
+    r"s/o|d/o|w/o|c/o|"
+    r"नाम|मरीज\s*का\s*नाम|रोगी\s*का\s*नाम|"
+    r"पिता\s*का\s*नाम|माता\s*का\s*नाम|"
+    r"पता|गांव|ग्राम|मोहल्ला|"
+    r"मोबाइल|फोन|आधार|पिन\s*कोड"
+    r")\s*[:：=\-]\s*(?P<value>[^\n,;|]{2,80})",
+    re.I
+)
+
+RELATIVE_LABEL = re.compile(
+    r"\b(?:s\s*/\s*o|d\s*/\s*o|w\s*/\s*o|c\s*/\s*o)\s*"
+    r"[\w\u0900-\u097f][A-Za-z\u0900-\u097f.'-]+"
+    r"(?:\s+[\w\u0900-\u097f][A-Za-z\u0900-\u097f.'-]+){0,3}",
+    re.I
+)
+
+def _norm(value):
+    value = unicodedata.normalize("NFKC", str(value or ""))
+    return re.sub(r"[^a-z0-9]+", "", value.casefold())
 
 
-def _count(stats, kind, count=1):
-    stats.identifiers += count
-    stats.entities[kind] = stats.entities.get(kind, 0) + count
+def _field_role(field):
+    key = _norm(field)
+
+    # Date fields: let the existing date-shift engine transform them.
+    if key.startswith(("dob", "dateofbirth", "birthdate", "janmtithi")):
+        return "dob"
+
+    if any(x in key for x in (
+        "sourcepath", "originalpath", "filepath", "exportpath",
+        "sourcefile", "originalfilename", "exportfilename"
+    )):
+        return "metadata"
+
+    if any(x in key for x in (
+        "phone", "mobile", "contactnumber", "contactno", "telephone"
+    )):
+        return "phone"
+
+    if any(x in key for x in (
+        "aadhaar", "aadhar", "pannumber", "passport", "nationalid"
+    )):
+        return "mrn"
+
+    # Strong patient identifiers and insurance identifiers.
+    if any(x in key for x in (
+        "uhid", "mrn", "patientid", "medicalrecord",
+        "patientref", "patientreference", "registrationid",
+        "registrationnumber", "registrationno", "regno",
+        "hospitalnumber", "opnumber", "ipnumber",
+        "pmjayid", "insuranceid", "policyno",
+        "policynumber", "claimnumber", "payerpan",
+        "abhaid", "healthid", "visitid"
+    )):
+        return "mrn"
+
+    # Person names, including relatives and guardians.
+    if any(x in key for x in (
+        "patientname", "firstname", "middlename", "lastname",
+        "surname", "fullname", "beneficiaryname", "membername",
+        "guardian", "father", "mother", "spouse", "husband",
+        "wife", "relative", "nextofkin", "contactperson",
+        "attendername", "refdoctor", "givenname", "familyname",
+        "given", "family", "prefix", "suffix", "naam", "pita",
+        "patika"
+    )):
+        return "name"
+
+    # Addresses and geographic quasi-identifiers.
+    if any(x in key for x in (
+        "address", "street", "houseno", "house",
+        "village", "mohalla", "locality", "landmark",
+        "tehsil", "district", "town", "city", "colony",
+        "ward", "postalcode", "pincode", "pin", "zipcode", "zip",
+        "pata", "gaon", "gram", "jila", "zila"
+    )):
+        return "address"
+
+    # Exact generic fields only when their context is unambiguous.
+    if key in {"name", "patientfullname", "relative"}:
+        return "name"
+
+    return None
+
+def _replace_patterns(value):
+    value = PATTERNS["EMAIL"].sub("[REDACTED_EMAIL]", value)
+    value = PATTERNS["PHONE"].sub("[REDACTED_PHONE]", value)
+    value = PATTERNS["AADHAAR_MASKED"].sub("[REDACTED_AADHAAR]", value)
+    value = PATTERNS["AADHAAR"].sub("[REDACTED_AADHAAR]", value)
+    value = PATTERNS["PAN"].sub("[REDACTED_PAN]", value)
+    value = PATTERNS["ABHA"].sub("[REDACTED_ABHA]", value)
+    return value
 
 
-def _replace_patterns(text, stats):
-    result = text
-
-    for kind, pattern in PATTERNS:
-        result, count = pattern.subn(f"[{kind}]", result)
-        if count:
-            _count(stats, kind, count)
-
-    return result
-
-
-def _replace_labelled_names(text, stats):
+def sanitize_value(field, value=None, stats=None):
     """
-    Detect names only in explicit identity contexts.
-    Do not classify every capitalized word as a person.
+    Backwards-compatible project interface:
+        sanitize_value(field, value, stats)
+
+    Also accepts the newer two-argument form:
+        sanitize_value(value, field)
     """
-    patterns = [
-        re.compile(
-            r"(?i)\b(patient\s*name|name\s*of\s*patient|"
-            r"नाम|मरीज\s*का\s*नाम|रोगी\s*का\s*नाम)\s*[:=-]\s*"
-            r"([^\n,;|]{2,80})"
-        ),
-        re.compile(
-            r"(?i)\b(father'?s?\s*name|mother'?s?\s*name|"
-            r"spouse'?s?\s*name|guardian'?s?\s*name)\s*[:=-]\s*"
-            r"([^\n,;|]{2,80})"
-        ),
-    ]
+    if value is None:
+        value = field
+        field = None
 
-    result = text
+    role = _field_role(field)
 
-    for pattern in patterns:
-        def replacement(match):
-            _count(stats, "PERSON_NAME")
-            return match.group(1) + ": [PERSON_NAME]"
+    # Preserve DOB for the engine's patient-specific date shifter.
+    if role == "dob":
+        return value
 
-        result = pattern.sub(replacement, result)
+    if value is None:
+        return value
 
-    # Explicit relative-name forms.
-    relative = re.compile(
-        r"(?i)\b(?:S/O|D/O|W/O|C/O)\s*[:.-]?\s*"
-        r"[A-Z][A-Za-z.' -]{2,50}"
-    )
+    if isinstance(value, (int, float)):
+        if role == "phone":
+            return "[REDACTED_PHONE]"
+        if role == "metadata":
+            return "[REDACTED_METADATA]"
+        if role in {"name", "mrn", "insurance", "address"}:
+            return "[REDACTED]"
+        return value
 
-    def relative_replacement(match):
-        _count(stats, "RELATIVE_NAME")
-        return "[RELATIVE_NAME]"
-
-    result = relative.sub(relative_replacement, result)
-
-    return result
-
-
-def sanitize_value(field, value, stats):
     if not isinstance(value, str):
         return value
 
-    original = value
-    normalized_field = _field_key(field)
+    if not value.strip():
+        return value
 
-    # Clinical text is not blindly redacted by column name.
-    # Explicit identifiers are still detected below.
-    if normalized_field in SENSITIVE_FIELD_HINTS and normalized_field not in {
-        "clinicalnote",
-        "notes",
-        "diagnosis",
-    }:
-        kind = SENSITIVE_FIELD_HINTS[normalized_field]
-        if value.strip():
-            _count(stats, kind)
-            return f"[{kind}]"
+    # Preserve the existing statistics interface used by the pipeline/tests.
+    if stats is not None:
+        detected = sum(
+            len(pattern.findall(value))
+            for pattern in PATTERNS.values()
+        )
+        detected += len(LABELLED_VALUE.findall(value))
+        detected += len(RELATIVE_LABEL.findall(value))
+        if detected:
+            stats.identifiers += detected
 
-    result = _replace_patterns(original, stats)
-    result = _replace_labelled_names(result, stats)
+    if role == "name":
+        return "[REDACTED_NAME]"
+    if role == "mrn":
+        return "[REDACTED_ID]"
+    if role == "insurance":
+        return "[REDACTED_INSURANCE_ID]"
+    if role == "address":
+        return "[GENERALIZED_LOCATION]"
+    if role == "phone":
+        return "[REDACTED_PHONE]"
+    if role == "metadata":
+        return "[REDACTED_METADATA]"
 
-    # Remove obvious labelled addresses without destroying all prose.
-    address_pattern = re.compile(
-        r"(?i)\b(address|पता|residing\s+at|resident\s+of)\s*[:=-]\s*"
-        r"([^\n;|]{5,150})"
-    )
+    value = _replace_patterns(value)
 
-    def address_replacement(match):
-        _count(stats, "ADDRESS")
-        return match.group(1) + ": [ADDRESS]"
+    def replace_label(match):
+        label = match.group("label")
+        label_norm = _norm(label)
+        if any(x in label_norm for x in (
+            "नाम", "name", "father", "mother", "husband",
+            "wife", "guardian", "relative", "naam", "pita",
+            "pati", "s/o", "d/o",
+            "w/o", "c/o"
+        )):
+            return label + ": [REDACTED_NAME]"
+        return label + ": [GENERALIZED_LOCATION]"
 
-    result = address_pattern.sub(address_replacement, result)
+    value = LABELLED_VALUE.sub(replace_label, value)
+    value = RELATIVE_LABEL.sub("[REDACTED_RELATIVE_NAME]", value)
 
-    return result
+    return value
 
+def sanitize_field_name(field):
+    # Preserve schema keys. Do not rename FHIR fields or CSV headers.
+    return str(field)
 
-def detect_identifiers(text):
-    found = []
+def detect_identifiers(value):
+    if not isinstance(value, str):
+        value = str(value or "")
 
-    for kind, pattern in PATTERNS:
-        if pattern.search(text):
-            found.append(kind)
+    found = Counter()
+    for kind, pattern in PATTERNS.items():
+        found[kind] += len(pattern.findall(value))
 
-    return found
+    for match in LABELLED_VALUE.finditer(value):
+        label = _norm(match.group("label"))
+        if any(x in label for x in ("नाम", "name", "father", "mother",
+                                    "husband", "wife", "guardian",
+                                    "relative", "s/o", "d/o", "w/o", "c/o")):
+            found["NAME"] += 1
+        else:
+            found["ADDRESS"] += 1
+
+    if RELATIVE_LABEL.search(value):
+        found["RELATIVE_NAME"] += 1
+
+    return dict(found)
