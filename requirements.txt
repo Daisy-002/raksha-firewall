@@ -1,0 +1,2 @@
+# Standard-library-only runtime.
+# No model downloads or runtime network dependencies.
