@@ -18,12 +18,28 @@ from .reconstruction import write_csv, write_json
 from .quarantine import quarantine_reason
 from .reporting import write_report
 from .validation import find_residual_identifiers
-from .detection import sanitize_value
+from .detection import PATTERNS, sanitize_value
 
 
 PRIVATE_INDEX_FIELDS = {
     "byname", "byuhid", "bypatientname", "bypatientid", "nameindex",
 }
+GENERIC_HEADER_WORDS = {
+    "address", "admission", "age", "amount", "bed", "blood", "body",
+    "claim", "clinic", "code", "date", "department", "diagnosis",
+    "discharge", "doctor", "dose", "duration", "email", "family",
+    "first", "frequency", "full", "gender", "general", "given",
+    "height", "heart", "history", "hospital", "insurance", "lab",
+    "last", "management", "medical", "medication", "middle", "mobile",
+    "name", "no", "notes", "number", "oxygen", "patient", "phone",
+    "pin", "policy", "postal", "pressure", "pulse", "rate", "record",
+    "reference", "remarks", "respiratory", "result", "sample", "sex",
+    "state", "status", "saturation", "temperature", "test", "time",
+    "total", "type", "unit", "value", "visit", "ward", "weight",
+}
+PERSON_LIKE_HEADER = re.compile(
+    r"^[A-Z][A-Za-z.'-]+(?:\s+[A-Z][A-Za-z.'-]+){1,3}$"
+)
 
 
 class PipelineStats:
@@ -54,12 +70,36 @@ def _safe_relative_path(relative: str, digest: str):
     return Path(*safe_parts)
 
 
-def _clean_record(record, patient_key, stats, maximum_shift, name_context=False):
+def _safe_csv_header(value, index):
+    header = str(value).strip()
+    if any(pattern.search(header) for pattern in PATTERNS.values()):
+        return f"column_{index + 1}"
+
+    words = header.split()
+    if (
+        PERSON_LIKE_HEADER.fullmatch(header)
+        and not any(word.casefold() in GENERIC_HEADER_WORDS for word in words)
+    ):
+        return f"column_{index + 1}"
+
+    return value
+
+
+def _clean_record(
+    record,
+    patient_key,
+    stats,
+    maximum_shift,
+    name_context=False,
+    reference_context=False,
+    narrative_context=False,
+):
     cleaned = {}
     patient_id = pseudonym(patient_key) if patient_key else None
 
     for key, value in record.items():
         key_string = str(key)
+        original_value = value
         normalized = re.sub(r"[^a-z]", "", key_string.casefold())
 
         # These maps expose direct name-to-identifier relationships.
@@ -68,23 +108,42 @@ def _clean_record(record, patient_key, stats, maximum_shift, name_context=False)
 
         safe_key = key_string
         nested_name_context = name_context or normalized == "name"
-        field_to_clean = (
-            "name"
-            if name_context and normalized in {
-                "text", "given", "family", "prefix", "suffix"
-            }
-            else key_string
-        )
+        nested_reference_context = reference_context or normalized == "subject"
+        nested_narrative_context = narrative_context or normalized == "text"
+        if reference_context and normalized == "display":
+            field_to_clean = "name"
+        elif reference_context and normalized == "reference":
+            field_to_clean = "patientref"
+        elif narrative_context and normalized == "div":
+            field_to_clean = "fhir_narrative"
+        elif name_context and normalized in {
+            "text", "given", "family", "prefix", "suffix"
+        }:
+            field_to_clean = "name"
+        else:
+            field_to_clean = key_string
 
         if isinstance(value, dict):
             value = _clean_record(
-                value, patient_key, stats, maximum_shift, nested_name_context
+                value,
+                patient_key,
+                stats,
+                maximum_shift,
+                nested_name_context,
+                nested_reference_context,
+                nested_narrative_context,
             )
 
         elif isinstance(value, list):
             value = [
                 _clean_record(
-                    x, patient_key, stats, maximum_shift, nested_name_context
+                    x,
+                    patient_key,
+                    stats,
+                    maximum_shift,
+                    nested_name_context,
+                    nested_reference_context,
+                    nested_narrative_context,
                 )
                 if isinstance(x, dict)
                 else sanitize_value(field_to_clean, x, stats)
@@ -92,7 +151,6 @@ def _clean_record(record, patient_key, stats, maximum_shift, name_context=False)
             ]
 
         elif isinstance(value, str):
-            original = value
             value = sanitize_value(field_to_clean, value, stats)
 
             if patient_key and normalized in {
@@ -112,6 +170,28 @@ def _clean_record(record, patient_key, stats, maximum_shift, name_context=False)
             if generalized != value:
                 stats.generalized += 1
             value = generalized
+
+        if (
+            reference_context
+            and normalized == "reference"
+            and isinstance(value, str)
+            and isinstance(original_value, str)
+        ):
+            patient_reference = re.match(
+                r"^Patient/([^/]+)", original_value
+            )
+            identifier = (
+                patient_reference.group(1)
+                if patient_reference
+                else original_value
+            )
+            reference_key = canonical_patient_key(
+                {"patientref": identifier}
+            )
+            if reference_key:
+                value = pseudonym(patient_key or reference_key)
+            else:
+                value = "[REDACTED_ID]"
 
         # Replace an existing strong patient identifier with its pseudonym.
         if patient_id and normalized in {
@@ -168,7 +248,10 @@ def _process_csv(text, delimiter, relative, records, stats, maximum_shift):
         raise ValueError("empty_file")
 
     header = parsed[0]
-    safe_header = header
+    safe_header = [
+        _safe_csv_header(column, index)
+        for index, column in enumerate(header)
+    ]
     output_rows = [safe_header]
 
     for index, row in enumerate(parsed[1:]):

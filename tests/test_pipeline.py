@@ -105,6 +105,17 @@ class PipelineTests(unittest.TestCase):
                 "visits": [{
                     "patient_ref": "JJH-0077305",
                     "visit_id": "OPD/26/05/00112",
+                    "subject": {
+                        "display": "Kamala Nishad",
+                        "reference": "Patient/JJH-0077305",
+                    },
+                    "text": {
+                        "status": "generated",
+                        "div": (
+                            '<div xmlns="http://www.w3.org/1999/xhtml">'
+                            "Kamala Nishad, 27 yrs, female, JJH-0077305</div>"
+                        ),
+                    },
                     "patient": {
                         "name": [{
                             "use": "official",
@@ -132,6 +143,31 @@ class PipelineTests(unittest.TestCase):
                 self.assertNotIn(value, result)
             self.assertIn("[REDACTED_METADATA]", result)
             self.assertNotIn("by_name", result)
+            self.assertIn('"reference": "PSN-', result)
+
+    def test_patient_names_in_csv_headers_are_renamed(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "input"
+            output = root / "output"
+            source.mkdir()
+            (source / "wide.csv").write_text(
+                "time,Blood Pressure,JJH-0077112 Zainab Siddiqui,"
+                "Jaspreet Singh\n"
+                "14:00,120,128,110\n",
+                encoding="utf-8",
+            )
+
+            run_pipeline(source, output)
+
+            result = (output / "sanitized" / "wide.csv").read_text(
+                encoding="utf-8"
+            )
+            self.assertNotIn("JJH-0077112", result)
+            self.assertNotIn("Zainab Siddiqui", result)
+            self.assertNotIn("Jaspreet Singh", result)
+            self.assertIn("time,Blood Pressure,column_3,column_4", result)
+            self.assertIn("14:00,120,128,110", result)
 
 
 if __name__ == "__main__":

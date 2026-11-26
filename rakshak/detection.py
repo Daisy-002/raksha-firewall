@@ -21,6 +21,11 @@ PATTERNS = {
     ),
     "PAN": re.compile(r"\b[A-Z]{5}\d{4}[A-Z]\b", re.I),
     "ABHA": re.compile(r"\b\d{2}-\d{4}-\d{4}-\d{4}\b"),
+    "HOSPITAL_ID": re.compile(
+        r"\b(?:JJH|SNJ|HOSP|UHID|IPD|ADM|OPD)[-/]"
+        r"[A-Z0-9][A-Z0-9/-]{2,}\b",
+        re.I,
+    ),
     "PIN": re.compile(r"(?<!\d)[1-9]\d{5}(?!\d)"),
 }
 
@@ -82,6 +87,7 @@ SENSITIVE_HINTS = {
 # Labels in English, Hindi and common Hinglish.
 LABELLED_VALUE = re.compile(
     r"(?P<label>"
+    r"patient|name|"
     r"patient\s*name|name\s*of\s*patient|"
     r"patient\s*naam|pita(?:\s*/\s*pati)?\s*ka\s*naam|"
     r"naam|pata|gaon|gram|mohalla|tehsil|jila|zila|"
@@ -103,6 +109,33 @@ RELATIVE_LABEL = re.compile(
     r"[\w\u0900-\u097f][A-Za-z\u0900-\u097f.'-]+"
     r"(?:\s+[\w\u0900-\u097f][A-Za-z\u0900-\u097f.'-]+){0,3}",
     re.I
+)
+
+FHIR_NARRATIVE_NAME = re.compile(
+    r"(?is)(<div\b[^>]*>\s*)"
+    r"(?P<name>(?:[A-Z][A-Za-z.'-]*|[\u0900-\u097f]+)"
+    r"(?:\s+(?:[A-Z][A-Za-z.'-]*|[\u0900-\u097f]+)){1,3})"
+    r"(?=,\s*\d{1,3}\s*(?:yrs?|years?|y/o)\b)"
+)
+
+TIMESTAMP_RELATIVE_NAME = re.compile(
+    r"(?im)(\b\d{1,2}:\d{2}\s*[-–—]\s*)"
+    r"(?:[A-Z][A-Za-z.'-]*|[\u0900-\u097f]+)"
+    r"(?:\s+(?:[A-Z][A-Za-z.'-]*|[\u0900-\u097f]+)){0,3}"
+    r"(?=\s*[-–—]\s*[KSDWC]\s*/(?:\s*O\b)?)"
+)
+
+HINGLISH_PERSON_CONTEXT = re.compile(
+    r"(?<![\w])"
+    r"[A-Z][A-Za-z.'-]*(?:\s+[A-Z][A-Za-z.'-]*){0,2}"
+    r"(?:\s+(?i:sahab|ji))?"
+    r"(?=\s+(?:(?i:ko)\s+\d+\s*(?i:din|days?)\b|"
+    r"(?i:ka|ki|ke)\s+(?i:BP|pulse|blood\s+pressure)\b))"
+)
+
+HINDI_PERSON_DURATION_CONTEXT = re.compile(
+    r"[\u0900-\u097f]+(?:\s+(?!को\b)[\u0900-\u097f]+){1,3}"
+    r"(?=\s+को\s+\d+\s*(?:दिन|दिनों|दिवस)\s+से(?:\s|$))"
 )
 
 def _norm(value):
@@ -180,6 +213,7 @@ def _replace_patterns(value):
     value = PATTERNS["AADHAAR"].sub("[REDACTED_AADHAAR]", value)
     value = PATTERNS["PAN"].sub("[REDACTED_PAN]", value)
     value = PATTERNS["ABHA"].sub("[REDACTED_ABHA]", value)
+    value = PATTERNS["HOSPITAL_ID"].sub("[REDACTED_ID]", value)
     return value
 
 
@@ -249,7 +283,7 @@ def sanitize_value(field, value=None, stats=None):
         label = match.group("label")
         label_norm = _norm(label)
         if any(x in label_norm for x in (
-            "नाम", "name", "father", "mother", "husband",
+            "नाम", "name", "patient", "father", "mother", "husband",
             "wife", "guardian", "relative", "naam", "pita",
             "pati", "s/o", "d/o",
             "w/o", "c/o"
@@ -259,6 +293,19 @@ def sanitize_value(field, value=None, stats=None):
 
     value = LABELLED_VALUE.sub(replace_label, value)
     value = RELATIVE_LABEL.sub("[REDACTED_RELATIVE_NAME]", value)
+
+    if _norm(field) == "fhirnarrative":
+        value = FHIR_NARRATIVE_NAME.sub(
+            r"\1[REDACTED_NAME]", value
+        )
+
+    value = TIMESTAMP_RELATIVE_NAME.sub(
+        r"\1[REDACTED_NAME]", value
+    )
+    value = HINGLISH_PERSON_CONTEXT.sub("[REDACTED_NAME]", value)
+    value = HINDI_PERSON_DURATION_CONTEXT.sub(
+        "[REDACTED_NAME]", value
+    )
 
     return value
 

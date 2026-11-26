@@ -65,6 +65,51 @@ class DetectionTests(unittest.TestCase):
         self.assertIn("5 mg", result)
         self.assertIn("1-0-1", result)
 
+    def test_free_text_name_and_hospital_id_labels(self):
+        result = sanitize_value(
+            "clinical_note",
+            "Name: Kamala Nishad; Reg No: JJH-0077305",
+        )
+        self.assertNotIn("Kamala Nishad", result)
+        self.assertNotIn("JJH-0077305", result)
+
+    def test_fhir_narrative_name_and_identifier_are_redacted(self):
+        result = sanitize_value(
+            "fhir_narrative",
+            '<div xmlns="http://www.w3.org/1999/xhtml">'
+            "Kamala Nishad, 27 yrs, female, JJH-0077305</div>",
+        )
+        self.assertNotIn("Kamala Nishad", result)
+        self.assertNotIn("JJH-0077305", result)
+        self.assertIn("[REDACTED_NAME]", result)
+
+    def test_timestamped_relative_note_redacts_patient_name(self):
+        result = sanitize_value(
+            "clinical_note",
+            "14:00 - Ramesh Kumar - K/O Mahesh Kumar",
+        )
+        self.assertNotIn("Ramesh Kumar", result)
+
+    def test_hinglish_patient_name_contexts(self):
+        examples = (
+            "Irfan ka BP is 128/72",
+            "Ramesh Kumar ko 6 din se bukhar hai",
+            "Harish sahab ka blood pressure is elevated",
+        )
+        for text in examples:
+            with self.subTest(text=text):
+                result = sanitize_value("clinical_note", text)
+                self.assertIn("[REDACTED_NAME]", result)
+                self.assertNotIn(text.split()[0], result)
+
+    def test_hindi_name_before_symptom_duration(self):
+        result = sanitize_value(
+            "clinical_note",
+            "कमला निषाद को 6 दिन से बुखार है",
+        )
+        self.assertNotIn("कमला निषाद", result)
+        self.assertIn("6 दिन से बुखार", result)
+
 
 if __name__ == "__main__":
     unittest.main()
