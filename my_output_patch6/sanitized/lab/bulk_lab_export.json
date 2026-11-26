@@ -1,0 +1,1301 @@
+{
+  "export": "LIMS bulk extract",
+  "results": [
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-M80NQJ6A",
+      "test": "Haemoglobin",
+      "loinc": "718-7",
+      "value": 9.2,
+      "unit": "g/dL",
+      "date": "2026-04-10"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-M80NQJ6A",
+      "test": "TSH",
+      "loinc": "3016-3",
+      "value": 10.52,
+      "unit": "mIU/L",
+      "date": "2025-09-07"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-M80NQJ6A",
+      "test": "HbA1c",
+      "loinc": "4548-4",
+      "value": 8.8,
+      "unit": "%",
+      "date": "2026-03-14"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-3NFJBQCP",
+      "test": "Serum Creatinine",
+      "loinc": "2160-0",
+      "value": 1.1,
+      "unit": "mg/dL",
+      "date": "2026-01-09"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-3NFJBQCP",
+      "test": "Platelet Count",
+      "loinc": "777-3",
+      "value": 137130,
+      "unit": "/uL",
+      "date": "2026-04-14"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-3NFJBQCP",
+      "test": "Serum Creatinine",
+      "loinc": "2160-0",
+      "value": 0.8,
+      "unit": "mg/dL",
+      "date": "2026-07-19"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-51FDCBAH",
+      "test": "Random Blood Sugar",
+      "loinc": "2345-7",
+      "value": 260,
+      "unit": "mg/dL",
+      "date": "2026-03-27"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-51FDCBAH",
+      "test": "Serum Sodium",
+      "loinc": "2951-2",
+      "value": 128,
+      "unit": "mmol/L",
+      "date": "2026-06-03"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-51FDCBAH",
+      "test": "Haemoglobin",
+      "loinc": "718-7",
+      "value": 14.7,
+      "unit": "g/dL",
+      "date": "2026-02-25"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-SMTX0DE4",
+      "test": "HbA1c",
+      "loinc": "4548-4",
+      "value": 11.5,
+      "unit": "%",
+      "date": "2025-12-22"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-SMTX0DE4",
+      "test": "Serum Sodium",
+      "loinc": "2951-2",
+      "value": 130,
+      "unit": "mmol/L",
+      "date": "2026-02-01"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-SMTX0DE4",
+      "test": "Platelet Count",
+      "loinc": "777-3",
+      "value": 127894,
+      "unit": "/uL",
+      "date": "2026-03-31"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-29FHG7ZZ",
+      "test": "Haemoglobin",
+      "loinc": "718-7",
+      "value": 8.6,
+      "unit": "g/dL",
+      "date": "2026-11-29"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-29FHG7ZZ",
+      "test": "Random Blood Sugar",
+      "loinc": "2345-7",
+      "value": 307,
+      "unit": "mg/dL",
+      "date": "2026-09-17"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-29FHG7ZZ",
+      "test": "Platelet Count",
+      "loinc": "777-3",
+      "value": 41800,
+      "unit": "/uL",
+      "date": "2026-06-07"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-EQ79ADSW",
+      "test": "Platelet Count",
+      "loinc": "777-3",
+      "value": 128646,
+      "unit": "/uL",
+      "date": "2026-07-31"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-EQ79ADSW",
+      "test": "Haemoglobin",
+      "loinc": "718-7",
+      "value": 13.8,
+      "unit": "g/dL",
+      "date": "2026-07-06"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-EQ79ADSW",
+      "test": "Platelet Count",
+      "loinc": "777-3",
+      "value": 56927,
+      "unit": "/uL",
+      "date": "2027-03-14"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-4NJAPK9Z",
+      "test": "Serum Sodium",
+      "loinc": "2951-2",
+      "value": 130,
+      "unit": "mmol/L",
+      "date": "2026-09-07"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-4NJAPK9Z",
+      "test": "Haemoglobin",
+      "loinc": "718-7",
+      "value": 15.5,
+      "unit": "g/dL",
+      "date": "2026-06-20"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-4NJAPK9Z",
+      "test": "HbA1c",
+      "loinc": "4548-4",
+      "value": 5.4,
+      "unit": "%",
+      "date": "2026-03-10"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-9R3ANBN5",
+      "test": "Haemoglobin",
+      "loinc": "718-7",
+      "value": 9.6,
+      "unit": "g/dL",
+      "date": "2026-08-11"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-9R3ANBN5",
+      "test": "Serum Creatinine",
+      "loinc": "2160-0",
+      "value": 3.2,
+      "unit": "mg/dL",
+      "date": "2026-10-31"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-9R3ANBN5",
+      "test": "Haemoglobin",
+      "loinc": "718-7",
+      "value": 10.9,
+      "unit": "g/dL",
+      "date": "2026-04-30"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-X62KHWF8",
+      "test": "Random Blood Sugar",
+      "loinc": "2345-7",
+      "value": 143,
+      "unit": "mg/dL",
+      "date": "2027-02-13"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-X62KHWF8",
+      "test": "Haemoglobin",
+      "loinc": "718-7",
+      "value": 11.4,
+      "unit": "g/dL",
+      "date": "2026-09-30"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-X62KHWF8",
+      "test": "Serum Sodium",
+      "loinc": "2951-2",
+      "value": 141,
+      "unit": "mmol/L",
+      "date": "2026-05-24"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-N7SFAVQP",
+      "test": "Platelet Count",
+      "loinc": "777-3",
+      "value": 290515,
+      "unit": "/uL",
+      "date": "2026-09-24"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-N7SFAVQP",
+      "test": "Haemoglobin",
+      "loinc": "718-7",
+      "value": 9.3,
+      "unit": "g/dL",
+      "date": "2026-08-24"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-N7SFAVQP",
+      "test": "TSH",
+      "loinc": "3016-3",
+      "value": 6.93,
+      "unit": "mIU/L",
+      "date": "2026-05-07"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-6SBXZARV",
+      "test": "Platelet Count",
+      "loinc": "777-3",
+      "value": 154139,
+      "unit": "/uL",
+      "date": "2026-02-01"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-6SBXZARV",
+      "test": "Random Blood Sugar",
+      "loinc": "2345-7",
+      "value": 237,
+      "unit": "mg/dL",
+      "date": "2026-02-27"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-6SBXZARV",
+      "test": "Random Blood Sugar",
+      "loinc": "2345-7",
+      "value": 265,
+      "unit": "mg/dL",
+      "date": "2026-10-27"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-78C2E432",
+      "test": "Serum Sodium",
+      "loinc": "2951-2",
+      "value": 128,
+      "unit": "mmol/L",
+      "date": "2026-06-04"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-78C2E432",
+      "test": "Platelet Count",
+      "loinc": "777-3",
+      "value": 255465,
+      "unit": "/uL",
+      "date": "2026-09-29"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-78C2E432",
+      "test": "Random Blood Sugar",
+      "loinc": "2345-7",
+      "value": 115,
+      "unit": "mg/dL",
+      "date": "2026-08-19"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-B4ZT3Q47",
+      "test": "Haemoglobin",
+      "loinc": "718-7",
+      "value": 8.0,
+      "unit": "g/dL",
+      "date": "2026-01-13"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-B4ZT3Q47",
+      "test": "HbA1c",
+      "loinc": "4548-4",
+      "value": 8.8,
+      "unit": "%",
+      "date": "2025-11-10"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-B4ZT3Q47",
+      "test": "Platelet Count",
+      "loinc": "777-3",
+      "value": 106050,
+      "unit": "/uL",
+      "date": "2026-06-27"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-DRFZTMR3",
+      "test": "Platelet Count",
+      "loinc": "777-3",
+      "value": 41534,
+      "unit": "/uL",
+      "date": "2025-12-05"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-DRFZTMR3",
+      "test": "Platelet Count",
+      "loinc": "777-3",
+      "value": 123766,
+      "unit": "/uL",
+      "date": "2026-04-06"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-DRFZTMR3",
+      "test": "Random Blood Sugar",
+      "loinc": "2345-7",
+      "value": 194,
+      "unit": "mg/dL",
+      "date": "2026-02-11"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-BRJT7WSV",
+      "test": "HbA1c",
+      "loinc": "4548-4",
+      "value": 7.2,
+      "unit": "%",
+      "date": "2026-09-13"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-BRJT7WSV",
+      "test": "Total WBC Count",
+      "loinc": "6690-2",
+      "value": 13087,
+      "unit": "/uL",
+      "date": "2026-10-06"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-BRJT7WSV",
+      "test": "Haemoglobin",
+      "loinc": "718-7",
+      "value": 14.0,
+      "unit": "g/dL",
+      "date": "2026-07-12"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-81XJRF3X",
+      "test": "Haemoglobin",
+      "loinc": "718-7",
+      "value": 15.2,
+      "unit": "g/dL",
+      "date": "2026-05-17"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-81XJRF3X",
+      "test": "TSH",
+      "loinc": "3016-3",
+      "value": 6.04,
+      "unit": "mIU/L",
+      "date": "2026-05-24"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-81XJRF3X",
+      "test": "Serum Sodium",
+      "loinc": "2951-2",
+      "value": 144,
+      "unit": "mmol/L",
+      "date": "2026-12-11"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-E0T9KRXJ",
+      "test": "Platelet Count",
+      "loinc": "777-3",
+      "value": 59909,
+      "unit": "/uL",
+      "date": "2026-08-13"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-E0T9KRXJ",
+      "test": "Haemoglobin",
+      "loinc": "718-7",
+      "value": 11.0,
+      "unit": "g/dL",
+      "date": "2026-08-09"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-E0T9KRXJ",
+      "test": "Random Blood Sugar",
+      "loinc": "2345-7",
+      "value": 269,
+      "unit": "mg/dL",
+      "date": "2026-04-24"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-SSCRVFB1",
+      "test": "Platelet Count",
+      "loinc": "777-3",
+      "value": 127377,
+      "unit": "/uL",
+      "date": "2026-06-02"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-SSCRVFB1",
+      "test": "Serum Creatinine",
+      "loinc": "2160-0",
+      "value": 2.4,
+      "unit": "mg/dL",
+      "date": "2025-10-28"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-SSCRVFB1",
+      "test": "HbA1c",
+      "loinc": "4548-4",
+      "value": 6.9,
+      "unit": "%",
+      "date": "2026-01-22"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-W4SXV4ZM",
+      "test": "TSH",
+      "loinc": "3016-3",
+      "value": 10.49,
+      "unit": "mIU/L",
+      "date": "2026-03-26"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-W4SXV4ZM",
+      "test": "Serum Creatinine",
+      "loinc": "2160-0",
+      "value": 1.4,
+      "unit": "mg/dL",
+      "date": "2026-05-16"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-W4SXV4ZM",
+      "test": "Haemoglobin",
+      "loinc": "718-7",
+      "value": 11.3,
+      "unit": "g/dL",
+      "date": "2026-11-12"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-E2Q17K9A",
+      "test": "Random Blood Sugar",
+      "loinc": "2345-7",
+      "value": 178,
+      "unit": "mg/dL",
+      "date": "2026-01-31"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-E2Q17K9A",
+      "test": "HbA1c",
+      "loinc": "4548-4",
+      "value": 10.6,
+      "unit": "%",
+      "date": "2025-10-23"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-E2Q17K9A",
+      "test": "TSH",
+      "loinc": "3016-3",
+      "value": 2.13,
+      "unit": "mIU/L",
+      "date": "2026-07-04"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-DZDDJ1Y9",
+      "test": "Serum Creatinine",
+      "loinc": "2160-0",
+      "value": 2.7,
+      "unit": "mg/dL",
+      "date": "2026-01-06"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-DZDDJ1Y9",
+      "test": "TSH",
+      "loinc": "3016-3",
+      "value": 4.01,
+      "unit": "mIU/L",
+      "date": "2026-07-26"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-DZDDJ1Y9",
+      "test": "Platelet Count",
+      "loinc": "777-3",
+      "value": 65118,
+      "unit": "/uL",
+      "date": "2026-08-13"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-0H96AQZX",
+      "test": "Random Blood Sugar",
+      "loinc": "2345-7",
+      "value": 306,
+      "unit": "mg/dL",
+      "date": "2026-01-05"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-0H96AQZX",
+      "test": "Haemoglobin",
+      "loinc": "718-7",
+      "value": 12.7,
+      "unit": "g/dL",
+      "date": "2025-09-12"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-0H96AQZX",
+      "test": "Serum Sodium",
+      "loinc": "2951-2",
+      "value": 136,
+      "unit": "mmol/L",
+      "date": "2026-04-02"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-RSH7ZJ6B",
+      "test": "Serum Sodium",
+      "loinc": "2951-2",
+      "value": 140,
+      "unit": "mmol/L",
+      "date": "2026-04-16"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-RSH7ZJ6B",
+      "test": "Platelet Count",
+      "loinc": "777-3",
+      "value": 71774,
+      "unit": "/uL",
+      "date": "2026-06-01"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-RSH7ZJ6B",
+      "test": "Haemoglobin",
+      "loinc": "718-7",
+      "value": 9.7,
+      "unit": "g/dL",
+      "date": "2026-09-27"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-VDDXKV5M",
+      "test": "Total WBC Count",
+      "loinc": "6690-2",
+      "value": 4801,
+      "unit": "/uL",
+      "date": "2026-06-30"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-VDDXKV5M",
+      "test": "Platelet Count",
+      "loinc": "777-3",
+      "value": 219712,
+      "unit": "/uL",
+      "date": "2026-04-02"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-VDDXKV5M",
+      "test": "Random Blood Sugar",
+      "loinc": "2345-7",
+      "value": 238,
+      "unit": "mg/dL",
+      "date": "2026-03-16"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-RPY29K9W",
+      "test": "Random Blood Sugar",
+      "loinc": "2345-7",
+      "value": 220,
+      "unit": "mg/dL",
+      "date": "2026-03-22"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-RPY29K9W",
+      "test": "Total WBC Count",
+      "loinc": "6690-2",
+      "value": 13475,
+      "unit": "/uL",
+      "date": "2025-12-14"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-RPY29K9W",
+      "test": "Random Blood Sugar",
+      "loinc": "2345-7",
+      "value": 299,
+      "unit": "mg/dL",
+      "date": "2026-03-22"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-V74WJP57",
+      "test": "HbA1c",
+      "loinc": "4548-4",
+      "value": 6.7,
+      "unit": "%",
+      "date": "2026-06-18"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-V74WJP57",
+      "test": "Platelet Count",
+      "loinc": "777-3",
+      "value": 240124,
+      "unit": "/uL",
+      "date": "2025-12-14"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-V74WJP57",
+      "test": "Random Blood Sugar",
+      "loinc": "2345-7",
+      "value": 200,
+      "unit": "mg/dL",
+      "date": "2026-06-22"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-RMHR6SW8",
+      "test": "Serum Sodium",
+      "loinc": "2951-2",
+      "value": 135,
+      "unit": "mmol/L",
+      "date": "2026-02-18"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-RMHR6SW8",
+      "test": "HbA1c",
+      "loinc": "4548-4",
+      "value": 10.8,
+      "unit": "%",
+      "date": "2026-04-21"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-RMHR6SW8",
+      "test": "Serum Creatinine",
+      "loinc": "2160-0",
+      "value": 2.7,
+      "unit": "mg/dL",
+      "date": "2026-02-03"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-RMK5YV5A",
+      "test": "HbA1c",
+      "loinc": "4548-4",
+      "value": 9.6,
+      "unit": "%",
+      "date": "2026-03-08"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-RMK5YV5A",
+      "test": "Total WBC Count",
+      "loinc": "6690-2",
+      "value": 7500,
+      "unit": "/uL",
+      "date": "2025-11-10"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-RMK5YV5A",
+      "test": "TSH",
+      "loinc": "3016-3",
+      "value": 1.1,
+      "unit": "mIU/L",
+      "date": "2026-08-16"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-9RZF0HMQ",
+      "test": "HbA1c",
+      "loinc": "4548-4",
+      "value": 7.4,
+      "unit": "%",
+      "date": "2025-12-20"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-9RZF0HMQ",
+      "test": "Platelet Count",
+      "loinc": "777-3",
+      "value": 164052,
+      "unit": "/uL",
+      "date": "2026-02-21"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-9RZF0HMQ",
+      "test": "Platelet Count",
+      "loinc": "777-3",
+      "value": 116228,
+      "unit": "/uL",
+      "date": "2025-12-16"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-4X7Q801N",
+      "test": "TSH",
+      "loinc": "3016-3",
+      "value": 1.24,
+      "unit": "mIU/L",
+      "date": "2026-08-22"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-4X7Q801N",
+      "test": "Serum Sodium",
+      "loinc": "2951-2",
+      "value": 137,
+      "unit": "mmol/L",
+      "date": "2026-07-31"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-4X7Q801N",
+      "test": "Serum Creatinine",
+      "loinc": "2160-0",
+      "value": 2.5,
+      "unit": "mg/dL",
+      "date": "2026-10-03"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-8CS79DKQ",
+      "test": "Serum Sodium",
+      "loinc": "2951-2",
+      "value": 130,
+      "unit": "mmol/L",
+      "date": "2026-07-30"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-8CS79DKQ",
+      "test": "Random Blood Sugar",
+      "loinc": "2345-7",
+      "value": 212,
+      "unit": "mg/dL",
+      "date": "2026-11-05"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-8CS79DKQ",
+      "test": "Total WBC Count",
+      "loinc": "6690-2",
+      "value": 13596,
+      "unit": "/uL",
+      "date": "2027-02-02"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-TNK80NQA",
+      "test": "Total WBC Count",
+      "loinc": "6690-2",
+      "value": 11389,
+      "unit": "/uL",
+      "date": "2026-01-28"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-TNK80NQA",
+      "test": "Random Blood Sugar",
+      "loinc": "2345-7",
+      "value": 155,
+      "unit": "mg/dL",
+      "date": "2026-03-08"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-TNK80NQA",
+      "test": "HbA1c",
+      "loinc": "4548-4",
+      "value": 7.8,
+      "unit": "%",
+      "date": "2026-08-22"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-XYNY8513",
+      "test": "TSH",
+      "loinc": "3016-3",
+      "value": 6.82,
+      "unit": "mIU/L",
+      "date": "2026-04-15"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-XYNY8513",
+      "test": "Total WBC Count",
+      "loinc": "6690-2",
+      "value": 3820,
+      "unit": "/uL",
+      "date": "2026-04-11"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-XYNY8513",
+      "test": "TSH",
+      "loinc": "3016-3",
+      "value": 8.9,
+      "unit": "mIU/L",
+      "date": "2025-11-18"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-VTJBV332",
+      "test": "HbA1c",
+      "loinc": "4548-4",
+      "value": 9.5,
+      "unit": "%",
+      "date": "2026-04-01"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-VTJBV332",
+      "test": "TSH",
+      "loinc": "3016-3",
+      "value": 2.92,
+      "unit": "mIU/L",
+      "date": "2026-06-23"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-VTJBV332",
+      "test": "Serum Sodium",
+      "loinc": "2951-2",
+      "value": 132,
+      "unit": "mmol/L",
+      "date": "2026-05-25"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-E94MWDHK",
+      "test": "TSH",
+      "loinc": "3016-3",
+      "value": 9.96,
+      "unit": "mIU/L",
+      "date": "2026-06-30"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-E94MWDHK",
+      "test": "Serum Creatinine",
+      "loinc": "2160-0",
+      "value": 3.2,
+      "unit": "mg/dL",
+      "date": "2026-11-05"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-E94MWDHK",
+      "test": "HbA1c",
+      "loinc": "4548-4",
+      "value": 8.7,
+      "unit": "%",
+      "date": "2026-12-24"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-AYKEPQNA",
+      "test": "Platelet Count",
+      "loinc": "777-3",
+      "value": 337551,
+      "unit": "/uL",
+      "date": "2025-12-05"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-AYKEPQNA",
+      "test": "Platelet Count",
+      "loinc": "777-3",
+      "value": 307686,
+      "unit": "/uL",
+      "date": "2025-12-03"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-AYKEPQNA",
+      "test": "HbA1c",
+      "loinc": "4548-4",
+      "value": 8.6,
+      "unit": "%",
+      "date": "2026-05-23"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-6WRGMY11",
+      "test": "HbA1c",
+      "loinc": "4548-4",
+      "value": 11.5,
+      "unit": "%",
+      "date": "2026-07-09"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-6WRGMY11",
+      "test": "Serum Sodium",
+      "loinc": "2951-2",
+      "value": 131,
+      "unit": "mmol/L",
+      "date": "2026-06-26"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-6WRGMY11",
+      "test": "Platelet Count",
+      "loinc": "777-3",
+      "value": 237087,
+      "unit": "/uL",
+      "date": "2026-01-01"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-75MW0M1N",
+      "test": "HbA1c",
+      "loinc": "4548-4",
+      "value": 8.7,
+      "unit": "%",
+      "date": "2026-02-19"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-75MW0M1N",
+      "test": "Serum Creatinine",
+      "loinc": "2160-0",
+      "value": 2.7,
+      "unit": "mg/dL",
+      "date": "2026-06-27"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-75MW0M1N",
+      "test": "Haemoglobin",
+      "loinc": "718-7",
+      "value": 14.1,
+      "unit": "g/dL",
+      "date": "2026-07-19"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-XRJM2BTN",
+      "test": "TSH",
+      "loinc": "3016-3",
+      "value": 1.55,
+      "unit": "mIU/L",
+      "date": "2025-11-14"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-XRJM2BTN",
+      "test": "TSH",
+      "loinc": "3016-3",
+      "value": 2.44,
+      "unit": "mIU/L",
+      "date": "2026-04-30"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-XRJM2BTN",
+      "test": "Serum Creatinine",
+      "loinc": "2160-0",
+      "value": 2.2,
+      "unit": "mg/dL",
+      "date": "2026-06-06"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-49ZPQ6XP",
+      "test": "Platelet Count",
+      "loinc": "777-3",
+      "value": 159020,
+      "unit": "/uL",
+      "date": "2026-12-25"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-49ZPQ6XP",
+      "test": "Total WBC Count",
+      "loinc": "6690-2",
+      "value": 7272,
+      "unit": "/uL",
+      "date": "2026-06-07"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-49ZPQ6XP",
+      "test": "TSH",
+      "loinc": "3016-3",
+      "value": 8.34,
+      "unit": "mIU/L",
+      "date": "2026-04-27"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-B6P70BTS",
+      "test": "Haemoglobin",
+      "loinc": "718-7",
+      "value": 12.0,
+      "unit": "g/dL",
+      "date": "2026-03-06"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-B6P70BTS",
+      "test": "Random Blood Sugar",
+      "loinc": "2345-7",
+      "value": 228,
+      "unit": "mg/dL",
+      "date": "2026-03-31"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-B6P70BTS",
+      "test": "Total WBC Count",
+      "loinc": "6690-2",
+      "value": 15775,
+      "unit": "/uL",
+      "date": "2026-04-17"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-1YZZR0QK",
+      "test": "Serum Sodium",
+      "loinc": "2951-2",
+      "value": 143,
+      "unit": "mmol/L",
+      "date": "2026-06-14"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-1YZZR0QK",
+      "test": "HbA1c",
+      "loinc": "4548-4",
+      "value": 7.9,
+      "unit": "%",
+      "date": "2026-03-09"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-1YZZR0QK",
+      "test": "TSH",
+      "loinc": "3016-3",
+      "value": 10.31,
+      "unit": "mIU/L",
+      "date": "2026-06-11"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-W9VHEMXM",
+      "test": "Platelet Count",
+      "loinc": "777-3",
+      "value": 259921,
+      "unit": "/uL",
+      "date": "2026-06-22"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-W9VHEMXM",
+      "test": "Total WBC Count",
+      "loinc": "6690-2",
+      "value": 12319,
+      "unit": "/uL",
+      "date": "2026-07-11"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-W9VHEMXM",
+      "test": "Total WBC Count",
+      "loinc": "6690-2",
+      "value": 9463,
+      "unit": "/uL",
+      "date": "2026-03-21"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-JAMQQCZD",
+      "test": "Haemoglobin",
+      "loinc": "718-7",
+      "value": 13.7,
+      "unit": "g/dL",
+      "date": "2025-10-13"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-JAMQQCZD",
+      "test": "HbA1c",
+      "loinc": "4548-4",
+      "value": 11.4,
+      "unit": "%",
+      "date": "2025-09-13"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-JAMQQCZD",
+      "test": "HbA1c",
+      "loinc": "4548-4",
+      "value": 6.9,
+      "unit": "%",
+      "date": "2026-03-10"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-9KXYTSN3",
+      "test": "Platelet Count",
+      "loinc": "777-3",
+      "value": 234013,
+      "unit": "/uL",
+      "date": "2026-04-06"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-9KXYTSN3",
+      "test": "HbA1c",
+      "loinc": "4548-4",
+      "value": 9.7,
+      "unit": "%",
+      "date": "2025-12-26"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-9KXYTSN3",
+      "test": "Serum Creatinine",
+      "loinc": "2160-0",
+      "value": 2.5,
+      "unit": "mg/dL",
+      "date": "2025-11-23"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-XAAZ1XXQ",
+      "test": "Haemoglobin",
+      "loinc": "718-7",
+      "value": 12.1,
+      "unit": "g/dL",
+      "date": "2026-05-15"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-XAAZ1XXQ",
+      "test": "TSH",
+      "loinc": "3016-3",
+      "value": 6.75,
+      "unit": "mIU/L",
+      "date": "2026-07-12"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-XAAZ1XXQ",
+      "test": "Random Blood Sugar",
+      "loinc": "2345-7",
+      "value": 258,
+      "unit": "mg/dL",
+      "date": "2025-12-15"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-4TDREVS4",
+      "test": "Total WBC Count",
+      "loinc": "6690-2",
+      "value": 7075,
+      "unit": "/uL",
+      "date": "2026-10-09"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-4TDREVS4",
+      "test": "Serum Sodium",
+      "loinc": "2951-2",
+      "value": 136,
+      "unit": "mmol/L",
+      "date": "2027-01-10"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-4TDREVS4",
+      "test": "Platelet Count",
+      "loinc": "777-3",
+      "value": 241949,
+      "unit": "/uL",
+      "date": "2026-08-23"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-0CR52VY9",
+      "test": "Haemoglobin",
+      "loinc": "718-7",
+      "value": 13.3,
+      "unit": "g/dL",
+      "date": "2027-03-23"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-0CR52VY9",
+      "test": "TSH",
+      "loinc": "3016-3",
+      "value": 2.35,
+      "unit": "mIU/L",
+      "date": "2027-04-29"
+    },
+    {
+      "patient_name": "[REDACTED_NAME]",
+      "uhid": "PSN-0CR52VY9",
+      "test": "Serum Creatinine",
+      "loinc": "2160-0",
+      "value": 1.2,
+      "unit": "mg/dL",
+      "date": "2027-04-30"
+    }
+  ]
+}

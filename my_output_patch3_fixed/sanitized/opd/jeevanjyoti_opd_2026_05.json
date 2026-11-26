@@ -1,0 +1,595 @@
+{
+  "_export_meta": {
+    "system": "eHospital OPD module",
+    "hospital": "[REDACTED_NAME]",
+    "exported_by": "opd.records.clerk",
+    "generated_at": "2026-05-28T18:00:00+05:30",
+    "source_path": "[REDACTED_METADATA]"
+  },
+  "visits": [
+    {
+      "visit_id": "[REDACTED_ID]",
+      "patient_ref": "PSN-MDB8N58V",
+      "visit_date": "06-07-2026",
+      "department": "Pulmonology",
+      "doctor": "Dr. Harjeet Bedi",
+      "complaints": "[REDACTED_RELATIVE_NAME] x 9 days",
+      "history": "H/O TB 3 yrs back, completed ATT",
+      "vitals": {
+        "bp": "128/72",
+        "pulse": 110,
+        "temp_f": 97.7,
+        "spo2": 97,
+        "weight_kg": 47
+      },
+      "diagnosis": [
+        {
+          "code": "J44.9",
+          "display": "Chronic obstructive pulmonary disease, unspecified"
+        },
+        {
+          "code": "B55.0",
+          "display": "Visceral leishmaniasis (kala-azar)"
+        }
+      ],
+      "rx": [
+        {
+          "drug": "Salbutamol inhaler",
+          "strength": "100 mcg",
+          "frequency": "2 puffs",
+          "duration": "7 days"
+        }
+      ],
+      "notes": "[REDACTED_NAME] ka BP 128/72, raat ko neend theek se aayi. Review after 2 weeks.",
+      "patient": {
+        "name": "[REDACTED_NAME]",
+        "age_sex": "97/M",
+        "mobile": "[REDACTED_PHONE]"
+      }
+    },
+    {
+      "visit_id": "[REDACTED_ID]",
+      "patient_ref": "PSN-H9GN0NMA",
+      "visit_date": "11-06-2026",
+      "department": "Medicine",
+      "doctor": "Dr. Vandana Kulshrestha",
+      "complaints": "[REDACTED_RELATIVE_NAME] x 6 days",
+      "history": "K/[REDACTED_RELATIVE_NAME]2 x 12 yrs",
+      "vitals": {
+        "bp": "110/83",
+        "pulse": 91,
+        "temp_f": 103.3,
+        "spo2": 99,
+        "weight_kg": 16
+      },
+      "diagnosis": [
+        {
+          "code": "A97.9",
+          "display": "Dengue, unspecified"
+        }
+      ],
+      "rx": [
+        {
+          "drug": "Paracetamol",
+          "strength": "650 mg",
+          "frequency": "1-1-1",
+          "duration": "5 days"
+        }
+      ],
+      "notes": "[REDACTED_NAME] ka BP 110/83, chal phir sakte hain. Review after 2 weeks.",
+      "patient": {
+        "name": "[REDACTED_NAME]",
+        "age_sex": "60/M",
+        "mobile": "[REDACTED_PHONE]"
+      }
+    },
+    {
+      "visit_id": "[REDACTED_ID]",
+      "patient_ref": "PSN-AB5MZF4N",
+      "visit_date": "20-04-2026",
+      "department": "Medicine",
+      "doctor": "Dr. Ramesh Srivastava",
+      "complaints": "7 दिन से चक्कर आना",
+      "history": "H/O snake bite 5 yrs back",
+      "vitals": {
+        "bp": "168/101",
+        "pulse": 102,
+        "temp_f": 98.1,
+        "spo2": 94,
+        "weight_kg": 31
+      },
+      "diagnosis": [
+        {
+          "code": "I10",
+          "display": "Essential (primary) hypertension"
+        },
+        {
+          "code": "E03.9",
+          "display": "Hypothyroidism, unspecified"
+        }
+      ],
+      "rx": [
+        {
+          "drug": "Amlodipine",
+          "strength": "5 mg",
+          "frequency": "0-0-1",
+          "duration": "30 days"
+        },
+        {
+          "drug": "Telmisartan",
+          "strength": "40 mg",
+          "frequency": "1-0-0",
+          "duration": "30 days"
+        },
+        {
+          "drug": "Ramipril",
+          "strength": "5 mg",
+          "frequency": "0-0-1",
+          "duration": "30 days"
+        },
+        {
+          "drug": "Levothyroxine",
+          "strength": "50 mcg",
+          "frequency": "1-0-0",
+          "duration": "7 days"
+        },
+        {
+          "drug": "Pantoprazole",
+          "strength": "40 mg",
+          "frequency": "1-0-0",
+          "duration": "30 days"
+        }
+      ],
+      "notes": "[REDACTED_NAME] ka BP 168/101, bukhar utar gaya hai. Review after 2 weeks.",
+      "patient": {
+        "name": "[REDACTED_NAME]",
+        "age_sex": "48/F",
+        "mobile": "[REDACTED_PHONE]"
+      }
+    },
+    {
+      "visit_id": "[REDACTED_ID]",
+      "patient_ref": "PSN-G94FQRT9",
+      "visit_date": "31-08-2026",
+      "department": "Medicine",
+      "doctor": "Dr. Vandana Kulshrestha",
+      "complaints": "saans phoolna 2 hafte se",
+      "history": "K/[REDACTED_RELATIVE_NAME]",
+      "vitals": {
+        "bp": "109/71",
+        "pulse": 74,
+        "temp_f": 99.0,
+        "spo2": 97,
+        "weight_kg": 89
+      },
+      "diagnosis": [
+        {
+          "code": "N39.0",
+          "display": "Urinary tract infection, site not specified"
+        }
+      ],
+      "rx": [
+        {
+          "drug": "Doxycycline",
+          "strength": "100 mg",
+          "frequency": "1-0-1",
+          "duration": "7 days"
+        }
+      ],
+      "notes": "Geeta behenji ka BP 109/71, BP abhi bhi high hai. Review after 2 weeks.",
+      "patient": {
+        "name": "[REDACTED_NAME]",
+        "age_sex": "54/F",
+        "mobile": "[REDACTED_PHONE]"
+      }
+    },
+    {
+      "visit_id": "[REDACTED_ID]",
+      "patient_ref": "PSN-R7XEK5B9",
+      "visit_date": "05-02-2026",
+      "department": "Medicine",
+      "doctor": "Dr. Ramesh Srivastava",
+      "complaints": "9 din se bukhar",
+      "history": "K/[REDACTED_RELATIVE_NAME]",
+      "vitals": {
+        "bp": "124/69",
+        "pulse": 81,
+        "temp_f": 100.9,
+        "spo2": 93,
+        "weight_kg": 15
+      },
+      "diagnosis": [
+        {
+          "code": "A01.0",
+          "display": "Typhoid fever"
+        }
+      ],
+      "rx": [
+        {
+          "drug": "Ceftriaxone",
+          "strength": "1 g",
+          "frequency": "IV",
+          "duration": "14 days"
+        },
+        {
+          "drug": "Paracetamol",
+          "strength": "650 mg",
+          "frequency": "1-1-1",
+          "duration": "5 days"
+        },
+        {
+          "drug": "Pantoprazole",
+          "strength": "40 mg",
+          "frequency": "1-0-0",
+          "duration": "14 days"
+        }
+      ],
+      "notes": "[REDACTED_NAME] ka BP 124/69, bukhar utar gaya hai. Review after 2 weeks.",
+      "patient": {
+        "name": "[REDACTED_NAME]",
+        "age_sex": "27/M",
+        "mobile": "[REDACTED_PHONE]"
+      }
+    },
+    {
+      "visit_id": "[REDACTED_ID]",
+      "patient_ref": "PSN-P16FGYDA",
+      "visit_date": "20-11-2026",
+      "department": "Pulmonology",
+      "doctor": "Dr. Harjeet Bedi",
+      "complaints": "9 दिन से पेट दर्द",
+      "history": "K/[REDACTED_RELATIVE_NAME]2 x 7 yrs",
+      "vitals": {
+        "bp": "109/68",
+        "pulse": 106,
+        "temp_f": 98.7,
+        "spo2": 95,
+        "weight_kg": 50
+      },
+      "diagnosis": [
+        {
+          "code": "J44.9",
+          "display": "Chronic obstructive pulmonary disease, unspecified"
+        }
+      ],
+      "rx": [
+        {
+          "drug": "Salbutamol inhaler",
+          "strength": "100 mcg",
+          "frequency": "2 puffs",
+          "duration": "7 days"
+        }
+      ],
+      "notes": "[REDACTED_NAME] ka BP 109/68, khana kam kha rahe hain. Review after 2 weeks.",
+      "patient": {
+        "name": "[REDACTED_NAME]",
+        "age_sex": "42/M",
+        "mobile": "[REDACTED_PHONE]"
+      }
+    },
+    {
+      "visit_id": "[REDACTED_ID]",
+      "patient_ref": "PSN-AB5MZF4N",
+      "visit_date": "09-05-2026",
+      "department": "Medicine",
+      "doctor": "Dr. Vandana Kulshrestha",
+      "complaints": "[REDACTED_RELATIVE_NAME] x 9 days",
+      "history": "K/[REDACTED_RELATIVE_NAME]2 x 12 yrs",
+      "vitals": {
+        "bp": "158/102",
+        "pulse": 99,
+        "temp_f": 98.9,
+        "spo2": 97,
+        "weight_kg": 57
+      },
+      "diagnosis": [
+        {
+          "code": "I10",
+          "display": "Essential (primary) hypertension"
+        },
+        {
+          "code": "E03.9",
+          "display": "Hypothyroidism, unspecified"
+        }
+      ],
+      "rx": [
+        {
+          "drug": "Amlodipine",
+          "strength": "5 mg",
+          "frequency": "0-0-1",
+          "duration": "5 days"
+        },
+        {
+          "drug": "Telmisartan",
+          "strength": "40 mg",
+          "frequency": "1-0-0",
+          "duration": "14 days"
+        },
+        {
+          "drug": "Ramipril",
+          "strength": "5 mg",
+          "frequency": "0-0-1",
+          "duration": "14 days"
+        },
+        {
+          "drug": "Levothyroxine",
+          "strength": "50 mcg",
+          "frequency": "1-0-0",
+          "duration": "5 days"
+        },
+        {
+          "drug": "Pantoprazole",
+          "strength": "40 mg",
+          "frequency": "1-0-0",
+          "duration": "30 days"
+        }
+      ],
+      "notes": "[REDACTED_NAME] ka BP 158/102, bukhar utar gaya hai. Review after 2 weeks.",
+      "patient": {
+        "name": "[REDACTED_NAME]",
+        "age_sex": "48/F",
+        "mobile": "[REDACTED_PHONE]"
+      }
+    },
+    {
+      "visit_id": "[REDACTED_ID]",
+      "patient_ref": "PSN-CZZE12D7",
+      "visit_date": "13-10-2026",
+      "department": "Pulmonology",
+      "doctor": "Dr. Harjeet Bedi",
+      "complaints": "9 दिन से चक्कर आना",
+      "history": "H/O TB 6 yrs back, completed ATT",
+      "vitals": {
+        "bp": "105/68",
+        "pulse": 67,
+        "temp_f": 102.5,
+        "spo2": 99,
+        "weight_kg": 92
+      },
+      "diagnosis": [
+        {
+          "code": "J18.9",
+          "display": "Pneumonia, unspecified organism"
+        }
+      ],
+      "rx": [
+        {
+          "drug": "Azithromycin",
+          "strength": "500 mg",
+          "frequency": "1-0-0",
+          "duration": "5 days"
+        },
+        {
+          "drug": "Paracetamol",
+          "strength": "650 mg",
+          "frequency": "1-1-1",
+          "duration": "5 days"
+        },
+        {
+          "drug": "Pantoprazole",
+          "strength": "40 mg",
+          "frequency": "1-0-0",
+          "duration": "7 days"
+        }
+      ],
+      "notes": "[REDACTED_NAME] ka BP 105/68, ulti band ho gayi. Review after 2 weeks.",
+      "patient": {
+        "name": "[REDACTED_NAME]",
+        "age_sex": "9/F",
+        "mobile": "[REDACTED_PHONE]"
+      }
+    },
+    {
+      "visit_id": "[REDACTED_ID]",
+      "patient_ref": "PSN-C9H2Y2V5",
+      "visit_date": "19-11-2026",
+      "department": "Medicine",
+      "doctor": "Dr. Ramesh Srivastava",
+      "complaints": "[REDACTED_RELATIVE_NAME] x 5 days",
+      "history": "K/[REDACTED_RELATIVE_NAME]",
+      "vitals": {
+        "bp": "107/81",
+        "pulse": 112,
+        "temp_f": 97.9,
+        "spo2": 91,
+        "weight_kg": 42
+      },
+      "diagnosis": [
+        {
+          "code": "A09",
+          "display": "Infectious gastroenteritis and colitis, unspecified"
+        }
+      ],
+      "rx": [
+        {
+          "drug": "ORS",
+          "strength": "1 sachet",
+          "frequency": "after each loose stool",
+          "duration": "14 days"
+        }
+      ],
+      "notes": "Kamla behenji ka BP 107/81, sugar control nahi hai. Review after 2 weeks.",
+      "patient": {
+        "name": "[REDACTED_NAME]",
+        "age_sex": "47/F",
+        "mobile": "[REDACTED_PHONE]"
+      }
+    },
+    {
+      "visit_id": "[REDACTED_ID]",
+      "patient_ref": "PSN-MR5J5QWM",
+      "visit_date": "11-05-2026",
+      "department": "Medicine",
+      "doctor": "Dr. Ramesh Srivastava",
+      "complaints": "[REDACTED_RELATIVE_NAME] x 3 days",
+      "history": "K/[REDACTED_RELATIVE_NAME]",
+      "vitals": {
+        "bp": "132/71",
+        "pulse": 70,
+        "temp_f": 103.0,
+        "spo2": 89,
+        "weight_kg": 23
+      },
+      "diagnosis": [
+        {
+          "code": "A01.0",
+          "display": "Typhoid fever"
+        },
+        {
+          "code": "E11.9",
+          "display": "Type 2 diabetes mellitus without complications"
+        },
+        {
+          "code": "D64.9",
+          "display": "Anaemia, unspecified"
+        }
+      ],
+      "rx": [
+        {
+          "drug": "Ceftriaxone",
+          "strength": "1 g",
+          "frequency": "IV",
+          "duration": "14 days"
+        },
+        {
+          "drug": "Paracetamol",
+          "strength": "650 mg",
+          "frequency": "1-1-1",
+          "duration": "5 days"
+        },
+        {
+          "drug": "Metformin",
+          "strength": "500 mg",
+          "frequency": "1-0-1",
+          "duration": "5 days"
+        },
+        {
+          "drug": "Glimepiride",
+          "strength": "1 mg",
+          "frequency": "1-0-0",
+          "duration": "14 days"
+        },
+        {
+          "drug": "Ferrous sulphate + Folic acid",
+          "strength": "100 mg + 0.5 mg",
+          "frequency": "0-1-0",
+          "duration": "30 days"
+        },
+        {
+          "drug": "Pantoprazole",
+          "strength": "40 mg",
+          "frequency": "1-0-0",
+          "duration": "14 days"
+        }
+      ],
+      "notes": "[REDACTED_NAME] ka BP 132/71, sugar control nahi hai. Review after 2 weeks.",
+      "patient": {
+        "name": "[REDACTED_NAME]",
+        "age_sex": "49/M",
+        "mobile": "[REDACTED_PHONE]"
+      }
+    },
+    {
+      "visit_id": "[REDACTED_ID]",
+      "patient_ref": "PSN-MDB8N58V",
+      "visit_date": "12-07-2026",
+      "department": "Pulmonology",
+      "doctor": "Dr. Harjeet Bedi",
+      "complaints": "chakkar aana 9 din se",
+      "history": "K/[REDACTED_RELATIVE_NAME]2 x 11 yrs",
+      "vitals": {
+        "bp": "104/68",
+        "pulse": 80,
+        "temp_f": 98.9,
+        "spo2": 93,
+        "weight_kg": 19
+      },
+      "diagnosis": [
+        {
+          "code": "J44.9",
+          "display": "Chronic obstructive pulmonary disease, unspecified"
+        },
+        {
+          "code": "B55.0",
+          "display": "Visceral leishmaniasis (kala-azar)"
+        }
+      ],
+      "rx": [
+        {
+          "drug": "Salbutamol inhaler",
+          "strength": "100 mcg",
+          "frequency": "2 puffs",
+          "duration": "14 days"
+        }
+      ],
+      "notes": "[REDACTED_NAME] ka BP 104/68, raat ko neend theek se aayi. Review after 2 weeks.",
+      "patient": {
+        "name": "[REDACTED_NAME]",
+        "age_sex": "97/M",
+        "mobile": "[REDACTED_PHONE]"
+      }
+    },
+    {
+      "visit_id": "[REDACTED_ID]",
+      "patient_ref": "PSN-DV9G449J",
+      "visit_date": "19-05-2026",
+      "department": "Medicine",
+      "doctor": "Dr. Vandana Kulshrestha",
+      "complaints": "[REDACTED_RELATIVE_NAME] x 2 days",
+      "history": "H/O snake bite 12 yrs back",
+      "vitals": {
+        "bp": "136/78",
+        "pulse": 67,
+        "temp_f": 98.3,
+        "spo2": 99,
+        "weight_kg": 65
+      },
+      "diagnosis": [
+        {
+          "code": "A09",
+          "display": "Infectious gastroenteritis and colitis, unspecified"
+        },
+        {
+          "code": "J45.9",
+          "display": "Asthma, unspecified"
+        },
+        {
+          "code": "D64.9",
+          "display": "Anaemia, unspecified"
+        }
+      ],
+      "rx": [
+        {
+          "drug": "ORS",
+          "strength": "1 sachet",
+          "frequency": "after each loose stool",
+          "duration": "5 days"
+        },
+        {
+          "drug": "Salbutamol inhaler",
+          "strength": "100 mcg",
+          "frequency": "2 puffs",
+          "duration": "30 days"
+        },
+        {
+          "drug": "Ferrous sulphate + Folic acid",
+          "strength": "100 mg + 0.5 mg",
+          "frequency": "0-1-0",
+          "duration": "14 days"
+        },
+        {
+          "drug": "Pantoprazole",
+          "strength": "40 mg",
+          "frequency": "1-0-0",
+          "duration": "7 days"
+        }
+      ],
+      "notes": "[REDACTED_NAME] ka BP 136/78, bukhar utar gaya hai. Review after 2 weeks.",
+      "patient": {
+        "name": "[REDACTED_NAME]",
+        "age_sex": "0/F",
+        "mobile": "[REDACTED_PHONE]"
+      }
+    }
+  ]
+}

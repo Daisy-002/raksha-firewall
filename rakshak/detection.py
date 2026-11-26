@@ -1,6 +1,7 @@
+import base64
 import re
-import unicodedata
 from collections import Counter
+from .normalization import normalize_key
 
 # Deterministic, offline, CPU-only PII detection.
 # Field-aware rules are deliberately stronger than free-text rules.
@@ -40,7 +41,9 @@ FIELD_GROUPS = {
         "fathername", "mothername", "spousename",
         "husbandname", "wifeName".lower(), "relative",
         "relative_name", "relativefullname", "nextofkin",
-        "nextofkinname", "contactpersonname"
+        "nextofkinname", "contactpersonname",
+        "नाम", "मरीज का नाम", "रोगी का नाम",
+        "पिता का नाम", "माता का नाम", "पिता/पति का नाम",
     },
     "mrn": {
         "mrn", "uhid", "patientid", "patient_id",
@@ -48,8 +51,9 @@ FIELD_GROUPS = {
         "registrationid", "registrationnumber",
         "registrationno", "healthid", "abhaid",
         "hospitalnumber", "hospnumber", "opnumber",
-        "ipnumber", "visitid", "insuranceid",
-        "policyid", "memberid", "claimid"
+        "ipnumber", "visitid", "patientref", "patientreference",
+        "claimid", "claimnumber", "आधार संख्या", "आभा आईडी",
+        "रोगी आईडी", "पंजीकरण संख्या",
     },
     "address": {
         "address", "fulladdress", "residentialaddress",
@@ -58,16 +62,28 @@ FIELD_GROUPS = {
         "landmark", "locality", "mohalla", "colony",
         "village", "villagename", "gram", "town",
         "pincode", "pin", "postalcode", "zipcode",
-        "district", "ward", "tehsil"
+        "district", "ward", "tehsil",
+        "पता", "गांव", "गाँव", "ग्राम", "मोहल्ला",
+        "जिला", "ज़िला", "तहसील", "पिन कोड",
     },
     "insurance": {
         "insuranceid", "insurance_id", "policyid",
         "policynumber", "insurancenumber",
-        "insurance_no", "membernumber", "claimnumber"
+        "insurance_no", "insuranceno", "membernumber",
+        "memberid", "claimnumber", "claimid",
+        "बीमा संख्या", "पॉलिसी नंबर", "दावा संख्या", "सदस्य संख्या",
     },
     "dob": {
         "dob", "dateofbirth", "birthdate",
-        "patientdob", "date_of_birth"
+        "patientdob", "date_of_birth", "janmtithi",
+        "जन्म तिथि", "जन्मतिथि", "जन्म तारीख", "जन्मतारीख",
+    },
+    "phone": {
+        "phone", "phone_no", "phone_number", "mobile",
+        "mobileno", "mobilenumber", "contactnumber",
+        "contactno", "telephone", "mobile no", "mobile number",
+        "फोन", "फोन नंबर", "मोबाइल", "मोबाइल नंबर",
+        "संपर्क नंबर",
     },
 }
 
@@ -87,8 +103,9 @@ SENSITIVE_HINTS = {
 # Labels in English, Hindi and common Hinglish.
 LABELLED_VALUE = re.compile(
     r"(?P<label>"
-    r"patient|name|"
-    r"patient\s*name|name\s*of\s*patient|"
+    r"date\s*of\s*birth|dob|"
+    r"patient|name|patient\s*name|"
+    r"name\s*of\s*patient|"
     r"patient\s*naam|pita(?:\s*/\s*pati)?\s*ka\s*naam|"
     r"naam|pata|gaon|gram|mohalla|tehsil|jila|zila|"
     r"mobile(?:\s*(?:no|number))?|phone(?:\s*(?:no|number))?|"
@@ -99,7 +116,8 @@ LABELLED_VALUE = re.compile(
     r"नाम|मरीज\s*का\s*नाम|रोगी\s*का\s*नाम|"
     r"पिता\s*का\s*नाम|माता\s*का\s*नाम|"
     r"पता|गांव|ग्राम|मोहल्ला|"
-    r"मोबाइल|फोन|आधार|पिन\s*कोड"
+    r"मोबाइल|फोन|आधार|पिन\s*कोड|"
+    r"जन्म\s*तिथि|जन्मतिथि"
     r")\s*[:：=\-]\s*(?P<value>[^\n,;|]{2,80})",
     re.I
 )
@@ -137,18 +155,47 @@ HINDI_PERSON_DURATION_CONTEXT = re.compile(
     r"[\u0900-\u097f]+(?:\s+(?!को\b)[\u0900-\u097f]+){1,3}"
     r"(?=\s+को\s+\d+\s*(?:दिन|दिनों|दिवस)\s+से(?:\s|$))"
 )
+BASE64_CANDIDATE = re.compile(
+    r"(?<![A-Za-z0-9+/])"
+    r"(?:[A-Za-z0-9+/]{4}){8,}"
+    r"(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?"
+    r"(?![A-Za-z0-9+/=])"
+)
 
 def _norm(value):
-    value = unicodedata.normalize("NFKC", str(value or ""))
-    return re.sub(r"[^a-z0-9]+", "", value.casefold())
+    return normalize_key(str(value or ""))
+
+
+NORMALIZED_FIELD_GROUPS = {
+    role: {_norm(alias) for alias in aliases}
+    for role, aliases in FIELD_GROUPS.items()
+}
+
+DATE_FIELD_NAMES = {
+    _norm(name)
+    for name in {
+        "date", "admissiondate", "dischargedate", "visitdate",
+        "appointmentdate", "registrationdate", "servicedate",
+        "dateofservice", "collectiondate", "specimendate", "testdate",
+        "issuedate", "createddate", "updateddate",
+        "प्रवेश तिथि", "छुट्टी तिथि", "भेंट तिथि",
+        "पंजीकरण तिथि", "तारीख",
+    }
+}
 
 
 def _field_role(field):
     key = _norm(field)
 
     # Date fields: let the existing date-shift engine transform them.
-    if key.startswith(("dob", "dateofbirth", "birthdate", "janmtithi")):
+    if key in NORMALIZED_FIELD_GROUPS["dob"] or key.startswith(
+        ("dob", "dateofbirth", "birthdate", "janmtithi")
+    ):
         return "dob"
+
+    for role in ("phone", "insurance", "mrn", "name", "address"):
+        if key in NORMALIZED_FIELD_GROUPS[role]:
+            return role
 
     if any(x in key for x in (
         "sourcepath", "originalpath", "filepath", "exportpath",
@@ -166,15 +213,19 @@ def _field_role(field):
     )):
         return "mrn"
 
-    # Strong patient identifiers and insurance identifiers.
+    if any(x in key for x in (
+        "insurance", "policyno", "policynumber",
+        "membernumber", "memberid", "claimnumber", "claimid",
+        "payerpan", "insuranceno"
+    )):
+        return "insurance"
+
     if any(x in key for x in (
         "uhid", "mrn", "patientid", "medicalrecord",
         "patientref", "patientreference", "registrationid",
         "registrationnumber", "registrationno", "regno",
         "hospitalnumber", "opnumber", "ipnumber",
-        "pmjayid", "insuranceid", "policyno",
-        "policynumber", "claimnumber", "payerpan",
-        "abhaid", "healthid", "visitid"
+        "pmjayid", "abhaid", "healthid", "visitid"
     )):
         return "mrn"
 
@@ -185,8 +236,7 @@ def _field_role(field):
         "guardian", "father", "mother", "spouse", "husband",
         "wife", "relative", "nextofkin", "contactperson",
         "attendername", "refdoctor", "givenname", "familyname",
-        "given", "family", "prefix", "suffix", "naam", "pita",
-        "patika"
+        "naam", "pita", "patika"
     )):
         return "name"
 
@@ -205,6 +255,12 @@ def _field_role(field):
         return "name"
 
     return None
+
+
+def is_date_field(field):
+    key = _norm(field)
+    return key in DATE_FIELD_NAMES or key in NORMALIZED_FIELD_GROUPS["dob"]
+
 
 def _replace_patterns(value):
     value = PATTERNS["EMAIL"].sub("[REDACTED_EMAIL]", value)
@@ -289,6 +345,10 @@ def sanitize_value(field, value=None, stats=None):
             "w/o", "c/o"
         )):
             return label + ": [REDACTED_NAME]"
+        if any(x in label_norm for x in (
+            "dob", "dateofbirth", "जन्मतिथि"
+        )):
+            return label + ": [REDACTED_DATE]"
         return label + ": [GENERALIZED_LOCATION]"
 
     value = LABELLED_VALUE.sub(replace_label, value)
@@ -306,6 +366,26 @@ def sanitize_value(field, value=None, stats=None):
     value = HINDI_PERSON_DURATION_CONTEXT.sub(
         "[REDACTED_NAME]", value
     )
+
+    def sanitize_base64(match):
+        encoded = match.group(0)
+        try:
+            decoded = base64.b64decode(encoded, validate=True).decode("utf-8")
+        except (ValueError, UnicodeDecodeError):
+            return encoded
+
+        if not decoded or any(
+            not character.isprintable() and character not in "\r\n\t"
+            for character in decoded
+        ):
+            return encoded
+
+        cleaned = sanitize_value("clinical_note", decoded, stats)
+        if cleaned == decoded:
+            return encoded
+        return base64.b64encode(cleaned.encode("utf-8")).decode("ascii")
+
+    value = BASE64_CANDIDATE.sub(sanitize_base64, value)
 
     return value
 

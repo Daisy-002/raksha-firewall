@@ -169,6 +169,53 @@ class PipelineTests(unittest.TestCase):
             self.assertIn("time,Blood Pressure,column_3,column_4", result)
             self.assertIn("14:00,120,128,110", result)
 
+    def test_native_hindi_fields_and_date_are_sanitized(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "input"
+            output = root / "output"
+            source.mkdir()
+            (source / "records.csv").write_text(
+                "रोगी आईडी,नाम,जन्म तिथि,पता,बीमा संख्या\n"
+                "JJH-0077305,कमला निषाद,15-01-1980,"
+                "मकान 32 बाराबंकी,POLICY-784512\n",
+                encoding="utf-8",
+            )
+
+            run_pipeline(source, output)
+
+            result = (output / "sanitized" / "records.csv").read_text(
+                encoding="utf-8"
+            )
+            self.assertNotIn("JJH-0077305", result)
+            self.assertNotIn("कमला निषाद", result)
+            self.assertNotIn("15-01-1980", result)
+            self.assertNotIn("मकान 32", result)
+            self.assertNotIn("POLICY-784512", result)
+            self.assertIn("PSN-", result)
+
+    def test_person_name_filenames_are_rewritten(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "input"
+            output = root / "output"
+            source.mkdir()
+            (source / "Jane_Doe.txt").write_text(
+                "Dengue treatment protocol", encoding="utf-8"
+            )
+            (source / "Dengue_Management_Protocol.txt").write_text(
+                "Dengue treatment protocol", encoding="utf-8"
+            )
+
+            run_pipeline(source, output)
+
+            output_files = {
+                path.name for path in (output / "sanitized").iterdir()
+            }
+            self.assertIn("Dengue_Management_Protocol.txt", output_files)
+            self.assertNotIn("Jane_Doe.txt", output_files)
+            self.assertTrue(any(name.startswith("file_") for name in output_files))
+
 
 if __name__ == "__main__":
     unittest.main()

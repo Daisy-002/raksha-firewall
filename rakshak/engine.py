@@ -18,7 +18,8 @@ from .reconstruction import write_csv, write_json
 from .quarantine import quarantine_reason
 from .reporting import write_report
 from .validation import find_residual_identifiers
-from .detection import PATTERNS, sanitize_value
+from .detection import PATTERNS, is_date_field, sanitize_value
+from .normalization import normalize_key
 
 
 PRIVATE_INDEX_FIELDS = {
@@ -100,7 +101,7 @@ def _clean_record(
     for key, value in record.items():
         key_string = str(key)
         original_value = value
-        normalized = re.sub(r"[^a-z]", "", key_string.casefold())
+        normalized = normalize_key(key_string)
 
         # These maps expose direct name-to-identifier relationships.
         if normalized in PRIVATE_INDEX_FIELDS:
@@ -153,11 +154,7 @@ def _clean_record(
         elif isinstance(value, str):
             value = sanitize_value(field_to_clean, value, stats)
 
-            if patient_key and normalized in {
-                "date", "dob", "dateofbirth", "birthdate",
-                "admissiondate", "janmtithi",
-                "dischargedate", "visitdate", "appointmentdate"
-            }:
+            if patient_key and is_date_field(key_string):
                 value = shift_date_string(value, patient_key, maximum_shift)
 
             generalized = generalize_value(key_string, value)
@@ -198,7 +195,8 @@ def _clean_record(
             "patientid", "uhid", "mrn", "medicalrecordnumber",
             "patientref", "patientreference", "registrationid",
             "registrationnumber", "registrationno", "regno",
-            "healthid", "abhaid"
+            "healthid", "abhaid", "रोगीआईडी", "पंजीकरणसंख्या",
+            "आधारसंख्या", "आभाआईडी"
         }:
             value = patient_id
 

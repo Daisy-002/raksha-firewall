@@ -1,6 +1,8 @@
 import re
 import unicodedata
 
+from .detection import BASE64_CANDIDATE
+
 
 PII_FILENAME_PATTERNS = [
     # Indian mobile numbers, including common separators
@@ -17,7 +19,23 @@ PII_FILENAME_PATTERNS = [
 
     # ABHA number
     re.compile(r"(?<!\d)\d{2}[-_]\d{4}[-_]\d{4}[-_]\d{4}(?!\d)"),
+
+    # Hospital and encounter identifiers
+    re.compile(
+        r"\b(?:JJH|SNJ|HOSP|UHID|IPD|ADM|OPD)[-/]"
+        r"[A-Z0-9][A-Z0-9/-]{2,}\b",
+        re.I,
+    ),
 ]
+
+GENERIC_FILENAME_WORDS = {
+    "admission", "ambulance", "arogya", "billing", "blood", "census",
+    "claim", "clean", "consent", "discharge", "dengue", "dhhardoi",
+    "doctor", "drug", "export", "fhir", "formulary", "hardoi",
+    "hospital", "jeevanjyoti", "lab", "management", "misc", "note",
+    "opd", "pathkind", "prescription", "protocol", "range", "registration",
+    "report", "result", "sanjeevani", "summary", "ward",
+}
 
 
 def filename_contains_pii(name: str) -> bool:
@@ -26,17 +44,23 @@ def filename_contains_pii(name: str) -> bool:
     if any(pattern.search(normalized) for pattern in PII_FILENAME_PATTERNS):
         return True
 
-    # Names embedded in filenames commonly use underscore-separated words.
-    # This is deliberately conservative: only flag multi-part title-case
-    # components when accompanied by a patient-like numeric identifier.
-    stem = normalized.rsplit(".", 1)[0]
-    has_name_like_parts = re.search(
-        r"(?:^|[_-])[A-Z][a-z]{2,}(?:[_-])[A-Z][a-z]{2,}(?:[_-]|$)",
-        stem,
-    )
-    has_numeric_identifier = re.search(r"\d{4,}", stem)
+    if BASE64_CANDIDATE.search(normalized):
+        return True
 
-    return bool(has_name_like_parts and has_numeric_identifier)
+    stem = normalized.rsplit(".", 1)[0]
+    parts = re.split(r"[_\s-]+", stem)
+    for size in range(2, min(4, len(parts)) + 1):
+        for start in range(len(parts) - size + 1):
+            candidate = parts[start:start + size]
+            if not all(re.fullmatch(r"[A-Z][a-z]{2,}", part) for part in candidate):
+                continue
+            if not any(
+                part.casefold() in GENERIC_FILENAME_WORDS
+                for part in candidate
+            ):
+                return True
+
+    return False
 
 
 def safe_filename(name: str, digest: str) -> str:

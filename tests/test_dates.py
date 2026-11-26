@@ -30,6 +30,26 @@ class DateTests(unittest.TestCase):
             "2024-99-99"
         )
 
+    def test_indian_date_formats_are_shifted_and_preserved(self):
+        os.environ["RAKSHA_SECRET"] = "test-secret-one"
+        samples = (
+            ("15-01-2024", r"\d{2}-\d{2}-\d{4}"),
+            ("15/01/2024", r"\d{2}/\d{2}/\d{4}"),
+            ("2024-01-15T10:30:00Z", r"\d{4}-\d{2}-\d{2}T10:30:00Z"),
+        )
+        for value, expected_format in samples:
+            with self.subTest(value=value):
+                shifted = shift_date_string(value, "patient:1")
+                self.assertNotEqual(shifted, value)
+                self.assertRegex(shifted, f"^{expected_format}$")
+
+    def test_devanagari_date_digits_are_shifted(self):
+        os.environ["RAKSHA_SECRET"] = "test-secret-one"
+        original = "१५-०१-२०२४"
+        shifted = shift_date_string(original, "patient:1")
+        self.assertNotEqual(shifted, original)
+        self.assertRegex(shifted, r"^[०-९]{2}-[०-९]{2}-[०-९]{4}$")
+
 
 if __name__ == "__main__":
     unittest.main()

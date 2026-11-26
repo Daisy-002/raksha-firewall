@@ -1,0 +1,11 @@
+PatientID,redacted_person_name,redacted_person_name,Sex,DOB (MM/DD/YYYY),redacted_relative_name,Street,City,District,Zip,Phone,redacted_email,Registered (MM/DD/YYYY),Notes
+PSN-KKQT8FAH,[PERSON_NAME],[PERSON_NAME],M,04/20/1979,[RELATIVE_NAME],"H.No. 180, Mohalla Subhash Nagar",Gopaldih,Sitapur,261715,[PHONE],,11/24/2025,"Pt allergic to sulfa drugs.
+Old card merged - verify identity on next visit."
+PSN-Z09H2RS8,[PERSON_NAME],[PERSON_NAME],M,02/28/2021,[RELATIVE_NAME],H.No. 323,Mohangarh,Sitapur,261004,[PHONE],,03/31/2025,Temp 101.2°F on arrival – sent to emergency.
+PSN-C1AFCNP2,[PERSON_NAME],[PERSON_NAME],F,12/24/1981,[RELATIVE_NAME],"H.No. 192, Mohalla Purani Basti",Shivnagar,Sitapur,261004,[PHONE],,06/03/2024,
+PSN-XWTFAMRE,[PERSON_NAME],[PERSON_NAME],M,05/30/1986,[RELATIVE_NAME],"H.No. 101, Mohalla Harijan Basti",Mohanganj Kalan,Sitapur,261167,[PHONE],,03/08/2026,
+PSN-0J790KC6,[PERSON_NAME],[PERSON_NAME],F,01/21/1981,[RELATIVE_NAME],H.No. 317,Rasoolnagar Khurd,Bahraich,271077,[PHONE],[EMAIL],08/09/2026,"Pt allergic to sulfa drugs.
+Old card merged - verify identity on next visit."
+PSN-C5H0HS7R,[PERSON_NAME],[PERSON_NAME],M,05/30/1986,[RELATIVE_NAME],"H.No. 101, Mohalla Harijan Basti",Mohanganj Kalan,Sitapur,261167,[PHONE],,01/30/2026,
+PSN-GHDGGFD0,[PERSON_NAME],[PERSON_NAME],M,01/01/1961,[RELATIVE_NAME],H.No. 133,Madhavdih Kalan,Sitapur,261699,[PHONE],,05/03/2026,Referred by ASHA worker of the village.
+PSN-R1ZZFVS8,[PERSON_NAME],[PERSON_NAME],F,10/23/2005,[RELATIVE_NAME],H.No. 236,Ramdih,Sitapur,261454,[PHONE],,08/12/2026,

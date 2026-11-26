@@ -18,4 +18,8 @@ def normalize_text(value: str) -> str:
 
 def normalize_key(value: str) -> str:
     value = normalize_text(value).casefold()
-    return re.sub(r"[^a-z0-9]", "", value)
+    return "".join(
+        char
+        for char in value
+        if unicodedata.category(char)[0] in {"L", "M", "N"}
+    )

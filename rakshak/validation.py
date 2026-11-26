@@ -14,6 +14,13 @@ RESIDUAL_PATTERNS = [
     # PAN
     re.compile(r"\b[A-Z]{5}\d{4}[A-Z]\b", re.I),
 
+    # Common hospital and encounter identifier formats
+    re.compile(
+        r"\b(?:JJH|SNJ|HOSP|UHID|IPD|ADM|OPD)[-/]"
+        r"[A-Z0-9][A-Z0-9/-]{2,}\b",
+        re.I,
+    ),
+
     # Aadhaar-like 12-digit numbers
     re.compile(r"(?<!\d)\d{4}[\s-]?\d{4}[\s-]?\d{4}(?!\d)"),
 ]
