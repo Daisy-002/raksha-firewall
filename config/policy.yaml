@@ -1,7 +1,10 @@
-age_band_years: 5
-date_shift_max_days: 180
-min_group_size: 5
-fail_closed: true
-link_by_name_only: false
-link_by_phone_only: false
-link_by_strong_identifier: true
+# Privacy rules. Every value here is read by the pipeline.
+age_band_years: 5               # ages become bands such as 45-49
+wide_age_band_years: 20         # wider band for patients with a rare diagnosis
+top_age: 90                     # ages at or above this become "90+"
+date_shift_max_days: 180        # one secret offset per patient, so intervals stay exact
+date_shift_min_days: 15
+rare_diagnosis_max_patients: 2  # a diagnosis held by this many patients or fewer is rare
+pin_digits_kept: 3
+max_json_depth: 60              # deeper files are quarantined
+max_file_mb: 200

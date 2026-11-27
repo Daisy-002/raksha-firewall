@@ -1,508 +1,308 @@
-import base64
+"""Context-aware detection of personal data as non-overlapping spans.
+
+The same detector is used twice: once to harvest linking clues and the global
+name lexicon, and again to redact. Spans are (start, end, type) tuples.
+"""
 import re
-from collections import Counter
-from .normalization import normalize_key
 
-# Deterministic, offline, CPU-only PII detection.
-# Field-aware rules are deliberately stronger than free-text rules.
+from .textutil import ABBREVIATIONS, DEVANAGARI, TOKEN, fold_digits, phonetic, similar_word, skeleton
+from .vocab import DOCTOR_TITLES, GENERIC_NAME_PARTS, HONORIFICS, PREFIXES, STOPWORDS
 
-PATTERNS = {
-    "PHONE": re.compile(
-        r"(?<![0-9०-९])(?:\+?(?:91|९१)[\s.-]?)?0?[6-9६-९][0-9०-९]{4}[\s.-]?[0-9०-९]{5}(?![0-9०-९])"
-    ),
-    "EMAIL": re.compile(
-        r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", re.I
-    ),
-    "AADHAAR": re.compile(
-        r"(?<!\d)(?:\d{4}[\s-]?){2}\d{4}(?!\d)"
-    ),
-    "AADHAAR_MASKED": re.compile(
-        r"(?<![A-Z0-9])(?:X{4}|[*]{4}|[X*]{4})[\s-]?\d{4}[\s-]?\d{4}(?!\d)",
-        re.I
-    ),
-    "PAN": re.compile(r"\b[A-Z]{5}\d{4}[A-Z]\b", re.I),
-    "ABHA": re.compile(r"\b\d{2}-\d{4}-\d{4}-\d{4}\b"),
-    "HOSPITAL_ID": re.compile(
-        r"\b(?:JJH|SNJ|HOSP|UHID|IPD|ADM|OPD)[-/]"
-        r"[A-Z0-9][A-Z0-9/-]{2,}\b",
-        re.I,
-    ),
-    "PIN": re.compile(r"(?<!\d)[1-9]\d{5}(?!\d)"),
-}
+_SEP = r"[ \t._-]{0,2}"
+# Order matters: longer and more specific identifiers are claimed first.
+ID_PATTERNS = [
+    ("EMAIL", re.compile(r"(?<![\w.+-])[\w.+-]+@[A-Za-z][\w-]*(?:\.[\w-]+)*")),
+    ("INSURANCE", re.compile(r"(?<![A-Z0-9])(?:PMJAY|POL|TPA|CGHS|ESIC?)(?:[-/][A-Z]{2})?(?:[-/]\d{2,}){1,3}(?![\d])", re.I)),
+    ("ABHA", re.compile(r"(?<!\d)\d{2}[ -]?\d{4}[ -]\d{4}[ -]\d{4}(?!\d)|(?<![\d.])\d{14}(?![\d.])")),
+    ("AADHAAR_MASKED", re.compile(r"(?<![A-Za-z0-9])(?:[Xx*•#]{4}[ -]?){1,2}\d{4}(?!\d)")),
+    ("PHONE", re.compile(rf"(?<![\w.])(?:\+{_SEP}91{_SEP}|\(\+?91\){_SEP}|0091{_SEP}|91[ -]|0{_SEP})?[6-9](?:{_SEP}\d){{9}}(?![\d]|\.\d)")),
+    ("AADHAAR", re.compile(r"(?<![\d.])\d{4}[ -]?\d{4}[ -]?\d{4}(?![\d]|\.\d)")),
+    ("PHONE", re.compile(r"(?<![\w.])(?:[6-9]\d{1,3}[Xx*]{4,6}\d{2,4})(?!\w)|(?<![\d])\+91[ -]?\d{5}[ -]?\d{5}(?!\d)|(?<![\d.])0\d{2,4}-\d{6,8}(?!\d)")),
+    ("PAN", re.compile(r"(?<![A-Za-z0-9])[A-Za-z]{5}\d{4}[A-Za-z](?![A-Za-z0-9])")),
+    ("MRN", re.compile(
+        r"(?<![A-Za-z0-9])(?:"
+        # Known hospital-number prefixes in any case, then any upper-case prefix with digit groups.
+        r"(?i:UHID|MRN|IPD|IP|OPD|ADM|CR|HOSP|REG)(?:[-/_]?\d{2,4}){0,2}[-/_]?\d{4,}"
+        r"|[A-Z]{2,6}\d{0,4}(?:[-/_][A-Z]{1,4})?(?:[-/_]\d{2,4}){0,2}[-/_]\d{4,}"
+        r")(?![A-Za-z0-9])")),
+]
+_ID_LABEL = re.compile(
+    r"(?i)(?<![A-Za-z])(?:UHID|MRN|MR[ .]?No|Reg(?:istration|n)?[ .]*(?:No|Number|ID)|IPD?[ .]*(?:No|Number)|"
+    r"Patient[ .]*(?:ID|No)|CR[ .]*No|Hosp(?:ital)?[ .]*(?:ID|No)|Admission[ .]*No|Policy[ .]*(?:No|Number)|"
+    r"Member[ .]*ID|पंजीकरण[ ]*(?:सं\.?|संख्या)|आईपीडी[ ]*(?:सं\.?|संख्या))\.?[ \t]*[:#=\-]?[ \t]*"
+    r"(?P<v>(?=[A-Za-z0-9/_-]*\d{3})[A-Za-z0-9][A-Za-z0-9/_-]{3,})")
 
-# Field names are normalized before matching. Do not match generic
-# "patient" alone: FHIR Patient references must remain intact.
-FIELD_GROUPS = {
-    "name": {
-        "name", "patientname", "patientfullname", "fullname",
-        "firstname", "middlename", "lastname", "surname",
-        "beneficiaryname", "membername", "applicantname",
-        "insuredname", "attendername", "guardianname",
-        "fathername", "mothername", "spousename",
-        "husbandname", "wifeName".lower(), "relative",
-        "relative_name", "relativefullname", "nextofkin",
-        "nextofkinname", "contactpersonname",
-        "नाम", "मरीज का नाम", "रोगी का नाम",
-        "पिता का नाम", "माता का नाम", "पिता/पति का नाम",
-    },
-    "mrn": {
-        "mrn", "uhid", "patientid", "patient_id",
-        "patientmrn", "patientnumber", "patientno",
-        "medicalrecordnumber", "medicalrecordno",
-        "medicalrecordid", "mrnumber", "mrno", "mrid",
-        "chartnumber", "chartno", "hospitalid",
-        "hospitalrecordnumber", "uhidnumber",
-        "registrationid", "registrationnumber",
-        "registrationno", "healthid", "abhaid",
-        "hospitalnumber", "hospnumber", "opnumber",
-        "ipnumber", "visitid", "patientref", "patientreference",
-        "claimid", "claimnumber", "आधार संख्या", "आभा आईडी",
-        "रोगी आईडी", "पंजीकरण संख्या",
-    },
-    "address": {
-        "address", "fulladdress", "residentialaddress",
-        "permanentaddress", "currentaddress", "addressline1",
-        "addressline2", "addressline3", "streetaddress",
-        "house", "building", "buildingname", "flat", "flatno",
-        "flatnumber", "area", "neighborhood", "neighbourhood",
-        "postoffice", "postofficename", "panchayat", "block",
-        "subdistrict",
-        "houseno", "house_number", "street", "streetname",
-        "landmark", "locality", "mohalla", "colony",
-        "village", "villagename", "gram", "town",
-        "pincode", "pin", "postalcode", "zipcode",
-        "district", "ward", "tehsil",
-        "पता", "गांव", "गाँव", "ग्राम", "मोहल्ला",
-        "जिला", "ज़िला", "तहसील", "पिन कोड", "मकान",
-        "घर", "इलाका", "क्षेत्र", "डाकघर", "वार्ड",
-    },
-    "insurance": {
-        "insuranceid", "insurance_id", "policyid",
-        "policynumber", "insurancenumber",
-        "insurance_no", "insuranceno", "membernumber",
-        "memberid", "claimnumber", "claimid",
-        "बीमा संख्या", "पॉलिसी नंबर", "दावा संख्या", "सदस्य संख्या",
-    },
-    "dob": {
-        "dob", "dateofbirth", "birthdate",
-        "patientdob", "date_of_birth", "janmtithi",
-        "जन्म तिथि", "जन्मतिथि", "जन्म तारीख", "जन्मतारीख",
-    },
-    "phone": {
-        "phone", "phone_no", "phone_number", "mobile",
-        "mobileno", "mobilenumber", "contactnumber",
-        "contactno", "telephone", "mobile no", "mobile number",
-        "फोन", "फोन नंबर", "मोबाइल", "मोबाइल नंबर",
-        "संपर्क नंबर",
-    },
-}
+# Other government and personal documents, recognised by their label.
+_DOCUMENT_ID = re.compile(
+    r"(?i)(?<![A-Za-z])(?:passport|voter[ ]?id|epic|driving[ ]licen[cs]e|DL|ration[ ]card|esic?|bank[ ]a/?c|account|"
+    r"vehicle|ABHA|aadh?aar|adhaa?r|आधार)(?:[ ]*(?:no\.?|number|id|card|संख्या))?[ \t]*[:#=\-]?[ \t]*"
+    r"(?P<v>(?=[A-Z0-9/ -]*\d{4})[A-Z]{0,4}[ -]?\d[A-Z0-9/-]*(?:[ ]\d{4,})*)")
 
-SENSITIVE_HINTS = {
-    "patientname", "fullname", "firstname", "lastname",
-    "fathername", "mothername", "spousename", "guardianname",
-    "relative_name", "relativefullname", "nextofkin",
-    "address", "fulladdress", "residentialaddress",
-    "permanentaddress", "currentaddress", "phone", "mobile",
-    "mobileno", "phonenumber", "email", "emailid",
-    "aadhaar", "aadhar", "pan", "abha", "passport",
-    "village", "villagename", "mohalla", "locality",
-    "landmark", "houseno", "house", "pincode", "postalcode",
-    "insuranceid", "policynumber", "claimnumber",
-}
+# Address parts. District and state stay; everything finer is removed.
+_PLACE = r"(?:[A-Z][A-Za-z'.-]*|[\u0900-\u097F]+)(?:[ ](?:[A-Z][A-Za-z'-]*|[\u0900-\u097F]+)){0,3}"
+ADDRESS_PATTERNS = [
+    ("HOUSE", re.compile(r"(?i)(?<![A-Za-z])(?:H\.?[ ]?No\.?|House(?:[ ]No\.?)?|Makan(?:[ ]No\.?)?|Flat(?:[ ]No\.?)?|Plot(?:[ ]No\.?)?|Qtr\.?(?:[ ]No\.?)?|मकान(?:[ ]*(?:नं\.?|संख्या))?)[ \t]*[:#-]?[ \t]*(?P<v>\d+[A-Za-z]?(?:[/-]\d+)*)")),
+    ("LOCALITY", re.compile(r"(?<![A-Za-z])(?i:Mohalla|Moh\.|Colony of|Gali(?: No\.?)?|मोहल्ला|मुहल्ला)[ \t]*[:-]?[ \t]*(?P<v>" + _PLACE + r"|\d+)")),
+    ("LOCALITY", re.compile(r"(?i)(?<![A-Za-z])(?P<v>Ward(?:[ ]No\.?)?[ ]?\d+)(?=[ ]*,[ ]*(?:Mohalla|near|Tehsil|Vill|Gram))")),
+    ("LANDMARK", re.compile(r"(?<![A-Za-z])(?i:near|opp\.?|opposite|behind|beside|next to)[ \t]+(?P<v>[A-Z][A-Za-z'.-]*(?:[ ][A-Z][A-Za-z'-]*){0,3})")),
+    ("LANDMARK", re.compile(r"(?:(?<=,)|^)[ ]*(?P<v>[\u0900-\u097F]+(?:[ ][\u0900-\u097F]+){0,3}[ ]के[ ](?:पास|पीछे|सामने|निकट))")),
+    ("VILLAGE", re.compile(r"(?<![A-Za-z])(?i:Village|Vill\.?|Gram(?: Panchayat)?|Gaon|ग्राम|गांव|गाँव)(?![A-Za-z])[ \t]*[:\-–]?[ \t]*(?P<v>" + _PLACE + r")")),
+    ("TEHSIL", re.compile(r"(?<![A-Za-z])(?i:Tehsil|Teh\.|Block|तहसील)[ \t]*[:-]?[ \t]*(?P<v>" + _PLACE + r")")),
+]
+# A number written after a phone label, in any grouping.
+_PHONE_LABEL = re.compile(
+    r"(?i)(?<![A-Za-z])(?:ph(?:one)?|mob(?:ile)?|contact(?:[ ]no\.?)?|tel|cell|whatsapp|call(?:[ ]me)?(?:[ ]on)?|संपर्क|मोबाइल|फोन)"
+    r"\.?[ \t]*(?:no\.?|number)?[ \t]*[:#=\-]?[ \t]*(?P<v>\+?[(]?\d(?:[ ().-]{0,2}\d){9,13})(?!\d)")
+_PIN = re.compile(r"(?:(?<=[A-Za-z\u097F])[ ]|(?i:\bPIN(?:[ ]?code)?[ \t]*[:=-]?[ \t]*)|[-–][ \t]*|(?<=,)[ \t]*|पिन[ ]*(?:कोड)?[ \t]*[:-]?[ \t]*)(?P<v>[1-9]\d{2}[ ]?\d{3})(?![\d.,]\d|\d)")
+_ADDRESS_LINE = re.compile(r"(?im)^[ \t]*(?:Address|Residence|R/o|पता)[ \t]*[:\-]")
 
-# Labels in English, Hindi and common Hinglish.
-LABELLED_VALUE = re.compile(
-    r"(?P<label>"
-    r"date\s*of\s*birth|dob|"
-    r"patient|name|patient\s*name|"
-    r"name\s*of\s*patient|"
-    r"patient\s*naam|pita(?:\s*/\s*pati)?\s*ka\s*naam|"
-    r"naam|pata|gaon|gram|mohalla|tehsil|jila|zila|"
-    r"mobile(?:\s*(?:no|number))?|phone(?:\s*(?:no|number))?|"
-    r"father(?:'s)?\s*name|mother(?:'s)?\s*name|"
-    r"husband(?:'s)?\s*name|wife(?:'s)?\s*name|"
-    r"guardian(?:'s)?\s*name|relative\s*name|"
-    r"house(?:\s*(?:no\.?|number))?|flat(?:\s*(?:no\.?|number))?|"
-    r"building(?:\s*name)?|street(?:\s*address)?|"
-    r"address(?:\s*(?:line\s*\d|details?))?|"
-    r"locality|landmark|area|neighbou?rhood|colony|"
-    r"village|town|city|district|ward|tehsil|block|"
-    r"post\s*office|postal\s*code|zip(?:\s*code)?|"
-    r"pin(?:\s*code)?|"
-    r"s/o|d/o|w/o|c/o|"
-    r"नाम|मरीज\s*का\s*नाम|रोगी\s*का\s*नाम|"
-    r"पिता\s*का\s*नाम|माता\s*का\s*नाम|"
-    r"पता|गांव|ग्राम|मोहल्ला|मकान(?:\s*संख्या)?|"
-    r"घर(?:\s*संख्या)?|इलाका|क्षेत्र|डाकघर|वार्ड|"
-    r"मोबाइल|फोन|आधार|पिन\s*कोड|"
-    r"जिला|तहसील|"
-    r"जन्म\s*तिथि|जन्मतिथि"
-    r")\s*[:：=\-]\s*(?P<value>[^\n,;|]{2,80})",
-    re.I
-)
+_NAME_LABEL = re.compile(
+    r"(?i)(?<![A-Za-z])(?:patient(?:'s)?[ ]*(?:name)?|pt\.?(?:[ ]name)?|name(?:[ ]of(?:[ ]the)?[ ]patient)?|"
+    r"mareez(?:[ ]ka[ ]naam)?|naam|beneficiary|मरीज़?[ ]*का[ ]*नाम|रोगी[ ]*का[ ]*नाम|नाम|report[ ]of|reg(?:arding)?\.?[ ]patient)"
+    r"[ \t]*[:\-–=]?[ \t]+|(?<![A-Za-z])(?:patient(?:'s)?[ ]*(?:name)?|name|नाम)[ \t]*[:=\-–][ \t]*")
+_RELATIVE_LABEL = re.compile(
+    r"(?i)(?<![A-Za-z])(?:(?:[SDW][ ]?/[ ]?[Oo])|[Cc][ ]?/[ ]?[Oo]|"
+    r"(?:son|daughter|wife|husband|care)[ ]of|(?:father|mother|husband|wife|guardian|attendant|relative|informant)"
+    r"(?:'s)?(?:[ ]*name)?(?=[ \t]*[:\-–])|(?:पिता|पति|माता|पत्नी|अभिभावक)(?:/पति)?[ ]*का[ ]*नाम|पुत्री|पुत्र|पत्नी|आत्मज)"
+    r"[ \t]*[:\-–]?[ \t]*")
+_ACTION_LABEL = re.compile(
+    r"(?i)(?<![A-Za-z])(?:called[ ]by|witnessed[ ]by|informed[ ]by|received[ ]by|signed[ ]by|raised[ ]by|"
+    r"accompanied[ ]by|brought[ ]by|sample[ ]from|created[ ]by|prepared[ ]by|contact(?:[ ]person)?[ \t]*:|"
+    r"(?:staff[ ]nurse|nurse|attender|caregiver)(?=[ \t:]+[A-Z\u0900-\u097F]))[ \t:]*")
+_KIN_WORD = re.compile(
+    r"(?<![A-Za-z])(?i:husband|wife|father|mother|son|daughter|brother|sister|uncle|aunt|neighbou?r|guardian|"
+    r"relative|attendant|pati|patni|beta|beti|bhai)[ \t]+(?=[A-Z])")
+_DOCTOR = re.compile(DOCTOR_TITLES + r"(?:\.[ \t]*|[ \t]+)(?:(?:[A-Z]\.[ ]?)*(?:[A-Z][A-Za-z'-]+|[\u0900-\u097F]+)(?:[ ](?:[A-Z][a-z'-]+)){0,2})")
+_PROTECT = re.compile(r"(?i)\bASHA(?=[ -](?:worker|karyakarta|sahyogi|didi))|[A-Z][a-z]+(?:'s|’s)[ ](?:disease|syndrome|sign|palsy|lymphoma)")
 
-MRN_LABELLED_VALUE = re.compile(
-    r"(?<![A-Z0-9])"
-    r"(?P<label>"
-    r"mrn|mr\s*(?:no\.?|number)?|"
-    r"medical[\s_-]*record(?:[\s_-]*(?:id|number|no\.?))?|"
-    r"patient[\s_-]*(?:id|number|no\.?)|"
-    r"hospital[\s_-]*(?:id|number|no\.?)|"
-    r"uhid(?:[\s_-]*(?:id|number|no\.?))?|"
-    r"chart[\s_-]*(?:id|number|no\.?)|"
-    r"registration[\s_-]*(?:id|number|no\.?)|"
-    r"reg[\s_-]*no\.?"
-    r")"
-    r"(?P<separator>\s*(?:[#:=\-]\s*|\s+))"
-    r"(?P<value>(?=[A-Z0-9./_-]*\d)"
-    r"[A-Z0-9](?:[A-Z0-9./_-]{1,}[A-Z0-9]))"
-    r"(?![A-Z0-9])",
-    re.I,
-)
-
-RELATIVE_LABEL = re.compile(
-    r"\b(?:s\s*/\s*o|d\s*/\s*o|w\s*/\s*o|c\s*/\s*o)\s*"
-    r"[\w\u0900-\u097f][A-Za-z\u0900-\u097f.'-]+"
-    r"(?:\s+[\w\u0900-\u097f][A-Za-z\u0900-\u097f.'-]+){0,3}",
-    re.I
-)
-
-FHIR_NARRATIVE_NAME = re.compile(
-    r"(?is)(<div\b[^>]*>\s*)"
-    r"(?P<name>(?:[A-Z][A-Za-z.'-]*|[\u0900-\u097f]+)"
-    r"(?:\s+(?:[A-Z][A-Za-z.'-]*|[\u0900-\u097f]+)){1,3})"
-    r"(?=,\s*\d{1,3}\s*(?:yrs?|years?|y/o)\b)"
-)
-
-TIMESTAMP_RELATIVE_NAME = re.compile(
-    r"(?im)(\b\d{1,2}:\d{2}\s*[-–—]\s*)"
-    r"(?:[A-Z][A-Za-z.'-]*|[\u0900-\u097f]+)"
-    r"(?:\s+(?:[A-Z][A-Za-z.'-]*|[\u0900-\u097f]+)){0,3}"
-    r"(?=\s*[-–—]\s*[KSDWC]\s*/(?:\s*O\b)?)"
-)
-
-HINGLISH_NAME_WORD = (
-    r"(?!"
-    r"and|are|aaj|admit(?:ted)?|blood|bp|bukhar|case|complaint|"
-    r"complaints|cold|cough|dard|days?|doctor|fever|for|from|hai|"
-    r"had|has|have|headache|high|history|hospital|ji|ka|kal|ke|khansi|"
-    r"ki|ko|low|medicine|ne|pain|patient|pulse|sahab|sahib|sugar|"
-    r"the|tha|thee|thi|today|treatment|with|yesterday"
-    r")\b[A-Za-z][A-Za-z.'-]{1,}"
-)
-HINGLISH_NAME = rf"{HINGLISH_NAME_WORD}(?:\s+{HINGLISH_NAME_WORD}){{0,2}}"
-HINGLISH_CLINICAL_TERM = (
-    r"(?:bukhar|fever|khansi|cough|jukam|cold|dard|pain|headache|"
-    r"sir\s*dard|pet\s*dard|chest\s*pain|saans|breathing|sugar|"
-    r"diabetes|bp|blood\s+pressure|pulse|vomit(?:ing)?|ulti|"
-    r"dizziness|chakkar|weakness|kamzori|infection|rash|swelling|"
-    r"sujan|admit(?:ted)?|checkup|treatment|medicine|dawa|doctor|"
-    r"hospital|clinic|opd|consult(?:ed|ation)?|complain(?:ed|ing)?|"
-    r"report(?:ed)?|bataya|bola|kaha|dikhaya|aaya|aayi|laaya|laayi)"
-)
-HINGLISH_PERSON_CONTEXT = re.compile(
-    rf"(?<![\w])(?P<name>{HINGLISH_NAME})"
-    r"(?:\s+(?:sahab|sahib|ji))?"
-    rf"(?=\s+(?:"
-    rf"ko\s+(?:(?:\d{{1,2}}\s*(?:din|days?|haft(?:e|a)|weeks?|"
-    rf"mahine?|months?)\s*(?:se)?|aaj|kal)\s*)?"
-    rf"(?:{HINGLISH_CLINICAL_TERM})\b|"
-    rf"(?:ka|ki|ke)\s+(?:bp|blood\s+pressure|pulse|sugar|"
-    rf"fever|bukhar|dard|pain)\b|"
-    rf"ne\s+(?:complain(?:ed|ing)?|report(?:ed)?|bataya|bola|kaha|"
-    rf"dikhaya|(?:{HINGLISH_CLINICAL_TERM}))\b|"
-    rf"(?:is\s+)?(?:admit(?:ted)?|referred|under\s+treatment)\b"
-    rf"))",
-    re.I,
-)
-HINGLISH_REVERSED_PERSON_CONTEXT = re.compile(
-    rf"(?i)(?P<context>\b(?:{HINGLISH_CLINICAL_TERM})\b)"
-    rf"(?P<gap>[^\n.!?;]{{0,48}}?)"
-    rf"(?P<name>{HINGLISH_NAME})"
-    rf"(?P<particle>\s+(?:ko|ka|ki|ke)\b)"
-)
-
-HINDI_PERSON_DURATION_CONTEXT = re.compile(
-    r"[\u0900-\u097f]+(?:\s+(?!को\b)[\u0900-\u097f]+){1,3}"
-    r"(?=\s+को\s+\d+\s*(?:दिन|दिनों|दिवस)\s+से(?:\s|$))"
-)
-BASE64_CANDIDATE = re.compile(
-    r"(?<![A-Za-z0-9+/])"
-    r"(?:[A-Za-z0-9+/]{4}){8,}"
-    r"(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?"
-    r"(?![A-Za-z0-9+/=])"
-)
-
-def _norm(value):
-    return normalize_key(str(value or ""))
+_HINGLISH_AFTER = re.compile(
+    r"(?i)^[ \t]+(?:(?:ka|ki|ke)[ ](?:bp|sugar|pulse|temp|fever|bukhar|dard|report|ilaj|condition|attendant|"
+    r"blood)|ko[ ](?:\d+[ ](?:din|day|hafte|mahine)|bukhar|fever|khansi|dard|ulti|chakkar|admit|aaj|kal|"
+    r"discharge|lekar|dikhaya|dawai)|ne[ ](?:bataya|kaha|bola|complain))")
+_HINDI_AFTER = re.compile(r"^(?=[ \t]+साथ[ ](?:आ|थ))|^[ \t]+(?:को|का|की|के|ने)[ \t]+(?:\d+|बुखार|खांसी|दर्द|बीपी|शुगर|भर्ती|रिपोर्ट|छुट्टी)")
 
 
-NORMALIZED_FIELD_GROUPS = {
-    role: {_norm(alias) for alias in aliases}
-    for role, aliases in FIELD_GROUPS.items()
-}
+class Lexicon:
+    """Names and places learned from the input itself (never from a built-in list)."""
 
-DATE_FIELD_NAMES = {
-    _norm(name)
-    for name in {
-        "date", "admissiondate", "dischargedate", "visitdate",
-        "appointmentdate", "registrationdate", "servicedate",
-        "dateofservice", "collectiondate", "specimendate", "testdate",
-        "issuedate", "createddate", "updateddate",
-        "प्रवेश तिथि", "छुट्टी तिथि", "भेंट तिथि",
-        "पंजीकरण तिथि", "तारीख",
-    }
-}
+    def __init__(self):
+        self.names = {}
+        self.skeletons = {}
+        self.places = set()
 
+    def add_name(self, name):
+        for word in TOKEN.findall(name):
+            key = phonetic(word)
+            if len(key) < 3 or key in GENERIC_NAME_PARTS or word.casefold() in STOPWORDS:
+                continue
+            self.names.setdefault(key, word)
+            self.skeletons.setdefault(skeleton(word), set()).add(word)
 
-def _field_role(field):
-    key = _norm(field)
+    def add_place(self, place):
+        place = " ".join(place.split())
+        if len(place) >= 4 and place.casefold() not in STOPWORDS:
+            self.places.add(place)
 
-    # Date fields: let the existing date-shift engine transform them.
-    if key in NORMALIZED_FIELD_GROUPS["dob"] or key.startswith(
-        ("dob", "dateofbirth", "birthdate", "janmtithi")
-    ):
-        return "dob"
+    def knows(self, word):
+        # "MD" is a medical degree; abbreviations count only next to a known name.
+        if word.casefold() in STOPWORDS or word.casefold() in ABBREVIATIONS:
+            return False
+        key = phonetic(word)
+        if len(key) < 3:
+            return False
+        if key in self.names:
+            return True
+        return any(similar_word(word, other) for other in sorted(self.skeletons.get(skeleton(word), ())))
 
-    for role in ("phone", "insurance", "mrn", "name", "address"):
-        if key in NORMALIZED_FIELD_GROUPS[role]:
-            return role
-
-    if any(x in key for x in (
-        "sourcepath", "originalpath", "filepath", "exportpath",
-        "sourcefile", "originalfilename", "exportfilename"
-    )):
-        return "metadata"
-
-    if any(x in key for x in (
-        "phone", "mobile", "contactnumber", "contactno", "telephone"
-    )):
-        return "phone"
-
-    if any(x in key for x in (
-        "aadhaar", "aadhar", "pannumber", "passport", "nationalid"
-    )):
-        return "mrn"
-
-    if any(x in key for x in (
-        "insurance", "policyno", "policynumber",
-        "membernumber", "memberid", "claimnumber", "claimid",
-        "payerpan", "insuranceno"
-    )):
-        return "insurance"
-
-    if any(x in key for x in (
-        "uhid", "mrn", "patientid", "medicalrecord",
-        "patientref", "patientreference", "registrationid",
-        "registrationnumber", "registrationno", "regno",
-        "hospitalnumber", "opnumber", "ipnumber",
-        "pmjayid", "abhaid", "healthid", "visitid"
-    )):
-        return "mrn"
-
-    # Person names, including relatives and guardians.
-    if any(x in key for x in (
-        "patientname", "firstname", "middlename", "lastname",
-        "surname", "fullname", "beneficiaryname", "membername",
-        "guardian", "father", "mother", "spouse", "husband",
-        "wife", "relative", "nextofkin", "contactperson",
-        "attendername", "refdoctor", "givenname", "familyname",
-        "naam", "pita", "patika"
-    )):
-        return "name"
-
-    # Addresses and geographic quasi-identifiers.
-    if any(x in key for x in (
-        "address", "street", "houseno", "house",
-        "village", "mohalla", "locality", "landmark",
-        "tehsil", "district", "town", "city", "colony",
-        "ward", "postalcode", "pincode", "pin", "zipcode", "zip",
-        "pata", "gaon", "gram", "jila", "zila"
-    )):
-        return "address"
-
-    # Exact generic fields only when their context is unambiguous.
-    if key in {"name", "patientfullname", "relative"}:
-        return "name"
-
-    return None
+    def compile_places(self):
+        ordered = sorted(self.places, key=lambda p: (-len(p), p))
+        self.place_pattern = re.compile(
+            r"(?i)(?<![\w\u0900-\u097F])(?:" + "|".join(map(re.escape, ordered)) + r")(?![\w\u0900-\u097F])"
+        ) if ordered else None
 
 
-def is_date_field(field):
-    key = _norm(field)
-    return key in DATE_FIELD_NAMES or key in NORMALIZED_FIELD_GROUPS["dob"]
+class Spans:
+    def __init__(self):
+        self.items = []
+
+    def add(self, start, end, kind):
+        if end > start and not any(start < e and s < end for s, e, _ in self.items):
+            self.items.append((start, end, kind))
 
 
-def _replace_patterns(value):
-    value = PATTERNS["EMAIL"].sub("[REDACTED_EMAIL]", value)
-    value = PATTERNS["PHONE"].sub("[REDACTED_PHONE]", value)
-    value = PATTERNS["AADHAAR_MASKED"].sub("[REDACTED_AADHAAR]", value)
-    value = PATTERNS["AADHAAR"].sub("[REDACTED_AADHAAR]", value)
-    value = PATTERNS["PAN"].sub("[REDACTED_PAN]", value)
-    value = PATTERNS["ABHA"].sub("[REDACTED_ABHA]", value)
-    value = PATTERNS["HOSPITAL_ID"].sub("[REDACTED_ID]", value)
-    return value
+def _is_name_word(word):
+    if word.casefold() in STOPWORDS or word.casefold() in HONORIFICS:
+        return False
+    return bool(DEVANAGARI.search(word)) or word[0].isupper()
 
 
-def sanitize_value(field, value=None, stats=None):
-    """
-    Backwards-compatible project interface:
-        sanitize_value(field, value, stats)
+def take_name(text, position, limit=4, allow_lower=False):
+    """Read a person name starting at `position`; return (start, end) or None."""
+    start = end = None
+    count = 0
+    while count < limit:
+        match = TOKEN.search(text, position)
+        if not match:
+            break
+        gap = text[position:match.start()]
+        word = match.group()
+        if count == 0:
+            if gap.strip(" \t.:-–,\"'("):
+                break
+        elif gap not in (" ", ". ", ".", "  ", "-", "'"):
+            break
+        if word.casefold() in PREFIXES and count == 0:
+            position = match.end()
+            continue
+        ok = _is_name_word(word) or (allow_lower and word.casefold() not in STOPWORDS
+                                     and word.casefold() not in HONORIFICS)
+        # Initials such as "R." are part of a name.
+        if not ok and not (len(word) == 1 and word.isupper() and text[match.end():match.end() + 1] == "."):
+            break
+        start = match.start() if start is None else start
+        end = position = match.end()
+        count += 1
+    return (start, end) if start is not None else None
 
-    Also accepts the newer two-argument form:
-        sanitize_value(value, field)
-    """
-    if value is None:
-        value = field
-        field = None
 
-    role = _field_role(field)
+def _name_before(text, position, limit=3):
+    """Walk backwards from `position` over name words on the same line."""
+    line_start = text.rfind("\n", 0, position) + 1
+    found = [m for m in TOKEN.finditer(text, line_start, position)]
+    start = end = None
+    edge = position
+    for match in reversed(found[-limit:]):
+        gap = text[match.end():edge]
+        if gap not in ("", " ", ". ", ".", "  ") or not _is_name_word(match.group()) and match.group().casefold() not in ("md", "mohd"):
+            break
+        start = edge = match.start()
+        end = end or match.end()
+    return (start, end) if start is not None else None
 
-    # Preserve DOB for the engine's patient-specific date shifter.
-    if role == "dob":
-        return value
 
-    if value is None:
-        return value
+def detect(text, lexicon=None, address_hint=False):
+    """Return sorted spans of personal data found in free text."""
+    folded = fold_digits(text)
+    protected = [(m.start(), m.end()) for m in _DOCTOR.finditer(text)]
+    protected += [(m.start(), m.end()) for m in _PROTECT.finditer(text)]
+    protected += [(m.start(), m.end()) for m in re.finditer(r"PSN-[0-9A-Z]{4}-[0-9A-Z]{4}", text)]
+    spans = Spans()
 
-    if isinstance(value, (int, float)):
-        if role == "phone":
-            return "[REDACTED_PHONE]"
-        if role == "metadata":
-            return "[REDACTED_METADATA]"
-        if role in {"name", "mrn", "insurance", "address"}:
-            return "[REDACTED]"
-        return value
+    for kind, pattern in ID_PATTERNS:
+        for m in pattern.finditer(folded):
+            spans.add(m.start(), m.end(), kind)
+    for m in _PHONE_LABEL.finditer(folded):
+        spans.add(m.start("v"), m.end("v"), "PHONE")
+    for m in _DOCUMENT_ID.finditer(folded):
+        spans.add(m.start("v"), m.end("v"), "OTHER_ID")
+    for m in _ID_LABEL.finditer(folded):
+        spans.add(m.start("v"), m.end("v"), "MRN")
 
-    if not isinstance(value, str):
-        return value
+    addressed = address_hint or bool(_ADDRESS_LINE.search(text))
+    for kind, pattern in ADDRESS_PATTERNS:
+        for m in pattern.finditer(folded):
+            value = m.group("v")
+            if value.split()[0].casefold() in {"worker", "no", "the"}:
+                continue
+            spans.add(m.start("v"), m.end("v"), kind)
+    for m in _PIN.finditer(folded):
+        line = folded[folded.rfind("\n", 0, m.start()) + 1:m.start()]
+        if addressed or re.search(r"(?i)distt?\b|district|tehsil|pin|address|जिला|पता|पिन", line):
+            spans.add(m.start("v"), m.end("v"), "PIN")
 
-    if not value.strip():
-        return value
+    def person(span, kind):
+        if not span:
+            return
+        s, e = span
+        if any(s < pe and ps < e for ps, pe in protected):
+            return
+        spans.add(s, e, kind)
 
-    # Preserve the existing statistics interface used by the pipeline/tests.
-    if stats is not None:
-        detected = sum(
-            len(pattern.findall(value))
-            for pattern in PATTERNS.values()
-        )
-        detected += len(LABELLED_VALUE.findall(value))
-        detected += len(MRN_LABELLED_VALUE.findall(value))
-        detected += len(RELATIVE_LABEL.findall(value))
-        if detected:
-            stats.identifiers += detected
+    # Chat exports: "[date, time] Sender Name: message".
+    for m in re.finditer(r"(?m)^\[[^\]\n]{6,40}\][ \t]*", text):
+        found = take_name(text, m.end(), 3)
+        if found and text[found[1]:found[1] + 1] == ":":
+            person(found, "PERSON_NAME")
+    for m in _RELATIVE_LABEL.finditer(text):
+        marker = m.group().strip().casefold()
+        found = take_name(text, m.end(), allow_lower=marker.startswith(("s/", "d/", "w/", "h/")))
+        # "C/O fever" is a complaint; "C/O Ramesh" is a relative.
+        if marker.startswith("c") and "/" in marker:
+            if not found or not text[found[0]].isupper() and not DEVANAGARI.search(text[found[0]]):
+                continue
+            if text[max(0, m.start() - 4):m.start()].rstrip().endswith(("K/", "k/")):
+                continue
+        person(found, "RELATIVE_NAME")
+    for m in _KIN_WORD.finditer(text):
+        person(take_name(text, m.end(), 3), "RELATIVE_NAME")
+    for m in _NAME_LABEL.finditer(text):
+        person(take_name(text, m.end()), "PATIENT_NAME")
+    for m in _ACTION_LABEL.finditer(text):
+        person(take_name(text, m.end()), "PERSON_NAME")
 
-    if role == "name":
-        return "[REDACTED_NAME]"
-    if role == "mrn":
-        return "[REDACTED_ID]"
-    if role == "insurance":
-        return "[REDACTED_INSURANCE_ID]"
-    if role == "address":
-        return "[GENERALIZED_LOCATION]"
-    if role == "phone":
-        return "[REDACTED_PHONE]"
-    if role == "metadata":
-        return "[REDACTED_METADATA]"
+    for m in TOKEN.finditer(text):
+        word = m.group()
+        if word.casefold() in HONORIFICS:
+            if text[m.start() - 1:m.start()] == " ":
+                person(_name_before(text, m.start() - 1), "PATIENT_NAME")
+        elif word.casefold() in PREFIXES and len(word) > 1:
+            person(take_name(text, m.end()), "PERSON_NAME")
+        elif word[0].isupper() or DEVANAGARI.search(word):
+            after = text[m.end():m.end() + 40]
+            if _is_name_word(word) and (_HINGLISH_AFTER.match(after) or _HINDI_AFTER.match(after)):
+                person(_name_before(text, m.end()), "PATIENT_NAME")
 
-    value = _replace_patterns(value)
-    value = MRN_LABELLED_VALUE.sub(
-        lambda match: (
-            match.group("label")
-            + match.group("separator")
-            + "[REDACTED_ID]"
-        ),
-        value,
-    )
+    # "Name, W/o Husband" or "Name, 45 yrs" at the start of a line.
+    for m in re.finditer(r"(?m)^(?:[ \t]*)(?=[A-Z\u0900-\u097F])", text):
+        found = take_name(text, m.end(), 3)
+        if found and re.match(r"[ \t]*(?:,[ \t]*(?:[SDWC]/[Oo]\b|\d{1,3}[ \t]*(?i:yrs?|years|y/o|/[ ]?[MF]\b))|\((?i:attendant|patient|relative)|[ \t]*[-–][ \t]*(?:K/C/O|H/O|C/O))", text[found[1]:]):
+            person(found, "PATIENT_NAME")
+    # After a time stamp: "14:00 - Name - K/C/O ...", "18:40 - Name (attendant)".
+    for m in re.finditer(r"(?m)\d{1,2}:\d{2}(?:[ ]?[ap]\.?m\.?)?\]?[ \t]*[-–:][ \t]*", text):
+        found = take_name(text, m.end(), 3)
+        if found and re.match(r"[ \t]*(?:[-–(,:]|(?i:ji|sahab|bhai|bhaiya|didi|chachu|chacha|amma)\b)", text[found[1]:]):
+            person(found, "PERSON_NAME")
+    for m in re.finditer(r"\([ ]?(?i:attendant|relative|husband|wife|father|mother)\b", text):
+        person(_name_before(text, m.start() - 1), "RELATIVE_NAME")
+    # Capitalised pair beside a phone number is very likely a contact person.
+    for s, e, kind in list(spans.items):
+        if kind != "PHONE":
+            continue
+        line_start = text.rfind("\n", 0, s) + 1
+        for m in re.finditer(r"(?<![\w])[A-Z][a-z]+(?:[ ][A-Z][a-z]+){1,2}", text[line_start:s]):
+            words = m.group().split()
+            if all(w.casefold() not in STOPWORDS for w in words):
+                person((line_start + m.start(), line_start + m.end()), "PERSON_NAME")
 
-    def replace_label(match):
-        label = match.group("label")
-        label_norm = _norm(label)
-        if any(x in label_norm for x in (
-            "नाम", "name", "patient", "father", "mother", "husband",
-            "wife", "guardian", "relative", "naam", "pita",
-            "pati", "s/o", "d/o",
-            "w/o", "c/o"
-        )):
-            return label + ": [REDACTED_NAME]"
-        if any(x in label_norm for x in (
-            "dob", "dateofbirth", "जन्मतिथि"
-        )):
-            return label + ": [REDACTED_DATE]"
-        return label + ": [GENERALIZED_LOCATION]"
+    if lexicon is not None:
+        if lexicon.place_pattern:
+            for m in lexicon.place_pattern.finditer(text):
+                spans.add(m.start(), m.end(), "VILLAGE")
+        run = []
+        for m in TOKEN.finditer(text):
+            s, e = m.span()
+            word = m.group()
+            hit = (word[0].isupper() or DEVANAGARI.search(word)) and lexicon.knows(word)
+            if hit and not any(s < pe and ps < e for ps, pe in protected):
+                if run and text[run[-1][1]:s] in (" ", ". ", "_", "-"):
+                    run[-1][1] = e
+                else:
+                    run.append([s, e])
+        for s, e in run:
+            # Pull in a leading Md./Mohd and trailing generic surname parts.
+            before = re.search(r"(?:\b(?:Md|Mohd|Mohammad|Mohammed)\.?[ ])$", text[:s])
+            if before:
+                s = before.start()
+            while True:
+                nxt = re.match(r"[ ]([A-Za-z\u0900-\u097F]+)", text[e:])
+                if nxt and phonetic(nxt.group(1)) in GENERIC_NAME_PARTS and nxt.group(1).casefold() not in HONORIFICS:
+                    e += nxt.end()
+                else:
+                    break
+            person((s, e), "PERSON_NAME")
+        # Lower-case mentions of a known name next to Hinglish clinical cues.
+        for m in TOKEN.finditer(text):
+            if m.group().islower() and _HINGLISH_AFTER.match(text[m.end():m.end() + 30]) and lexicon.knows(m.group()):
+                person(m.span(), "PERSON_NAME")
 
-    value = LABELLED_VALUE.sub(replace_label, value)
-    value = RELATIVE_LABEL.sub("[REDACTED_RELATIVE_NAME]", value)
-
-    if _norm(field) == "fhirnarrative":
-        value = FHIR_NARRATIVE_NAME.sub(
-            r"\1[REDACTED_NAME]", value
-        )
-
-    value = TIMESTAMP_RELATIVE_NAME.sub(
-        r"\1[REDACTED_NAME]", value
-    )
-    value = HINGLISH_PERSON_CONTEXT.sub("[REDACTED_NAME]", value)
-    value = HINGLISH_REVERSED_PERSON_CONTEXT.sub(
-        lambda match: (
-            match.group("context")
-            + match.group("gap")
-            + "[REDACTED_NAME]"
-            + match.group("particle")
-        ),
-        value,
-    )
-    value = HINDI_PERSON_DURATION_CONTEXT.sub(
-        "[REDACTED_NAME]", value
-    )
-
-    def sanitize_base64(match):
-        encoded = match.group(0)
-        try:
-            decoded = base64.b64decode(encoded, validate=True).decode("utf-8")
-        except (ValueError, UnicodeDecodeError):
-            return encoded
-
-        if not decoded or any(
-            not character.isprintable() and character not in "\r\n\t"
-            for character in decoded
-        ):
-            return encoded
-
-        cleaned = sanitize_value("clinical_note", decoded, stats)
-        if cleaned == decoded:
-            return encoded
-        return base64.b64encode(cleaned.encode("utf-8")).decode("ascii")
-
-    value = BASE64_CANDIDATE.sub(sanitize_base64, value)
-
-    return value
-
-def sanitize_field_name(field):
-    # Preserve schema keys. Do not rename FHIR fields or CSV headers.
-    return str(field)
-
-def detect_identifiers(value):
-    if not isinstance(value, str):
-        value = str(value or "")
-
-    found = Counter()
-    for kind, pattern in PATTERNS.items():
-        found[kind] += len(pattern.findall(value))
-
-    for match in LABELLED_VALUE.finditer(value):
-        label = _norm(match.group("label"))
-        if any(x in label for x in ("नाम", "name", "father", "mother",
-                                    "husband", "wife", "guardian",
-                                    "relative", "s/o", "d/o", "w/o", "c/o")):
-            found["NAME"] += 1
-        else:
-            found["ADDRESS"] += 1
-
-    if MRN_LABELLED_VALUE.search(value):
-        found["MRN"] += len(MRN_LABELLED_VALUE.findall(value))
-
-    if RELATIVE_LABEL.search(value):
-        found["RELATIVE_NAME"] += 1
-
-    return dict(found)
+    return sorted(spans.items)

@@ -11,7 +11,7 @@ venv/
 env/
 
 # Local output
-my_output/
+
 output/
 test_output/
 *.log
@@ -25,4 +25,6 @@ test_output/
 .DS_Store
 Thumbs.db
 .vscode/
-.idea/
+.idea/my_output*/
+out/
+*.zip

@@ -1,469 +1,286 @@
+"""Two-pass pipeline: learn who is in the data, then rewrite every file."""
 import csv
 import hashlib
 import io
 import json
-import os
 import re
 import time
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
-from .discovery import discover_files, is_supported
-from .ingestion import read_file
-from .linkage import canonical_patient_key
-from .pseudonymization import pseudonym
-from .dates import shift_date_string
-from .generalization import generalize_value
-from .risk import safe_filename
-from .reconstruction import write_csv, write_json
-from .quarantine import quarantine_reason
+from . import dates
+from .config import load_policy
+from .detection import Lexicon, detect
+from .fields import classify
+from .ingestion import Quarantine, discover_files, load
+from .linkage import Linker, cluster_key
+from .pseudonymization import deterministic_offset, digest, get_secret, pseudonym
+from .records import list_parents, split, walk
+from .redaction import Harvester, Redactor
 from .reporting import write_report
-from .validation import find_residual_identifiers
-from .detection import PATTERNS, is_date_field, sanitize_value
-from .normalization import normalize_key
+from .validation import has_residual_identifier
 
 
-PRIVATE_INDEX_FIELDS = {
-    "byname", "byuhid", "bypatientname", "bypatientid", "nameindex",
-}
-GENERIC_HEADER_WORDS = {
-    "address", "admission", "age", "amount", "bed", "blood", "body",
-    "claim", "clinic", "code", "date", "department", "diagnosis",
-    "discharge", "doctor", "dose", "duration", "email", "family",
-    "first", "frequency", "full", "gender", "general", "given",
-    "height", "heart", "history", "hospital", "insurance", "lab",
-    "last", "management", "medical", "medication", "middle", "mobile",
-    "name", "no", "notes", "number", "oxygen", "patient", "phone",
-    "pin", "policy", "postal", "pressure", "pulse", "rate", "record",
-    "reference", "remarks", "respiratory", "result", "sample", "sex",
-    "state", "status", "saturation", "temperature", "test", "time",
-    "total", "type", "unit", "value", "visit", "ward", "weight",
-}
-PERSON_LIKE_HEADER = re.compile(
-    r"^[A-Z][A-Za-z.'-]+(?:\s+[A-Z][A-Za-z.'-]+){1,3}$"
-)
-
-
-class PipelineStats:
-    def __init__(self):
-        self.identifiers = 0
-        self.generalized = 0
+class Context:
+    def __init__(self, policy):
+        self.policy = policy
+        self.lexicon = Lexicon()
         self.entities = {}
+        self.owners = {}
 
 
-def _peak_memory_mb():
-    try:
-        import resource
-        value = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
-        if os.uname().sysname == "Darwin":
-            return round(value / 1024 / 1024, 2)
-        return round(value / 1024, 2)
-    except Exception:
-        return 0.0
+class Record:
+    def __init__(self, document, locator, body):
+        self.document, self.locator, self.body = document, locator, body
+        self.clues = None
+        self.pid = None
+        self.rare = False
 
 
-def _safe_relative_path(relative: str, digest: str):
-    parts = Path(relative).parts
-    safe_parts = []
-
-    for index, part in enumerate(parts):
-        safe_parts.append(safe_filename(part, digest + str(index)))
-
-    return Path(*safe_parts)
-
-
-def _safe_csv_header(value, index):
-    header = str(value).strip()
-    if any(pattern.search(header) for pattern in PATTERNS.values()):
-        return f"column_{index + 1}"
-
-    words = header.split()
-    if (
-        PERSON_LIKE_HEADER.fullmatch(header)
-        and not any(word.casefold() in GENERIC_HEADER_WORDS for word in words)
-    ):
-        return f"column_{index + 1}"
-
-    return value
+def _flatten(document):
+    if document.kind == "text":
+        return [document.data]
+    if document.kind == "table":
+        return [cell for row in document.data for cell in row]
+    found, stack = [], [document.data]
+    while stack:
+        node = stack.pop()
+        if isinstance(node, dict):
+            stack.extend(node.values())
+        elif isinstance(node, list):
+            stack.extend(node)
+        elif isinstance(node, str):
+            found.append(node)
+    return found
 
 
-def _clean_record(
-    record,
-    patient_key,
-    stats,
-    maximum_shift,
-    name_context=False,
-    reference_context=False,
-    narrative_context=False,
-    address_context=False,
-):
-    cleaned = {}
-    patient_id = pseudonym(patient_key) if patient_key else None
-
-    for key, value in record.items():
-        key_string = str(key)
-        original_value = value
-        normalized = normalize_key(key_string)
-
-        # These maps expose direct name-to-identifier relationships.
-        if normalized in PRIVATE_INDEX_FIELDS:
-            continue
-
-        safe_key = key_string
-        nested_name_context = name_context or normalized == "name"
-        nested_reference_context = reference_context or normalized == "subject"
-        nested_narrative_context = narrative_context or normalized == "text"
-        nested_address_context = address_context or normalized == "address"
-        if reference_context and normalized == "display":
-            field_to_clean = "name"
-        elif reference_context and normalized == "reference":
-            field_to_clean = "patientref"
-        elif narrative_context and normalized == "div":
-            field_to_clean = "fhir_narrative"
-        elif name_context and normalized in {
-            "text", "given", "family", "prefix", "suffix"
-        }:
-            field_to_clean = "name"
-        elif address_context and normalized in {
-            "line", "text", "city", "district", "state", "postalcode",
-            "country",
-        }:
-            field_to_clean = "address"
-        else:
-            field_to_clean = key_string
-
-        if isinstance(value, dict):
-            value = _clean_record(
-                value,
-                patient_key,
-                stats,
-                maximum_shift,
-                nested_name_context,
-                nested_reference_context,
-                nested_narrative_context,
-                nested_address_context,
-            )
-
-        elif isinstance(value, list):
-            value = [
-                _clean_record(
-                    x,
-                    patient_key,
-                    stats,
-                    maximum_shift,
-                    nested_name_context,
-                    nested_reference_context,
-                    nested_narrative_context,
-                    nested_address_context,
-                )
-                if isinstance(x, dict)
-                else sanitize_value(field_to_clean, x, stats)
-                for x in value
-            ]
-
-        elif isinstance(value, str):
-            value = sanitize_value(field_to_clean, value, stats)
-
-            if patient_key and is_date_field(key_string):
-                value = shift_date_string(value, patient_key, maximum_shift)
-
-            generalized = generalize_value(key_string, value)
-            if generalized != value:
-                stats.generalized += 1
-            value = generalized
-
-        else:
-            generalized = generalize_value(key_string, value)
-            if generalized != value:
-                stats.generalized += 1
-            value = generalized
-
-        if (
-            reference_context
-            and normalized == "reference"
-            and isinstance(value, str)
-            and isinstance(original_value, str)
-        ):
-            patient_reference = re.match(
-                r"^Patient/([^/]+)", original_value
-            )
-            identifier = (
-                patient_reference.group(1)
-                if patient_reference
-                else original_value
-            )
-            reference_key = canonical_patient_key(
-                {"patientref": identifier}
-            )
-            if reference_key:
-                value = pseudonym(patient_key or reference_key)
-            else:
-                value = "[REDACTED_ID]"
-
-        # Replace an existing strong patient identifier with its pseudonym.
-        if patient_id and normalized in {
-            "patientid", "uhid", "mrn", "medicalrecordnumber",
-            "patientref", "patientreference", "registrationid",
-            "registrationnumber", "registrationno", "regno",
-            "healthid", "abhaid", "रोगीआईडी", "पंजीकरणसंख्या",
-            "आधारसंख्या", "आभाआईडी"
-        }:
-            value = patient_id
-
-        cleaned[safe_key] = value
-
-    return cleaned
-
-
-def _extract_records(data):
-    """
-    Yield (locator, record) pairs.
-    Handles common top-level arrays and FHIR Bundle entries.
-    """
-    if isinstance(data, dict):
-        if data.get("resourceType") == "Bundle":
-            entries = data.get("entry", [])
-            for index, entry in enumerate(entries):
-                if isinstance(entry, dict) and isinstance(entry.get("resource"), dict):
-                    yield f"/entry/{index}/resource", entry["resource"]
-            return
-
-        found = False
-        for key, value in data.items():
-            if isinstance(value, list):
-                for index, item in enumerate(value):
-                    if isinstance(item, dict):
-                        escaped = str(key).replace("~", "~0").replace("/", "~1")
-                        yield f"/{escaped}/{index}", item
-                        found = True
-
-        if not found:
-            yield "doc", data
-
-    elif isinstance(data, list):
-        for index, item in enumerate(data):
-            if isinstance(item, dict):
-                yield f"/{index}", item
-
+def _harvest(record, lexicon):
+    document = record.document
+    harvester = Harvester(lexicon, document.order)
+    if document.kind == "text":
+        harvester.text(record.body)
+    elif document.kind == "table":
+        header = document.data[0]
+        for i, cell in enumerate(record.body):
+            harvester.value(cell, header[i] if i < len(header) else "", (),
+                            document.roles[i] if i < len(document.roles) else "text", None)
     else:
-        yield "doc", None
+        walk(record.body, harvester, parents=list_parents(record.locator))
+    # File names often carry the admission or patient number of a note.
+    if record.locator == "doc":
+        stem = re.sub(r"_+", " ", PurePosixPath(document.relative).stem)
+        for start, end, kind in detect(stem):
+            if kind in {"MRN", "PHONE"}:
+                harvester.clues.add_id(kind, stem[start:end])
+    record.clues = harvester.finish()
 
 
-def _process_csv(text, delimiter, relative, records, stats, maximum_shift):
-    parsed = list(csv.reader(io.StringIO(text, newline=""), delimiter=delimiter))
-
-    if not parsed:
-        raise ValueError("empty_file")
-
-    header = parsed[0]
-    safe_header = [
-        _safe_csv_header(column, index)
-        for index, column in enumerate(header)
-    ]
-    output_rows = [safe_header]
-
-    for index, row in enumerate(parsed[1:]):
-        record = {
-            header[i]: row[i] if i < len(row) else ""
-            for i in range(len(header))
-        }
-
-        key = canonical_patient_key(record)
-        cleaned = _clean_record(record, key, stats, maximum_shift)
-
-        output_row = [cleaned.get(column, "") for column in header]
-        output_rows.append(output_row)
-
-        records.append({
-            "file": f"sanitized/{relative}",
-            "loc": f"row:{index}",
-            "patient": pseudonym(key) if key else None,
-        })
-
-    return write_csv(output_rows, delimiter)
+def _date_orders(documents):
+    """Infer day/month order per file, then borrow it from files in the same folder family."""
+    families = {}
+    for document in documents:
+        document.order = dates.infer_order(_flatten(document))
+        family = re.split(r"[_\-. ]", PurePosixPath(document.relative).name)[0]
+        if document.order:
+            families.setdefault(family, []).append(document.order)
+    for document in documents:
+        if not document.order:
+            votes = families.get(re.split(r"[_\-. ]", PurePosixPath(document.relative).name)[0], [])
+            document.order = "mdy" if votes.count("mdy") > votes.count("dmy") else "dmy"
 
 
-def _process_json(text, relative, records, stats, maximum_shift):
-    data = json.loads(text)
-    processed_top_fields = set()
-
-    for locator, record in _extract_records(data):
-        if record is None:
-            records.append({
-                "file": f"sanitized/{relative}",
-                "loc": locator,
-                "patient": None,
-            })
-            continue
-
-        key = canonical_patient_key(record)
-        address_context = any(
-            normalize_key(part.replace("~1", "/").replace("~0", "~"))
-            in {"address", "addresses"}
-            for part in locator.split("/")
-        )
-        cleaned = _clean_record(
-            record,
-            key,
-            stats,
-            maximum_shift,
-            address_context=address_context,
-        )
-
-        # Replace the record in its original location.
-        if locator == "doc":
-            data = cleaned
-            if isinstance(data, dict):
-                processed_top_fields.update(data)
-        elif locator.startswith("/entry/") and data.get("resourceType") == "Bundle":
-            parts = locator.strip("/").split("/")
-            data["entry"][int(parts[1])]["resource"] = cleaned
-            processed_top_fields.add("entry")
-        elif isinstance(data, dict):
-            parts = locator.strip("/").split("/")
-            array_name = parts[0].replace("~1", "/").replace("~0", "~")
-            data[array_name][int(parts[1])] = cleaned
-            processed_top_fields.add(array_name)
-        elif isinstance(data, list):
-            data[int(locator.strip("/"))] = cleaned
-
-        records.append({
-            "file": f"sanitized/{relative}",
-            "loc": locator,
-            "patient": pseudonym(key) if key else None,
-        })
-
-    if isinstance(data, dict):
-        for key, value in list(data.items()):
-            if key not in processed_top_fields:
-                data[key] = _clean_record(
-                    {key: value}, None, stats, maximum_shift
-                )[key]
-
-    return write_json(data)
+def _link(records, context):
+    clusters = Linker([r.clues for r in records]).run()
+    keyed = {}
+    for index in sorted(clusters):
+        key = cluster_key(clusters[index])
+        if key:
+            keyed[index] = key
+    codes = {i: set().union(*(records[m].clues.codes for m in clusters[i].members)) for i in keyed}
+    frequency = {}
+    for found in codes.values():
+        for code in found:
+            frequency[code] = frequency.get(code, 0) + 1
+    limit = context.policy["rare_diagnosis_max_patients"]
+    # Rarity is only meaningful when there is a population to compare against.
+    comparable = len(keyed) > limit * 5
+    used = set()
+    for index, key in keyed.items():
+        pid = pseudonym(key)
+        while pid in used:
+            key += "+"
+            pid = pseudonym(key)
+        used.add(pid)
+        rare = comparable and any(frequency[c] <= limit for c in codes[index])
+        for member in clusters[index].members:
+            records[member].pid, records[member].rare = pid, rare
+        for item in sorted(clusters[index].ids):
+            context.owners.setdefault(item, pid)
 
 
-def _process_text(text, relative, records, stats):
-    cleaned = sanitize_value("clinical_note", text, stats)
+def _safe_path(relative, redactor):
+    parts = []
+    for position, part in enumerate(PurePosixPath(relative).parts):
+        suffix = PurePosixPath(part).suffix
+        stem = part[: len(part) - len(suffix)] if suffix else part
+        readable = re.sub(r"[_+]+", " ", stem)
+        found = detect(readable, redactor.lexicon) or re.search(r"\d{6,}", readable)
+        if found:
+            part = "file_" + digest("filename", f"{relative}|{position}").hex()[:12] + suffix.lower()
+        parts.append(part)
+    return PurePosixPath(*parts)
 
-    # Text documents are not linked by name alone.
-    records.append({
-        "file": f"sanitized/{relative}",
-        "loc": "doc",
-        "patient": None,
-    })
 
-    return cleaned
+def _rebuild(document, outputs, header_redactor):
+    if document.kind == "text":
+        return outputs[0][1].replace("\n", document.newline)
+    if document.kind == "table":
+        stream = io.StringIO(newline="")
+        writer = csv.writer(stream, delimiter=document.delimiter, lineterminator=document.newline)
+        header = []
+        for cell in document.data[0]:
+            new = header_redactor.text(cell)
+            base, number = new, 2
+            while new != cell and new in header:
+                new = f"{base} {number}"
+                number += 1
+            header.append(new)
+        writer.writerow(header)
+        writer.writerows(row for _, row in outputs)
+        return stream.getvalue()
+    data = document.data
+    if not outputs:
+        data = walk(data, header_redactor)
+    elif outputs[0][0] == "doc":
+        data = outputs[0][1]
+    else:
+        replaced = {locator: body for locator, body in outputs}
+        if isinstance(data, list):
+            data = [replaced[f"/{i}"] for i in range(len(data))]
+        else:
+            rebuilt = {}
+            for key, value in data.items():
+                escaped = str(key).replace("~", "~0").replace("/", "~1")
+                if f"/{escaped}/0" in replaced:
+                    rebuilt[key] = [replaced[f"/{escaped}/{i}"] for i in range(len(value))]
+                else:
+                    # Export metadata and other values outside the records.
+                    rebuilt.update(walk({key: value}, header_redactor))
+            data = rebuilt
+    separators = None if document.indent else (",", ":")
+    return json.dumps(data, ensure_ascii=False, indent=document.indent, separators=separators) + "\n"
+
+
+def _contains(body, pid):
+    return pid in (body if isinstance(body, str) else json.dumps(body, ensure_ascii=False))
 
 
 def run_pipeline(input_dir: Path, output_dir: Path):
     start = time.monotonic()
-
-    if not input_dir.exists() or not input_dir.is_dir():
+    get_secret()
+    input_dir, output_dir = Path(input_dir).resolve(), Path(output_dir).resolve()
+    if not input_dir.is_dir():
         raise ValueError("invalid_input_directory")
-
+    if output_dir == input_dir or input_dir in output_dir.parents:
+        raise ValueError("output_inside_input")
     if output_dir.exists() and any(output_dir.iterdir()):
         raise ValueError("output_directory_not_empty")
-
-    output_dir.mkdir(parents=True, exist_ok=True)
     sanitized_dir = output_dir / "sanitized"
     sanitized_dir.mkdir(parents=True, exist_ok=True)
 
-    stats = PipelineStats()
-    files_report = []
-    records = []
-
-    maximum_shift = 180
-    policy_path = Path("config/policy.yaml")
-    if policy_path.exists():
-        for line in policy_path.read_text(encoding="utf-8").splitlines():
-            if line.strip().startswith("date_shift_max_days:"):
-                try:
-                    maximum_shift = int(line.split(":", 1)[1].strip())
-                except ValueError:
-                    pass
-
+    policy = load_policy()
+    context = Context(policy)
+    entries, documents = [], []
     for path in discover_files(input_dir):
-        raw = path.read_bytes()
-        digest = hashlib.sha256(raw).hexdigest()
-        relative = path.relative_to(input_dir).as_posix()
-
-        entry = {"input_sha256": digest}
-
+        entry = {"input_sha256": None, "output": None, "status": "quarantined"}
+        entries.append(entry)
         try:
-            if not is_supported(path):
-                raise ValueError("unsupported_format")
+            if path.is_symlink():
+                raise Quarantine("symbolic_link")
+            if path.stat().st_size > policy["max_file_mb"] * 1024 * 1024:
+                hasher = hashlib.sha256()
+                with path.open("rb") as handle:
+                    for chunk in iter(lambda: handle.read(1 << 20), b""):
+                        hasher.update(chunk)
+                entry["input_sha256"] = hasher.hexdigest()
+                raise Quarantine("file_too_large")
+            raw = path.read_bytes()
+            entry["input_sha256"] = hashlib.sha256(raw).hexdigest()
+            document = load(path, path.relative_to(input_dir).as_posix(), raw, policy)
+            document.entry = entry
+            documents.append(document)
+        except Quarantine as exc:
+            entry["reason"] = str(exc)
+        except Exception:
+            entry["reason"] = "processing_error"
 
-            if not raw.strip():
-                raise ValueError("empty_file")
+    _date_orders(documents)
+    records, usable = [], []
+    for document in documents:
+        try:
+            if document.kind == "table":
+                document.roles = [classify(h) for h in document.data[0]]
+            own = [Record(document, locator, body) for locator, body in split(document)]
+            for record in own:
+                _harvest(record, context.lexicon)
+            records.extend(own)
+            document.records = own
+            usable.append(document)
+        except Exception:
+            document.entry["reason"] = "processing_error"
 
-            text = read_file(path)
-            extension = path.suffix.lower()
+    context.lexicon.compile_places()
+    _link(records, context)
 
-            if extension in {".csv", ".tsv"}:
-                result = _process_csv(
-                    text,
-                    "\t" if extension == ".tsv" else ",",
-                    relative,
-                    records,
-                    stats,
-                    maximum_shift,
-                )
-            elif extension == ".json":
-                result = _process_json(
-                    text, relative, records, stats, maximum_shift
-                )
-            else:
-                result = _process_text(text, relative, records, stats)
+    exported, used_paths, generalized = [], set(), 0
+    for document in usable:
+        try:
+            outputs, claims, count = [], [], 0
+            for record in document.records:
+                key = record.pid or f"{document.relative}#{record.locator}"
+                offset = deterministic_offset(key, policy["date_shift_max_days"], policy["date_shift_min_days"])
+                redactor = Redactor(context, record.clues, record.pid, offset, document.order, record.rare)
+                redactor.locator = record.locator
+                body = redactor.record(record.body, document)
+                pid = record.pid
+                if pid and not _contains(body, pid):
+                    if document.kind == "text":
+                        body = f"Patient: {pid}\n{body}"
+                    else:
+                        pid = None
+                count += redactor.generalized
+                outputs.append((record.locator, body))
+                has_identity = record.clues.ids or record.clues.names or record.clues.others or record.pid
+                if has_identity:
+                    claims.append((record.locator, pid))
 
-            safe_relative = _safe_relative_path(relative, digest)
-            destination = sanitized_dir / safe_relative
+            file_key = f"file#{document.relative}"
+            offset = deterministic_offset(file_key, policy["date_shift_max_days"], policy["date_shift_min_days"])
+            blank = Harvester(context.lexicon, document.order).clues
+            outside = Redactor(context, blank, None, offset, document.order, False)
+            result = _rebuild(document, outputs, outside)
+            if has_residual_identifier(result):
+                raise Quarantine("residual_identifier_detected")
+
+            safe = _safe_path(document.relative, outside)
+            number = 2
+            while safe.as_posix().casefold() in used_paths:
+                safe = safe.with_name(f"{safe.stem}_{number}{safe.suffix}")
+                number += 1
+            used_paths.add(safe.as_posix().casefold())
+            destination = sanitized_dir.joinpath(*safe.parts)
             destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_bytes(result.encode("utf-8"))
+            name = "sanitized/" + safe.as_posix()
+            document.entry.update(output=name, status="sanitized")
+            document.entry.pop("reason", None)
+            generalized += count
+            exported.extend({"file": name, "loc": loc, "patient": pid} for loc, pid in claims)
+        except Quarantine as exc:
+            document.entry["reason"] = str(exc)
+        except Exception:
+            document.entry["reason"] = "processing_error"
 
-            # Independent residual scan. Fail closed if a high-confidence
-            # identifier remains in the reconstructed output.
-            if find_residual_identifiers(result):
-                raise ValueError("residual_identifier_detected")
-
-            destination.write_text(result, encoding="utf-8", newline="")
-
-            output_name = "sanitized/" + safe_relative.as_posix()
-            entry.update(output=output_name, status="sanitized")
-
-        except Exception as exc:
-            entry.update(
-                output=None,
-                status="quarantined",
-                reason=quarantine_reason(exc),
-            )
-
-        files_report.append(entry)
-
-    exported = {
-        item["output"]
-        for item in files_report
-        if item.get("output")
-    }
-    records = [r for r in records if r["file"] in exported]
-
-    elapsed = time.monotonic() - start
-
-    write_report(
-        output_dir,
-        files_report,
-        records,
-        {
-            "identifiers": stats.identifiers,
-            "generalized": stats.generalized,
-            "entities": stats.entities,
-        },
-        elapsed,
-        _peak_memory_mb(),
-    )
-
-    print(
-        "Raksha completed:",
-        len(files_report),
-        "files;",
-        len(records),
-        "records"
-    )
+    write_report(output_dir, entries, exported, context.entities, generalized, time.monotonic() - start)
+    sanitized = sum(e["status"] == "sanitized" for e in entries)
+    print(f"Raksha completed: {len(entries)} files; {sanitized} sanitized; "
+          f"{len(entries) - sanitized} quarantined; {len(exported)} records")

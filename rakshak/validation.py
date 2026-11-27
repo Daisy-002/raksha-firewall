@@ -1,36 +1,18 @@
+"""Independent last check: fail closed if a direct identifier survives."""
 import re
 
+from .textutil import fold_digits
 
-RESIDUAL_PATTERNS = [
-    # Indian phone numbers with optional country code, trunk zero, and separators
-    re.compile(
-        r"(?<![0-9०-९])(?:\+?(?:91|९१)[\s.-]?)?0?[6-9६-९]"
-        r"[0-9०-९]{4}[\s.-]?[0-9०-९]{5}(?![0-9०-९])"
-    ),
-
-    # Email addresses
-    re.compile(r"\b[\w.+-]+@[\w-]+\.[\w.-]+\b", re.I),
-
-    # PAN
-    re.compile(r"\b[A-Z]{5}\d{4}[A-Z]\b", re.I),
-
-    # Common hospital and encounter identifier formats
-    re.compile(
-        r"\b(?:JJH|SNJ|HOSP|UHID|IPD|ADM|OPD)[-/]"
-        r"[A-Z0-9][A-Z0-9/-]{2,}\b",
-        re.I,
-    ),
-
-    # Aadhaar-like 12-digit numbers
-    re.compile(r"(?<!\d)\d{4}[\s-]?\d{4}[\s-]?\d{4}(?!\d)"),
-]
+RESIDUAL = [re.compile(p) for p in (
+    r"(?<![\w.])(?:\+?91[ -]?|0)?[6-9]\d{4}[ -]?\d{5}(?![\w]|\.\d)",
+    r"(?<![\w.-])\d{4}[ -]?\d{4}[ -]?\d{4}(?![\w-]|\.\d)",
+    r"[\w.+-]+@[A-Za-z][\w-]+\.[A-Za-z]{2,}",
+    r"(?<![A-Za-z0-9])[A-Z]{5}\d{4}[A-Z](?![A-Za-z0-9])",
+)]
+# Random UUIDs in FHIR references contain long digit groups and are not personal data.
+_UUID = re.compile(r"[0-9a-fA-F]{8}-(?:[0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}")
 
 
-def find_residual_identifiers(text: str):
-    found = []
-
-    for pattern in RESIDUAL_PATTERNS:
-        if pattern.search(text):
-            found.append("possible_identifier")
-
-    return found
+def has_residual_identifier(text):
+    folded = _UUID.sub(" ", fold_digits(text))
+    return any(pattern.search(folded) for pattern in RESIDUAL)

@@ -1,38 +1,38 @@
+"""report.json and records.jsonl. Neither ever contains source values."""
 import json
-from pathlib import Path
+import sys
 
 
-def write_report(output_dir: Path, files, records, stats, seconds, peak_mb):
-    sanitized = sum(x["status"] == "sanitized" for x in files)
-    quarantined = sum(x["status"] == "quarantined" for x in files)
-    suppressed = sum(x["status"] == "suppressed" for x in files)
+def peak_memory_mb():
+    try:
+        import resource
+        value = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    except ImportError:
+        return 0.0
+    return round(value / (1024 * 1024 if sys.platform == "darwin" else 1024), 2)
 
+
+def write_report(output_dir, files, records, entities, generalized, seconds):
+    status = [f["status"] for f in files]
     report = {
         "schema": "raksha-report/1",
         "files": files,
         "counts": {
             "files_total": len(files),
-            "files_sanitized": sanitized,
-            "files_quarantined": quarantined,
+            "files_sanitized": status.count("sanitized"),
+            "files_quarantined": status.count("quarantined"),
             "records_processed": len(records),
-            "identifiers_detected": stats.get("identifiers", 0),
-            "records_linked": sum(r.get("patient") is not None for r in records),
-            "records_generalized": stats.get("generalized", 0),
-            "records_suppressed": suppressed,
-            "records_quarantined": quarantined,
+            "identifiers_detected": sum(entities.values()),
+            "records_linked": sum(r["patient"] is not None for r in records),
+            "records_generalized": generalized,
+            "records_suppressed": 0,
+            "records_quarantined": 0,
         },
-        "entities": stats.get("entities", {}),
+        "entities": dict(sorted(entities.items())),
         "timing": {"seconds": round(seconds, 3)},
-        "resources": {"peak_rss_mb": peak_mb},
+        "resources": {"peak_rss_mb": peak_memory_mb()},
     }
-
-    (output_dir / "report.json").write_text(
-        json.dumps(report, indent=2),
-        encoding="utf-8"
-    )
-
-    with (output_dir / "records.jsonl").open("w", encoding="utf-8") as handle:
+    (output_dir / "report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
+    with (output_dir / "records.jsonl").open("w", encoding="utf-8", newline="\n") as handle:
         for record in records:
-            handle.write(
-                json.dumps(record, ensure_ascii=False, sort_keys=True) + "\n"
-            )
+            handle.write(json.dumps(record, ensure_ascii=False, sort_keys=True) + "\n")
