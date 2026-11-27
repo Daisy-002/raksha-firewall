@@ -6,7 +6,7 @@
     "profile": [
       "https://nrces.in/ndhm/fhir/r4/StructureDefinition/DocumentBundle"
     ],
-    "source": "#SNJ/26/064365"
+    "source": "#[REDACTED_ID]"
   },
   "identifier": {
     "system": "https://sanjeevani.hospital.example/bundles",
@@ -31,8 +31,8 @@
           ]
         },
         "subject": {
-          "reference": "urn:uuid:15d90edd-783d-459f-bfa8-914afda50870",
-          "display": "Usha Tiwari"
+          "reference": "PSN-QQ96BD4Y",
+          "display": "[REDACTED_NAME]"
         },
         "encounter": {
           "reference": "urn:uuid:c11eabea-0ab5-4c4a-ab31-46a5ba229759"
@@ -78,7 +78,7 @@
         "id": "15d90edd-783d-459f-bfa8-914afda50870",
         "text": {
           "status": "generated",
-          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Usha Tiwari, 55 yrs, female, SNJ/26/064365</div>"
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">[REDACTED_NAME], 55 yrs, female, [REDACTED_ID]</div>"
         },
         "identifier": [
           {
@@ -92,7 +92,7 @@
               ]
             },
             "system": "https://sanjeevani.hospital.example/uhid",
-            "value": "SNJ/26/064365"
+            "value": "[REDACTED_ID]"
           },
           {
             "system": "https://healthid.abdm.gov.in",
@@ -120,13 +120,13 @@
         "address": [
           {
             "line": [
-              "H.No. 371, Tehsil Purwa, Distt. Unnao"
+              "[GENERALIZED_LOCATION]"
             ],
             "city": "[GENERALIZED_LOCATION]",
             "district": "[GENERALIZED_LOCATION]",
-            "state": "Uttar Pradesh",
+            "state": "[GENERALIZED_LOCATION]",
             "postalCode": "[GENERALIZED_LOCATION]",
-            "country": "IN"
+            "country": "[GENERALIZED_LOCATION]"
           }
         ],
         "contact": [
@@ -178,8 +178,8 @@
         "address": [
           {
             "city": "[GENERALIZED_LOCATION]",
-            "state": "Uttar Pradesh",
-            "country": "IN"
+            "state": "[GENERALIZED_LOCATION]",
+            "country": "[GENERALIZED_LOCATION]"
           }
         ]
       }
@@ -198,11 +198,11 @@
         "identifier": [
           {
             "system": "https://sanjeevani.hospital.example/ipd",
-            "value": "IPD-2026-00442"
+            "value": "[REDACTED_ID]"
           }
         ],
         "subject": {
-          "reference": "urn:uuid:15d90edd-783d-459f-bfa8-914afda50870"
+          "reference": "PSN-QQ96BD4Y"
         },
         "period": {
           "start": "2026-10-10T15:30:00+05:30",
@@ -244,7 +244,7 @@
           "text": "Pneumonia, unspecified organism"
         },
         "subject": {
-          "reference": "urn:uuid:15d90edd-783d-459f-bfa8-914afda50870"
+          "reference": "PSN-QQ96BD4Y"
         },
         "encounter": {
           "reference": "urn:uuid:c11eabea-0ab5-4c4a-ab31-46a5ba229759"
@@ -268,7 +268,7 @@
           ]
         },
         "subject": {
-          "reference": "urn:uuid:15d90edd-783d-459f-bfa8-914afda50870"
+          "reference": "PSN-QQ96BD4Y"
         },
         "effectiveDateTime": "2026-10-10T15:30:00+05:30",
         "component": [
@@ -326,7 +326,7 @@
           "text": "Haemoglobin"
         },
         "subject": {
-          "reference": "urn:uuid:15d90edd-783d-459f-bfa8-914afda50870"
+          "reference": "PSN-QQ96BD4Y"
         },
         "effectiveDateTime": "2026-10-10T15:30:00+05:30",
         "valueQuantity": {
@@ -352,7 +352,7 @@
           "text": "Random Blood Sugar"
         },
         "subject": {
-          "reference": "urn:uuid:15d90edd-783d-459f-bfa8-914afda50870"
+          "reference": "PSN-QQ96BD4Y"
         },
         "effectiveDateTime": "2026-10-10T15:30:00+05:30",
         "valueQuantity": {
@@ -378,7 +378,7 @@
           "text": "Serum Creatinine"
         },
         "subject": {
-          "reference": "urn:uuid:15d90edd-783d-459f-bfa8-914afda50870"
+          "reference": "PSN-QQ96BD4Y"
         },
         "effectiveDateTime": "2026-10-10T15:30:00+05:30",
         "valueQuantity": {
@@ -404,7 +404,7 @@
           "text": "Total WBC Count"
         },
         "subject": {
-          "reference": "urn:uuid:15d90edd-783d-459f-bfa8-914afda50870"
+          "reference": "PSN-QQ96BD4Y"
         },
         "effectiveDateTime": "2026-10-10T15:30:00+05:30",
         "valueQuantity": {
@@ -430,7 +430,7 @@
           "text": "Serum Sodium"
         },
         "subject": {
-          "reference": "urn:uuid:15d90edd-783d-459f-bfa8-914afda50870"
+          "reference": "PSN-QQ96BD4Y"
         },
         "effectiveDateTime": "2026-10-10T15:30:00+05:30",
         "valueQuantity": {
@@ -450,7 +450,7 @@
           "text": "Azithromycin 500 mg"
         },
         "subject": {
-          "reference": "urn:uuid:15d90edd-783d-459f-bfa8-914afda50870"
+          "reference": "PSN-QQ96BD4Y"
         },
         "authoredOn": "2026-10-20",
         "dosageInstruction": [
@@ -471,7 +471,7 @@
           "text": "Paracetamol 650 mg"
         },
         "subject": {
-          "reference": "urn:uuid:15d90edd-783d-459f-bfa8-914afda50870"
+          "reference": "PSN-QQ96BD4Y"
         },
         "authoredOn": "2026-10-20",
         "dosageInstruction": [
@@ -492,7 +492,7 @@
           "text": "Pantoprazole 40 mg"
         },
         "subject": {
-          "reference": "urn:uuid:15d90edd-783d-459f-bfa8-914afda50870"
+          "reference": "PSN-QQ96BD4Y"
         },
         "authoredOn": "2026-10-20",
         "dosageInstruction": [
@@ -512,14 +512,14 @@
           "text": "Referral letter"
         },
         "subject": {
-          "reference": "urn:uuid:15d90edd-783d-459f-bfa8-914afda50870"
+          "reference": "PSN-QQ96BD4Y"
         },
         "content": [
           {
             "attachment": {
               "contentType": "text/plain",
               "language": "en",
-              "data": "UmVmZXJyYWw6IFVzaGEgVGl3YXJpIChTTkovMjYvMDY0MzY1KSwgbW9iaWxlIDYyNjAwODkxOTYsIHJlZmVycmVkIGZvciBmb2xsb3ctdXAgb2YgUG5ldW1vbmlhLCB1bnNwZWNpZmllZCBvcmdhbmlzbS4=",
+              "data": "UmVmZXJyYWw6IFVzaGEgVGl3YXJpIChbUkVEQUNURURfSURdKSwgbW9iaWxlIFtSRURBQ1RFRF9QSE9ORV0sIHJlZmVycmVkIGZvciBmb2xsb3ctdXAgb2YgUG5ldW1vbmlhLCB1bnNwZWNpZmllZCBvcmdhbmlzbS4=",
               "title": "Referral letter"
             }
           }

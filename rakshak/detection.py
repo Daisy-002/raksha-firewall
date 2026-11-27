@@ -47,7 +47,11 @@ FIELD_GROUPS = {
     },
     "mrn": {
         "mrn", "uhid", "patientid", "patient_id",
+        "patientmrn", "patientnumber", "patientno",
         "medicalrecordnumber", "medicalrecordno",
+        "medicalrecordid", "mrnumber", "mrno", "mrid",
+        "chartnumber", "chartno", "hospitalid",
+        "hospitalrecordnumber", "uhidnumber",
         "registrationid", "registrationnumber",
         "registrationno", "healthid", "abhaid",
         "hospitalnumber", "hospnumber", "opnumber",
@@ -57,14 +61,20 @@ FIELD_GROUPS = {
     },
     "address": {
         "address", "fulladdress", "residentialaddress",
-        "permanentaddress", "currentaddress", "house",
+        "permanentaddress", "currentaddress", "addressline1",
+        "addressline2", "addressline3", "streetaddress",
+        "house", "building", "buildingname", "flat", "flatno",
+        "flatnumber", "area", "neighborhood", "neighbourhood",
+        "postoffice", "postofficename", "panchayat", "block",
+        "subdistrict",
         "houseno", "house_number", "street", "streetname",
         "landmark", "locality", "mohalla", "colony",
         "village", "villagename", "gram", "town",
         "pincode", "pin", "postalcode", "zipcode",
         "district", "ward", "tehsil",
         "पता", "गांव", "गाँव", "ग्राम", "मोहल्ला",
-        "जिला", "ज़िला", "तहसील", "पिन कोड",
+        "जिला", "ज़िला", "तहसील", "पिन कोड", "मकान",
+        "घर", "इलाका", "क्षेत्र", "डाकघर", "वार्ड",
     },
     "insurance": {
         "insuranceid", "insurance_id", "policyid",
@@ -112,14 +122,42 @@ LABELLED_VALUE = re.compile(
     r"father(?:'s)?\s*name|mother(?:'s)?\s*name|"
     r"husband(?:'s)?\s*name|wife(?:'s)?\s*name|"
     r"guardian(?:'s)?\s*name|relative\s*name|"
+    r"house(?:\s*(?:no\.?|number))?|flat(?:\s*(?:no\.?|number))?|"
+    r"building(?:\s*name)?|street(?:\s*address)?|"
+    r"address(?:\s*(?:line\s*\d|details?))?|"
+    r"locality|landmark|area|neighbou?rhood|colony|"
+    r"village|town|city|district|ward|tehsil|block|"
+    r"post\s*office|postal\s*code|zip(?:\s*code)?|"
+    r"pin(?:\s*code)?|"
     r"s/o|d/o|w/o|c/o|"
     r"नाम|मरीज\s*का\s*नाम|रोगी\s*का\s*नाम|"
     r"पिता\s*का\s*नाम|माता\s*का\s*नाम|"
-    r"पता|गांव|ग्राम|मोहल्ला|"
+    r"पता|गांव|ग्राम|मोहल्ला|मकान(?:\s*संख्या)?|"
+    r"घर(?:\s*संख्या)?|इलाका|क्षेत्र|डाकघर|वार्ड|"
     r"मोबाइल|फोन|आधार|पिन\s*कोड|"
+    r"जिला|तहसील|"
     r"जन्म\s*तिथि|जन्मतिथि"
     r")\s*[:：=\-]\s*(?P<value>[^\n,;|]{2,80})",
     re.I
+)
+
+MRN_LABELLED_VALUE = re.compile(
+    r"(?<![A-Z0-9])"
+    r"(?P<label>"
+    r"mrn|mr\s*(?:no\.?|number)?|"
+    r"medical[\s_-]*record(?:[\s_-]*(?:id|number|no\.?))?|"
+    r"patient[\s_-]*(?:id|number|no\.?)|"
+    r"hospital[\s_-]*(?:id|number|no\.?)|"
+    r"uhid(?:[\s_-]*(?:id|number|no\.?))?|"
+    r"chart[\s_-]*(?:id|number|no\.?)|"
+    r"registration[\s_-]*(?:id|number|no\.?)|"
+    r"reg[\s_-]*no\.?"
+    r")"
+    r"(?P<separator>\s*(?:[#:=\-]\s*|\s+))"
+    r"(?P<value>(?=[A-Z0-9./_-]*\d)"
+    r"[A-Z0-9](?:[A-Z0-9./_-]{1,}[A-Z0-9]))"
+    r"(?![A-Z0-9])",
+    re.I,
 )
 
 RELATIVE_LABEL = re.compile(
@@ -143,12 +181,45 @@ TIMESTAMP_RELATIVE_NAME = re.compile(
     r"(?=\s*[-–—]\s*[KSDWC]\s*/(?:\s*O\b)?)"
 )
 
+HINGLISH_NAME_WORD = (
+    r"(?!"
+    r"and|are|aaj|admit(?:ted)?|blood|bp|bukhar|case|complaint|"
+    r"complaints|cold|cough|dard|days?|doctor|fever|for|from|hai|"
+    r"had|has|have|headache|high|history|hospital|ji|ka|kal|ke|khansi|"
+    r"ki|ko|low|medicine|ne|pain|patient|pulse|sahab|sahib|sugar|"
+    r"the|tha|thee|thi|today|treatment|with|yesterday"
+    r")\b[A-Za-z][A-Za-z.'-]{1,}"
+)
+HINGLISH_NAME = rf"{HINGLISH_NAME_WORD}(?:\s+{HINGLISH_NAME_WORD}){{0,2}}"
+HINGLISH_CLINICAL_TERM = (
+    r"(?:bukhar|fever|khansi|cough|jukam|cold|dard|pain|headache|"
+    r"sir\s*dard|pet\s*dard|chest\s*pain|saans|breathing|sugar|"
+    r"diabetes|bp|blood\s+pressure|pulse|vomit(?:ing)?|ulti|"
+    r"dizziness|chakkar|weakness|kamzori|infection|rash|swelling|"
+    r"sujan|admit(?:ted)?|checkup|treatment|medicine|dawa|doctor|"
+    r"hospital|clinic|opd|consult(?:ed|ation)?|complain(?:ed|ing)?|"
+    r"report(?:ed)?|bataya|bola|kaha|dikhaya|aaya|aayi|laaya|laayi)"
+)
 HINGLISH_PERSON_CONTEXT = re.compile(
-    r"(?<![\w])"
-    r"[A-Z][A-Za-z.'-]*(?:\s+[A-Z][A-Za-z.'-]*){0,2}"
-    r"(?:\s+(?i:sahab|ji))?"
-    r"(?=\s+(?:(?i:ko)\s+\d+\s*(?i:din|days?)\b|"
-    r"(?i:ka|ki|ke)\s+(?i:BP|pulse|blood\s+pressure)\b))"
+    rf"(?<![\w])(?P<name>{HINGLISH_NAME})"
+    r"(?:\s+(?:sahab|sahib|ji))?"
+    rf"(?=\s+(?:"
+    rf"ko\s+(?:(?:\d{{1,2}}\s*(?:din|days?|haft(?:e|a)|weeks?|"
+    rf"mahine?|months?)\s*(?:se)?|aaj|kal)\s*)?"
+    rf"(?:{HINGLISH_CLINICAL_TERM})\b|"
+    rf"(?:ka|ki|ke)\s+(?:bp|blood\s+pressure|pulse|sugar|"
+    rf"fever|bukhar|dard|pain)\b|"
+    rf"ne\s+(?:complain(?:ed|ing)?|report(?:ed)?|bataya|bola|kaha|"
+    rf"dikhaya|(?:{HINGLISH_CLINICAL_TERM}))\b|"
+    rf"(?:is\s+)?(?:admit(?:ted)?|referred|under\s+treatment)\b"
+    rf"))",
+    re.I,
+)
+HINGLISH_REVERSED_PERSON_CONTEXT = re.compile(
+    rf"(?i)(?P<context>\b(?:{HINGLISH_CLINICAL_TERM})\b)"
+    rf"(?P<gap>[^\n.!?;]{{0,48}}?)"
+    rf"(?P<name>{HINGLISH_NAME})"
+    rf"(?P<particle>\s+(?:ko|ka|ki|ke)\b)"
 )
 
 HINDI_PERSON_DURATION_CONTEXT = re.compile(
@@ -316,6 +387,7 @@ def sanitize_value(field, value=None, stats=None):
             for pattern in PATTERNS.values()
         )
         detected += len(LABELLED_VALUE.findall(value))
+        detected += len(MRN_LABELLED_VALUE.findall(value))
         detected += len(RELATIVE_LABEL.findall(value))
         if detected:
             stats.identifiers += detected
@@ -334,6 +406,14 @@ def sanitize_value(field, value=None, stats=None):
         return "[REDACTED_METADATA]"
 
     value = _replace_patterns(value)
+    value = MRN_LABELLED_VALUE.sub(
+        lambda match: (
+            match.group("label")
+            + match.group("separator")
+            + "[REDACTED_ID]"
+        ),
+        value,
+    )
 
     def replace_label(match):
         label = match.group("label")
@@ -363,6 +443,15 @@ def sanitize_value(field, value=None, stats=None):
         r"\1[REDACTED_NAME]", value
     )
     value = HINGLISH_PERSON_CONTEXT.sub("[REDACTED_NAME]", value)
+    value = HINGLISH_REVERSED_PERSON_CONTEXT.sub(
+        lambda match: (
+            match.group("context")
+            + match.group("gap")
+            + "[REDACTED_NAME]"
+            + match.group("particle")
+        ),
+        value,
+    )
     value = HINDI_PERSON_DURATION_CONTEXT.sub(
         "[REDACTED_NAME]", value
     )
@@ -409,6 +498,9 @@ def detect_identifiers(value):
             found["NAME"] += 1
         else:
             found["ADDRESS"] += 1
+
+    if MRN_LABELLED_VALUE.search(value):
+        found["MRN"] += len(MRN_LABELLED_VALUE.findall(value))
 
     if RELATIVE_LABEL.search(value):
         found["RELATIVE_NAME"] += 1

@@ -1,8 +1,8 @@
 Sanjeevani Multispeciality Hospital - ओपीडी पर्चा
-नाम: [GENERALIZED_LOCATION]
+नाम: [REDACTED_NAME]
 ग्राम: [GENERALIZED_LOCATION]
 तारीख: 16/05/2026
-सुखविंदर कौर को 2 दिन से बुखार है।
+[REDACTED_NAME] को 2 दिन से बुखार है।
 Rx
 1. Tab Paracetamol 650mg 1-1-1 x 1 month
 2. Tab Metformin 500mg 1-0-1 x 2 wks

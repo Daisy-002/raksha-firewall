@@ -6,7 +6,7 @@
     "profile": [
       "https://nrces.in/ndhm/fhir/r4/StructureDefinition/DocumentBundle"
     ],
-    "source": "#SNJ/26/064441"
+    "source": "#[REDACTED_ID]"
   },
   "identifier": {
     "system": "https://sanjeevani.hospital.example/bundles",
@@ -31,8 +31,8 @@
           ]
         },
         "subject": {
-          "reference": "urn:uuid:76b6980b-5c2d-4743-b2db-367658e454fd",
-          "display": "Naresh Chaudhary"
+          "reference": "PSN-SY00YPD1",
+          "display": "[REDACTED_NAME]"
         },
         "encounter": {
           "reference": "urn:uuid:c999a953-e740-4646-839a-05057e6d8468"
@@ -75,7 +75,7 @@
         "id": "76b6980b-5c2d-4743-b2db-367658e454fd",
         "text": {
           "status": "generated",
-          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Naresh Chaudhary, 95 yrs, male, SNJ/26/064441</div>"
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">[REDACTED_NAME], 95 yrs, male, [REDACTED_ID]</div>"
         },
         "identifier": [
           {
@@ -89,7 +89,7 @@
               ]
             },
             "system": "https://sanjeevani.hospital.example/uhid",
-            "value": "SNJ/26/064441"
+            "value": "[REDACTED_ID]"
           },
           {
             "system": "https://healthid.abdm.gov.in",
@@ -117,13 +117,13 @@
         "address": [
           {
             "line": [
-              "H.No. 389, near Panchayat Bhawan, Tehsil Nanpara, Distt. Bahraich"
+              "[GENERALIZED_LOCATION]"
             ],
             "city": "[GENERALIZED_LOCATION]",
             "district": "[GENERALIZED_LOCATION]",
-            "state": "Uttar Pradesh",
+            "state": "[GENERALIZED_LOCATION]",
             "postalCode": "[GENERALIZED_LOCATION]",
-            "country": "IN"
+            "country": "[GENERALIZED_LOCATION]"
           }
         ],
         "contact": [
@@ -175,8 +175,8 @@
         "address": [
           {
             "city": "[GENERALIZED_LOCATION]",
-            "state": "Uttar Pradesh",
-            "country": "IN"
+            "state": "[GENERALIZED_LOCATION]",
+            "country": "[GENERALIZED_LOCATION]"
           }
         ]
       }
@@ -195,11 +195,11 @@
         "identifier": [
           {
             "system": "https://sanjeevani.hospital.example/ipd",
-            "value": "IPD-2026-00460"
+            "value": "[REDACTED_ID]"
           }
         ],
         "subject": {
-          "reference": "urn:uuid:76b6980b-5c2d-4743-b2db-367658e454fd"
+          "reference": "PSN-SY00YPD1"
         },
         "period": {
           "start": "2026-07-23T12:00:00+05:30",
@@ -241,7 +241,7 @@
           "text": "Asthma, unspecified"
         },
         "subject": {
-          "reference": "urn:uuid:76b6980b-5c2d-4743-b2db-367658e454fd"
+          "reference": "PSN-SY00YPD1"
         },
         "encounter": {
           "reference": "urn:uuid:c999a953-e740-4646-839a-05057e6d8468"
@@ -273,7 +273,7 @@
           "text": "Rabies, unspecified"
         },
         "subject": {
-          "reference": "urn:uuid:76b6980b-5c2d-4743-b2db-367658e454fd"
+          "reference": "PSN-SY00YPD1"
         },
         "encounter": {
           "reference": "urn:uuid:c999a953-e740-4646-839a-05057e6d8468"
@@ -297,7 +297,7 @@
           ]
         },
         "subject": {
-          "reference": "urn:uuid:76b6980b-5c2d-4743-b2db-367658e454fd"
+          "reference": "PSN-SY00YPD1"
         },
         "effectiveDateTime": "2026-07-23T12:00:00+05:30",
         "component": [
@@ -355,7 +355,7 @@
           "text": "Haemoglobin"
         },
         "subject": {
-          "reference": "urn:uuid:76b6980b-5c2d-4743-b2db-367658e454fd"
+          "reference": "PSN-SY00YPD1"
         },
         "effectiveDateTime": "2026-07-23T12:00:00+05:30",
         "valueQuantity": {
@@ -381,7 +381,7 @@
           "text": "Random Blood Sugar"
         },
         "subject": {
-          "reference": "urn:uuid:76b6980b-5c2d-4743-b2db-367658e454fd"
+          "reference": "PSN-SY00YPD1"
         },
         "effectiveDateTime": "2026-07-23T12:00:00+05:30",
         "valueQuantity": {
@@ -407,7 +407,7 @@
           "text": "Serum Creatinine"
         },
         "subject": {
-          "reference": "urn:uuid:76b6980b-5c2d-4743-b2db-367658e454fd"
+          "reference": "PSN-SY00YPD1"
         },
         "effectiveDateTime": "2026-07-23T12:00:00+05:30",
         "valueQuantity": {
@@ -433,7 +433,7 @@
           "text": "Total WBC Count"
         },
         "subject": {
-          "reference": "urn:uuid:76b6980b-5c2d-4743-b2db-367658e454fd"
+          "reference": "PSN-SY00YPD1"
         },
         "effectiveDateTime": "2026-07-23T12:00:00+05:30",
         "valueQuantity": {
@@ -459,7 +459,7 @@
           "text": "Serum Sodium"
         },
         "subject": {
-          "reference": "urn:uuid:76b6980b-5c2d-4743-b2db-367658e454fd"
+          "reference": "PSN-SY00YPD1"
         },
         "effectiveDateTime": "2026-07-23T12:00:00+05:30",
         "valueQuantity": {
@@ -479,7 +479,7 @@
           "text": "Salbutamol inhaler 100 mcg"
         },
         "subject": {
-          "reference": "urn:uuid:76b6980b-5c2d-4743-b2db-367658e454fd"
+          "reference": "PSN-SY00YPD1"
         },
         "authoredOn": "2026-07-28",
         "dosageInstruction": [
@@ -499,7 +499,7 @@
           "text": "Deep brain stimulation"
         },
         "subject": {
-          "reference": "urn:uuid:76b6980b-5c2d-4743-b2db-367658e454fd"
+          "reference": "PSN-SY00YPD1"
         },
         "performedDateTime": "2026-07-23"
       }

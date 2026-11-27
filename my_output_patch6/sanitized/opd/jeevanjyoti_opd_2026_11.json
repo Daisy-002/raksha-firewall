@@ -9,7 +9,7 @@
     {
       "visit_id": "[REDACTED_ID]",
       "patient_ref": "PSN-6BC96SNG",
-      "visit_date": "01-11-2026",
+      "visit_date": "12-04-2027",
       "department": "Medicine",
       "doctor": "Dr. Vandana Kulshrestha",
       "complaints": "kamzori 7 hafte se",
@@ -35,7 +35,7 @@
           "duration": "30 days"
         }
       ],
-      "notes": "Vikas ka BP 111/75, ulti band ho gayi. Review after 2 weeks.",
+      "notes": "[REDACTED_NAME] ka BP 111/75, ulti band ho gayi. Review after 2 weeks.",
       "patient": {
         "name": "[REDACTED_NAME]",
         "age_sex": "54/M",
@@ -45,7 +45,7 @@
     {
       "visit_id": "[REDACTED_ID]",
       "patient_ref": "PSN-PE4DRBBR",
-      "visit_date": "08-11-2026",
+      "visit_date": "12-05-2026",
       "department": "Medicine",
       "doctor": "Dr. Vandana Kulshrestha",
       "complaints": "saans phoolna 3 hafte se",
@@ -83,7 +83,7 @@
           "duration": "7 days"
         }
       ],
-      "notes": "Ramesh ka BP 105/70, ulti band ho gayi. Review after 2 weeks.",
+      "notes": "[REDACTED_NAME] ka BP 105/70, ulti band ho gayi. Review after 2 weeks.",
       "patient": {
         "name": "[REDACTED_NAME]",
         "age_sex": "44/M",

@@ -36,7 +36,7 @@
           "duration": "14 days"
         }
       ],
-      "notes": "Manoj bhai ka BP 117/73, raat ko neend theek se aayi. Review after 2 weeks.",
+      "notes": "[REDACTED_NAME] ka BP 117/73, [REDACTED_NAME] ko neend theek se aayi. Review after 2 weeks.",
       "patient": {
         "name": "[REDACTED_NAME]",
         "age_sex": "65/M",
@@ -74,7 +74,7 @@
           "duration": "30 days"
         }
       ],
-      "notes": "Anita ka BP 128/75, dawai time pe le rahe hain. Review after 2 weeks."
+      "notes": "[REDACTED_NAME] ka BP 128/75, dawai time pe le rahe hain. Review after 2 weeks."
     },
     {
       "visit_id": "[REDACTED_ID]",
@@ -105,7 +105,7 @@
           "duration": "5 days"
         }
       ],
-      "notes": "Ashok ji ka BP 109/74, raat ko neend theek se aayi. Review after 2 weeks."
+      "notes": "[REDACTED_NAME] ka BP 109/74, [REDACTED_NAME] ko neend theek se aayi. Review after 2 weeks."
     }
   ]
 }

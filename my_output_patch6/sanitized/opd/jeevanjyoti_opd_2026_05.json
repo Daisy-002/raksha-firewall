@@ -10,7 +10,7 @@
     {
       "visit_id": "[REDACTED_ID]",
       "patient_ref": "PSN-MDB8N58V",
-      "visit_date": "18-05-2026",
+      "visit_date": "06-07-2026",
       "department": "Pulmonology",
       "doctor": "Dr. Harjeet Bedi",
       "complaints": "[REDACTED_RELATIVE_NAME] x 9 days",
@@ -40,7 +40,7 @@
           "duration": "7 days"
         }
       ],
-      "notes": "Irfan ka BP 128/72, raat ko neend theek se aayi. Review after 2 weeks.",
+      "notes": "[REDACTED_NAME] ka BP 128/72, [REDACTED_NAME] ko neend theek se aayi. Review after 2 weeks.",
       "patient": {
         "name": "[REDACTED_NAME]",
         "age_sex": "97/M",
@@ -50,7 +50,7 @@
     {
       "visit_id": "[REDACTED_ID]",
       "patient_ref": "PSN-H9GN0NMA",
-      "visit_date": "16-05-2026",
+      "visit_date": "11-06-2026",
       "department": "Medicine",
       "doctor": "Dr. Vandana Kulshrestha",
       "complaints": "[REDACTED_RELATIVE_NAME] x 6 days",
@@ -76,7 +76,7 @@
           "duration": "5 days"
         }
       ],
-      "notes": "Harish sahab ka BP 110/83, chal phir sakte hain. Review after 2 weeks.",
+      "notes": "[REDACTED_NAME] ka BP 110/83, chal phir sakte hain. Review after 2 weeks.",
       "patient": {
         "name": "[REDACTED_NAME]",
         "age_sex": "60/M",
@@ -86,7 +86,7 @@
     {
       "visit_id": "[REDACTED_ID]",
       "patient_ref": "PSN-AB5MZF4N",
-      "visit_date": "10-05-2026",
+      "visit_date": "20-04-2026",
       "department": "Medicine",
       "doctor": "Dr. Ramesh Srivastava",
       "complaints": "7 दिन से चक्कर आना",
@@ -140,7 +140,7 @@
           "duration": "30 days"
         }
       ],
-      "notes": "Asha ka BP 168/101, bukhar utar gaya hai. Review after 2 weeks.",
+      "notes": "[REDACTED_NAME] ka BP 168/101, bukhar utar gaya hai. Review after 2 weeks.",
       "patient": {
         "name": "[REDACTED_NAME]",
         "age_sex": "48/F",
@@ -150,7 +150,7 @@
     {
       "visit_id": "[REDACTED_ID]",
       "patient_ref": "PSN-G94FQRT9",
-      "visit_date": "13-05-2026",
+      "visit_date": "31-08-2026",
       "department": "Medicine",
       "doctor": "Dr. Vandana Kulshrestha",
       "complaints": "saans phoolna 2 hafte se",
@@ -176,7 +176,7 @@
           "duration": "7 days"
         }
       ],
-      "notes": "Geeta behenji ka BP 109/71, BP abhi bhi high hai. Review after 2 weeks.",
+      "notes": "[REDACTED_NAME] ka BP 109/71, BP abhi bhi high hai. Review after 2 weeks.",
       "patient": {
         "name": "[REDACTED_NAME]",
         "age_sex": "54/F",
@@ -186,7 +186,7 @@
     {
       "visit_id": "[REDACTED_ID]",
       "patient_ref": "PSN-R7XEK5B9",
-      "visit_date": "16-05-2026",
+      "visit_date": "05-02-2026",
       "department": "Medicine",
       "doctor": "Dr. Ramesh Srivastava",
       "complaints": "9 din se bukhar",
@@ -224,7 +224,7 @@
           "duration": "14 days"
         }
       ],
-      "notes": "Brijesh ji ka BP 124/69, bukhar utar gaya hai. Review after 2 weeks.",
+      "notes": "[REDACTED_NAME] ka BP 124/69, bukhar utar gaya hai. Review after 2 weeks.",
       "patient": {
         "name": "[REDACTED_NAME]",
         "age_sex": "27/M",
@@ -234,7 +234,7 @@
     {
       "visit_id": "[REDACTED_ID]",
       "patient_ref": "PSN-P16FGYDA",
-      "visit_date": "30-05-2026",
+      "visit_date": "20-11-2026",
       "department": "Pulmonology",
       "doctor": "Dr. Harjeet Bedi",
       "complaints": "9 दिन से पेट दर्द",
@@ -260,7 +260,7 @@
           "duration": "7 days"
         }
       ],
-      "notes": "Mukesh ka BP 109/68, khana kam kha rahe hain. Review after 2 weeks.",
+      "notes": "[REDACTED_NAME] ka BP 109/68, khana kam kha rahe hain. Review after 2 weeks.",
       "patient": {
         "name": "[REDACTED_NAME]",
         "age_sex": "42/M",
@@ -270,7 +270,7 @@
     {
       "visit_id": "[REDACTED_ID]",
       "patient_ref": "PSN-AB5MZF4N",
-      "visit_date": "29-05-2026",
+      "visit_date": "09-05-2026",
       "department": "Medicine",
       "doctor": "Dr. Vandana Kulshrestha",
       "complaints": "[REDACTED_RELATIVE_NAME] x 9 days",
@@ -324,7 +324,7 @@
           "duration": "30 days"
         }
       ],
-      "notes": "Asha ka BP 158/102, bukhar utar gaya hai. Review after 2 weeks.",
+      "notes": "[REDACTED_NAME] ka BP 158/102, bukhar utar gaya hai. Review after 2 weeks.",
       "patient": {
         "name": "[REDACTED_NAME]",
         "age_sex": "48/F",
@@ -334,7 +334,7 @@
     {
       "visit_id": "[REDACTED_ID]",
       "patient_ref": "PSN-CZZE12D7",
-      "visit_date": "17-05-2026",
+      "visit_date": "13-10-2026",
       "department": "Pulmonology",
       "doctor": "Dr. Harjeet Bedi",
       "complaints": "9 दिन से चक्कर आना",
@@ -372,7 +372,7 @@
           "duration": "7 days"
         }
       ],
-      "notes": "Sarita ka BP 105/68, ulti band ho gayi. Review after 2 weeks.",
+      "notes": "[REDACTED_NAME] ka BP 105/68, ulti band ho gayi. Review after 2 weeks.",
       "patient": {
         "name": "[REDACTED_NAME]",
         "age_sex": "9/F",
@@ -382,7 +382,7 @@
     {
       "visit_id": "[REDACTED_ID]",
       "patient_ref": "PSN-C9H2Y2V5",
-      "visit_date": "29-05-2026",
+      "visit_date": "19-11-2026",
       "department": "Medicine",
       "doctor": "Dr. Ramesh Srivastava",
       "complaints": "[REDACTED_RELATIVE_NAME] x 5 days",
@@ -408,7 +408,7 @@
           "duration": "14 days"
         }
       ],
-      "notes": "Kamla behenji ka BP 107/81, sugar control nahi hai. Review after 2 weeks.",
+      "notes": "Kamla [REDACTED_NAME] ka BP 107/81, sugar control nahi hai. Review after 2 weeks.",
       "patient": {
         "name": "[REDACTED_NAME]",
         "age_sex": "47/F",
@@ -418,7 +418,7 @@
     {
       "visit_id": "[REDACTED_ID]",
       "patient_ref": "PSN-MR5J5QWM",
-      "visit_date": "26-05-2026",
+      "visit_date": "11-05-2026",
       "department": "Medicine",
       "doctor": "Dr. Ramesh Srivastava",
       "complaints": "[REDACTED_RELATIVE_NAME] x 3 days",
@@ -482,7 +482,7 @@
           "duration": "14 days"
         }
       ],
-      "notes": "Mahesh ji ka BP 132/71, sugar control nahi hai. Review after 2 weeks.",
+      "notes": "[REDACTED_NAME] ka BP 132/71, sugar control nahi hai. Review after 2 weeks.",
       "patient": {
         "name": "[REDACTED_NAME]",
         "age_sex": "49/M",
@@ -492,7 +492,7 @@
     {
       "visit_id": "[REDACTED_ID]",
       "patient_ref": "PSN-MDB8N58V",
-      "visit_date": "24-05-2026",
+      "visit_date": "12-07-2026",
       "department": "Pulmonology",
       "doctor": "Dr. Harjeet Bedi",
       "complaints": "chakkar aana 9 din se",
@@ -522,7 +522,7 @@
           "duration": "14 days"
         }
       ],
-      "notes": "Irfan ka BP 104/68, raat ko neend theek se aayi. Review after 2 weeks.",
+      "notes": "[REDACTED_NAME] ka BP 104/68, [REDACTED_NAME] ko neend theek se aayi. Review after 2 weeks.",
       "patient": {
         "name": "[REDACTED_NAME]",
         "age_sex": "97/M",
@@ -532,7 +532,7 @@
     {
       "visit_id": "[REDACTED_ID]",
       "patient_ref": "PSN-DV9G449J",
-      "visit_date": "10-05-2026",
+      "visit_date": "19-05-2026",
       "department": "Medicine",
       "doctor": "Dr. Vandana Kulshrestha",
       "complaints": "[REDACTED_RELATIVE_NAME] x 2 days",
@@ -584,7 +584,7 @@
           "duration": "7 days"
         }
       ],
-      "notes": "Fatima ji ka BP 136/78, bukhar utar gaya hai. Review after 2 weeks.",
+      "notes": "[REDACTED_NAME] ka BP 136/78, bukhar utar gaya hai. Review after 2 weeks.",
       "patient": {
         "name": "[REDACTED_NAME]",
         "age_sex": "0/F",

@@ -30,8 +30,8 @@
           ]
         },
         "subject": {
-          "reference": "urn:uuid:ff7e8fbb-f294-4152-934d-71bbc3a01d62",
-          "display": "Asha Rajput"
+          "reference": "PSN-H8BMNW6M",
+          "display": "[REDACTED_NAME]"
         },
         "encounter": {
           "reference": "urn:uuid:761938df-73c8-44de-afa8-15986a4d9d43"
@@ -86,7 +86,7 @@
         "id": "ff7e8fbb-f294-4152-934d-71bbc3a01d62",
         "text": {
           "status": "generated",
-          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Asha Rajput, 48 yrs, female, JJH-0076900</div>"
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">[REDACTED_NAME], 48 yrs, female, [REDACTED_ID]</div>"
         },
         "identifier": [
           {
@@ -100,7 +100,7 @@
               ]
             },
             "system": "https://jeevanjyoti.hospital.example/uhid",
-            "value": "JJH-0076900"
+            "value": "[REDACTED_ID]"
           },
           {
             "system": "https://healthid.abdm.gov.in",
@@ -128,13 +128,13 @@
         "address": [
           {
             "line": [
-              "House 71, Ward 3, Mohalla Subhash Nagar, near Kali Mata Mandir, Tehsil Lambhua, Distt. Sultanpur"
+              "[GENERALIZED_LOCATION]"
             ],
             "city": "[GENERALIZED_LOCATION]",
             "district": "[GENERALIZED_LOCATION]",
-            "state": "Uttar Pradesh",
+            "state": "[GENERALIZED_LOCATION]",
             "postalCode": "[GENERALIZED_LOCATION]",
-            "country": "IN"
+            "country": "[GENERALIZED_LOCATION]"
           }
         ],
         "contact": [
@@ -186,8 +186,8 @@
         "address": [
           {
             "city": "[GENERALIZED_LOCATION]",
-            "state": "Uttar Pradesh",
-            "country": "IN"
+            "state": "[GENERALIZED_LOCATION]",
+            "country": "[GENERALIZED_LOCATION]"
           }
         ]
       }
@@ -210,7 +210,7 @@
           }
         ],
         "subject": {
-          "reference": "urn:uuid:ff7e8fbb-f294-4152-934d-71bbc3a01d62"
+          "reference": "PSN-H8BMNW6M"
         },
         "period": {
           "start": "2026-08-30T16:15:00+05:30",
@@ -252,7 +252,7 @@
           "text": "Essential (primary) hypertension"
         },
         "subject": {
-          "reference": "urn:uuid:ff7e8fbb-f294-4152-934d-71bbc3a01d62"
+          "reference": "PSN-H8BMNW6M"
         },
         "encounter": {
           "reference": "urn:uuid:761938df-73c8-44de-afa8-15986a4d9d43"
@@ -284,7 +284,7 @@
           "text": "Hypothyroidism, unspecified"
         },
         "subject": {
-          "reference": "urn:uuid:ff7e8fbb-f294-4152-934d-71bbc3a01d62"
+          "reference": "PSN-H8BMNW6M"
         },
         "encounter": {
           "reference": "urn:uuid:761938df-73c8-44de-afa8-15986a4d9d43"
@@ -308,7 +308,7 @@
           ]
         },
         "subject": {
-          "reference": "urn:uuid:ff7e8fbb-f294-4152-934d-71bbc3a01d62"
+          "reference": "PSN-H8BMNW6M"
         },
         "effectiveDateTime": "2026-08-30T16:15:00+05:30",
         "component": [
@@ -366,7 +366,7 @@
           "text": "Haemoglobin"
         },
         "subject": {
-          "reference": "urn:uuid:ff7e8fbb-f294-4152-934d-71bbc3a01d62"
+          "reference": "PSN-H8BMNW6M"
         },
         "effectiveDateTime": "2026-08-30T16:15:00+05:30",
         "valueQuantity": {
@@ -392,7 +392,7 @@
           "text": "Random Blood Sugar"
         },
         "subject": {
-          "reference": "urn:uuid:ff7e8fbb-f294-4152-934d-71bbc3a01d62"
+          "reference": "PSN-H8BMNW6M"
         },
         "effectiveDateTime": "2026-08-30T16:15:00+05:30",
         "valueQuantity": {
@@ -418,7 +418,7 @@
           "text": "Serum Creatinine"
         },
         "subject": {
-          "reference": "urn:uuid:ff7e8fbb-f294-4152-934d-71bbc3a01d62"
+          "reference": "PSN-H8BMNW6M"
         },
         "effectiveDateTime": "2026-08-30T16:15:00+05:30",
         "valueQuantity": {
@@ -444,7 +444,7 @@
           "text": "TSH"
         },
         "subject": {
-          "reference": "urn:uuid:ff7e8fbb-f294-4152-934d-71bbc3a01d62"
+          "reference": "PSN-H8BMNW6M"
         },
         "effectiveDateTime": "2026-08-30T16:15:00+05:30",
         "valueQuantity": {
@@ -470,7 +470,7 @@
           "text": "Total WBC Count"
         },
         "subject": {
-          "reference": "urn:uuid:ff7e8fbb-f294-4152-934d-71bbc3a01d62"
+          "reference": "PSN-H8BMNW6M"
         },
         "effectiveDateTime": "2026-08-30T16:15:00+05:30",
         "valueQuantity": {
@@ -496,7 +496,7 @@
           "text": "Serum Sodium"
         },
         "subject": {
-          "reference": "urn:uuid:ff7e8fbb-f294-4152-934d-71bbc3a01d62"
+          "reference": "PSN-H8BMNW6M"
         },
         "effectiveDateTime": "2026-08-30T16:15:00+05:30",
         "valueQuantity": {
@@ -516,7 +516,7 @@
           "text": "Amlodipine 5 mg"
         },
         "subject": {
-          "reference": "urn:uuid:ff7e8fbb-f294-4152-934d-71bbc3a01d62"
+          "reference": "PSN-H8BMNW6M"
         },
         "authoredOn": "2026-09-05",
         "dosageInstruction": [
@@ -537,7 +537,7 @@
           "text": "Telmisartan 40 mg"
         },
         "subject": {
-          "reference": "urn:uuid:ff7e8fbb-f294-4152-934d-71bbc3a01d62"
+          "reference": "PSN-H8BMNW6M"
         },
         "authoredOn": "2026-09-05",
         "dosageInstruction": [
@@ -558,7 +558,7 @@
           "text": "Ramipril 5 mg"
         },
         "subject": {
-          "reference": "urn:uuid:ff7e8fbb-f294-4152-934d-71bbc3a01d62"
+          "reference": "PSN-H8BMNW6M"
         },
         "authoredOn": "2026-09-05",
         "dosageInstruction": [
@@ -579,7 +579,7 @@
           "text": "Levothyroxine 50 mcg"
         },
         "subject": {
-          "reference": "urn:uuid:ff7e8fbb-f294-4152-934d-71bbc3a01d62"
+          "reference": "PSN-H8BMNW6M"
         },
         "authoredOn": "2026-09-05",
         "dosageInstruction": [
@@ -600,7 +600,7 @@
           "text": "Pantoprazole 40 mg"
         },
         "subject": {
-          "reference": "urn:uuid:ff7e8fbb-f294-4152-934d-71bbc3a01d62"
+          "reference": "PSN-H8BMNW6M"
         },
         "authoredOn": "2026-09-05",
         "dosageInstruction": [

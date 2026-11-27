@@ -1,8 +1,8 @@
 District Hospital Hardoi - ओपीडी पर्चा
-नाम: [GENERALIZED_LOCATION]
+नाम: [REDACTED_NAME]
 ग्राम: [GENERALIZED_LOCATION]
 तारीख: 19.08.2026
-सुनीता पटेल को 7 दिन से बुखार है।
+[REDACTED_NAME] को 7 दिन से बुखार है।
 Rx
 1. Tab Azithromycin 500mg 1-0-0 x 5 days
 2. Tab Paracetamol 650 mg 1-1-1 x 2 wks

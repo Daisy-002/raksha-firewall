@@ -63,7 +63,7 @@
           "duration": "14 days"
         }
       ],
-      "notes": "Mary didi ka BP 141/97, bukhar utar gaya hai. Review after 2 weeks."
+      "notes": "[REDACTED_NAME] ka BP 141/97, bukhar utar gaya hai. Review after 2 weeks."
     },
     {
       "visit_id": "[REDACTED_ID]",
@@ -94,7 +94,7 @@
           "duration": "14 days"
         }
       ],
-      "notes": "Manoj ka BP 111/72, BP abhi bhi high hai. Review after 2 weeks.",
+      "notes": "[REDACTED_NAME] ka BP 111/72, BP abhi bhi high hai. Review after 2 weeks.",
       "address_note": "[GENERALIZED_LOCATION]",
       "reviewed_by": "Dr. Ramesh Srivastava reviewed the patient."
     }

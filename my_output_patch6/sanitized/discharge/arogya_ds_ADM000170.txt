@@ -1,9 +1,9 @@
 Arogya Seva Sadan, Sitapur
 डिस्चार्ज सारांश
 
-मरीज़ का नाम: [GENERALIZED_LOCATION]
-पिता का नाम: [GENERALIZED_LOCATION]
-पंजीकरण सं.: UHID-010623    आईपीडी सं.: ADM000170
+मरीज़ का नाम: [REDACTED_NAME]
+पिता का नाम: [REDACTED_NAME]
+पंजीकरण सं.: [REDACTED_ID]    आईपीडी सं.: ADM000170
 पता: [GENERALIZED_LOCATION], काली माता मंदिर के पास, ग्राम माधवडीह कलां, तहसील मिसरिख, जिला सीतापुर - 261699
 मोबाइल: [GENERALIZED_LOCATION]
 भर्ती की तारीख: 09/26/2026
@@ -18,7 +18,7 @@ Medications on discharge:
 
 Address (attendant): [REDACTED_RELATIVE_NAME], Ward 8
 OPD: [REDACTED_RELATIVE_NAME] 4 days
-Ward: 4 (Medicine)
+Ward: [GENERALIZED_LOCATION]
 Medicine: Ramipril 5 mg
 Dr. Ramesh Srivastava reviewed the patient.
 

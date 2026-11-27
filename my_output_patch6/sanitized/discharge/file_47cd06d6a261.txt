@@ -1,9 +1,9 @@
 Jeevan Jyoti Charitable Hospital, Barabanki
 डिस्चार्ज सारांश
 
-मरीज़ का नाम: [GENERALIZED_LOCATION]
-पति का नाम: [GENERALIZED_LOCATION]
-पंजीकरण सं.: JJH-0077357    आईपीडी सं.: IP/26/00144
+मरीज़ का नाम: [REDACTED_NAME]
+पति का नाम: [REDACTED_NAME]
+पंजीकरण सं.: [REDACTED_ID]    आईपीडी सं.: IP/26/00144
 पता: [GENERALIZED_LOCATION], हनुमान मंदिर के पास, ग्राम शिवगंज खुर्द, तहसील नानपारा, जिला बहराइच - 271077
 मोबाइल: [GENERALIZED_LOCATION]
 भर्ती की तारीख: 04-06-2026

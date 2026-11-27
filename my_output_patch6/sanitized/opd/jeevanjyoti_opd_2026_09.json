@@ -10,7 +10,7 @@
     {
       "visit_id": "[REDACTED_ID]",
       "patient_ref": "PSN-REPWX0Q8",
-      "visit_date": "19-09-2026",
+      "visit_date": "28-02-2027",
       "department": "Pulmonology",
       "doctor": "Dr. Harjeet Bedi",
       "complaints": "[REDACTED_RELATIVE_NAME] 7 days",
@@ -36,7 +36,7 @@
           "duration": "30 days"
         }
       ],
-      "notes": "Sukhwinder ji ka BP 114/75, khana kam kha rahe hain. Review after 2 weeks.",
+      "notes": "[REDACTED_NAME] ka BP 114/75, khana kam kha rahe hain. Review after 2 weeks.",
       "patient": {
         "name": "[REDACTED_NAME]",
         "age_sex": "27/F",
@@ -46,7 +46,7 @@
     {
       "visit_id": "[REDACTED_ID]",
       "patient_ref": "PSN-R7XEK5B9",
-      "visit_date": "01-09-2026",
+      "visit_date": "24-05-2026",
       "department": "Medicine",
       "doctor": "Dr. Vandana Kulshrestha",
       "complaints": "[REDACTED_RELATIVE_NAME] x 6 days",
@@ -84,7 +84,7 @@
           "duration": "14 days"
         }
       ],
-      "notes": "Brijesh sahab ka BP 133/69, bukhar utar gaya hai. Review after 2 weeks.",
+      "notes": "[REDACTED_NAME] ka BP 133/69, bukhar utar gaya hai. Review after 2 weeks.",
       "patient": {
         "name": "[REDACTED_NAME]",
         "age_sex": "27/M",
@@ -94,7 +94,7 @@
     {
       "visit_id": "[REDACTED_ID]",
       "patient_ref": "PSN-QA0V4H22",
-      "visit_date": "23-09-2026",
+      "visit_date": "25-05-2026",
       "department": "Pulmonology",
       "doctor": "Dr. Harjeet Bedi",
       "complaints": "[REDACTED_RELATIVE_NAME] x 8 weeks",
@@ -164,7 +164,7 @@
           "duration": "14 days"
         }
       ],
-      "notes": "Harish ka BP 142/98, dawai time pe le rahe hain. Review after 2 weeks.",
+      "notes": "[REDACTED_NAME] ka BP 142/98, dawai time pe le rahe hain. Review after 2 weeks.",
       "patient": {
         "name": "[REDACTED_NAME]",
         "age_sex": "21/M",

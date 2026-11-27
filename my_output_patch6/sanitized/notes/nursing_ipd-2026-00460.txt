@@ -1,5 +1,5 @@
-NURSING NOTES - Ward 9 (Pulmonology), Bed 1 - IPD-2026-00460
+NURSING NOTES - Ward 9 (Pulmonology), Bed 1 - [REDACTED_ID]
 
-23/07/2026 22:00 - Naresh sahab ka BP 119/85, pulse 108. Bukhar 98 F. Paracetamol 650 mg diya.
+23/07/2026 22:00 - [REDACTED_NAME] ka BP 119/85, pulse 108. Bukhar 98 F. Paracetamol 650 mg diya.
 Next morning 06:00 - Patient ne raat theek se neend li. RBS 185 mg/dL.
-14:00 - Naresh Choudhary - K/[REDACTED_RELATIVE_NAME] ([REDACTED_RELATIVE_NAME]) informed about diet.
+14:00 - [REDACTED_NAME] - K/[REDACTED_RELATIVE_NAME] ([REDACTED_RELATIVE_NAME]) informed about diet.

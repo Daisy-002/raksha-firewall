@@ -30,8 +30,8 @@
           ]
         },
         "subject": {
-          "reference": "urn:uuid:a30abf18-e116-43bd-9c82-ba95d8d2a008",
-          "display": "Kavita Pandey"
+          "reference": "PSN-5VDW841Q",
+          "display": "[REDACTED_NAME]"
         },
         "encounter": {
           "reference": "urn:uuid:f10ebc02-63b2-4659-be80-8b0a05775b1c"
@@ -89,7 +89,7 @@
         "id": "a30abf18-e116-43bd-9c82-ba95d8d2a008",
         "text": {
           "status": "generated",
-          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Kavita Pandey, 48 yrs, female, SNJ/26/064371</div>"
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">[REDACTED_NAME], 48 yrs, female, [REDACTED_ID]</div>"
         },
         "identifier": [
           {
@@ -103,7 +103,7 @@
               ]
             },
             "system": "https://sanjeevani.hospital.example/uhid",
-            "value": "SNJ/26/064371"
+            "value": "[REDACTED_ID]"
           }
         ],
         "name": [
@@ -127,13 +127,13 @@
         "address": [
           {
             "line": [
-              "House 182, near Kali Mata Mandir, Tehsil Malihabad, Distt. Lucknow"
+              "[GENERALIZED_LOCATION]"
             ],
             "city": "[GENERALIZED_LOCATION]",
             "district": "[GENERALIZED_LOCATION]",
-            "state": "Uttar Pradesh",
+            "state": "[GENERALIZED_LOCATION]",
             "postalCode": "[GENERALIZED_LOCATION]",
-            "country": "IN"
+            "country": "[GENERALIZED_LOCATION]"
           }
         ],
         "contact": [
@@ -191,8 +191,8 @@
         "address": [
           {
             "city": "[GENERALIZED_LOCATION]",
-            "state": "Uttar Pradesh",
-            "country": "IN"
+            "state": "[GENERALIZED_LOCATION]",
+            "country": "[GENERALIZED_LOCATION]"
           }
         ]
       }
@@ -211,11 +211,11 @@
         "identifier": [
           {
             "system": "https://sanjeevani.hospital.example/ipd",
-            "value": "IPD-2026-00450"
+            "value": "[REDACTED_ID]"
           }
         ],
         "subject": {
-          "reference": "urn:uuid:a30abf18-e116-43bd-9c82-ba95d8d2a008"
+          "reference": "PSN-5VDW841Q"
         },
         "period": {
           "start": "2026-01-24T12:30:00+05:30",
@@ -257,7 +257,7 @@
           "text": "Essential (primary) hypertension"
         },
         "subject": {
-          "reference": "urn:uuid:a30abf18-e116-43bd-9c82-ba95d8d2a008"
+          "reference": "PSN-5VDW841Q"
         },
         "encounter": {
           "reference": "urn:uuid:f10ebc02-63b2-4659-be80-8b0a05775b1c"
@@ -289,7 +289,7 @@
           "text": "Type 2 diabetes mellitus without complications"
         },
         "subject": {
-          "reference": "urn:uuid:a30abf18-e116-43bd-9c82-ba95d8d2a008"
+          "reference": "PSN-5VDW841Q"
         },
         "encounter": {
           "reference": "urn:uuid:f10ebc02-63b2-4659-be80-8b0a05775b1c"
@@ -313,7 +313,7 @@
           ]
         },
         "subject": {
-          "reference": "urn:uuid:a30abf18-e116-43bd-9c82-ba95d8d2a008"
+          "reference": "PSN-5VDW841Q"
         },
         "effectiveDateTime": "2026-01-24T12:30:00+05:30",
         "component": [
@@ -371,7 +371,7 @@
           "text": "Haemoglobin"
         },
         "subject": {
-          "reference": "urn:uuid:a30abf18-e116-43bd-9c82-ba95d8d2a008"
+          "reference": "PSN-5VDW841Q"
         },
         "effectiveDateTime": "2026-01-24T12:30:00+05:30",
         "valueQuantity": {
@@ -397,7 +397,7 @@
           "text": "HbA1c"
         },
         "subject": {
-          "reference": "urn:uuid:a30abf18-e116-43bd-9c82-ba95d8d2a008"
+          "reference": "PSN-5VDW841Q"
         },
         "effectiveDateTime": "2026-01-24T12:30:00+05:30",
         "valueQuantity": {
@@ -423,7 +423,7 @@
           "text": "Random Blood Sugar"
         },
         "subject": {
-          "reference": "urn:uuid:a30abf18-e116-43bd-9c82-ba95d8d2a008"
+          "reference": "PSN-5VDW841Q"
         },
         "effectiveDateTime": "2026-01-24T12:30:00+05:30",
         "valueQuantity": {
@@ -449,7 +449,7 @@
           "text": "Serum Creatinine"
         },
         "subject": {
-          "reference": "urn:uuid:a30abf18-e116-43bd-9c82-ba95d8d2a008"
+          "reference": "PSN-5VDW841Q"
         },
         "effectiveDateTime": "2026-01-24T12:30:00+05:30",
         "valueQuantity": {
@@ -475,7 +475,7 @@
           "text": "Total WBC Count"
         },
         "subject": {
-          "reference": "urn:uuid:a30abf18-e116-43bd-9c82-ba95d8d2a008"
+          "reference": "PSN-5VDW841Q"
         },
         "effectiveDateTime": "2026-01-24T12:30:00+05:30",
         "valueQuantity": {
@@ -501,7 +501,7 @@
           "text": "Serum Sodium"
         },
         "subject": {
-          "reference": "urn:uuid:a30abf18-e116-43bd-9c82-ba95d8d2a008"
+          "reference": "PSN-5VDW841Q"
         },
         "effectiveDateTime": "2026-01-24T12:30:00+05:30",
         "valueQuantity": {
@@ -521,7 +521,7 @@
           "text": "Amlodipine 5 mg"
         },
         "subject": {
-          "reference": "urn:uuid:a30abf18-e116-43bd-9c82-ba95d8d2a008"
+          "reference": "PSN-5VDW841Q"
         },
         "authoredOn": "2026-02-02",
         "dosageInstruction": [
@@ -542,7 +542,7 @@
           "text": "Telmisartan 40 mg"
         },
         "subject": {
-          "reference": "urn:uuid:a30abf18-e116-43bd-9c82-ba95d8d2a008"
+          "reference": "PSN-5VDW841Q"
         },
         "authoredOn": "2026-02-02",
         "dosageInstruction": [
@@ -563,7 +563,7 @@
           "text": "Ramipril 5 mg"
         },
         "subject": {
-          "reference": "urn:uuid:a30abf18-e116-43bd-9c82-ba95d8d2a008"
+          "reference": "PSN-5VDW841Q"
         },
         "authoredOn": "2026-02-02",
         "dosageInstruction": [
@@ -584,7 +584,7 @@
           "text": "Metformin 500 mg"
         },
         "subject": {
-          "reference": "urn:uuid:a30abf18-e116-43bd-9c82-ba95d8d2a008"
+          "reference": "PSN-5VDW841Q"
         },
         "authoredOn": "2026-02-02",
         "dosageInstruction": [
@@ -605,7 +605,7 @@
           "text": "Glimepiride 1 mg"
         },
         "subject": {
-          "reference": "urn:uuid:a30abf18-e116-43bd-9c82-ba95d8d2a008"
+          "reference": "PSN-5VDW841Q"
         },
         "authoredOn": "2026-02-02",
         "dosageInstruction": [
@@ -626,7 +626,7 @@
           "text": "Pantoprazole 40 mg"
         },
         "subject": {
-          "reference": "urn:uuid:a30abf18-e116-43bd-9c82-ba95d8d2a008"
+          "reference": "PSN-5VDW841Q"
         },
         "authoredOn": "2026-02-02",
         "dosageInstruction": [
@@ -646,14 +646,14 @@
           "text": "Referral letter"
         },
         "subject": {
-          "reference": "urn:uuid:a30abf18-e116-43bd-9c82-ba95d8d2a008"
+          "reference": "PSN-5VDW841Q"
         },
         "content": [
           {
             "attachment": {
               "contentType": "text/plain",
               "language": "en",
-              "data": "UmVmZXJyYWw6IEthdml0YSBQYW5kZXkgKFNOSi8yNi8wNjQzNzEpLCBtb2JpbGUgNzM1NzkzMjQ3MiwgcmVmZXJyZWQgZm9yIGZvbGxvdy11cCBvZiBFc3NlbnRpYWwgKHByaW1hcnkpIGh5cGVydGVuc2lvbi4=",
+              "data": "UmVmZXJyYWw6IEthdml0YSBQYW5kZXkgKFtSRURBQ1RFRF9JRF0pLCBtb2JpbGUgW1JFREFDVEVEX1BIT05FXSwgcmVmZXJyZWQgZm9yIGZvbGxvdy11cCBvZiBFc3NlbnRpYWwgKHByaW1hcnkpIGh5cGVydGVuc2lvbi4=",
               "title": "Referral letter"
             }
           }

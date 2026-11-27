@@ -2,15 +2,15 @@ SANJEEVANI MULTISPECIALITY HOSPITAL, LUCKNOW
 DISCHARGE SUMMARY
 
 Patient Name: [REDACTED_NAME]
-UHID: SNJ/26/064427        IPD No: IPD-2026-00459
-[REDACTED_RELATIVE_NAME]: House 231, Ward 2, Mohalla Harijan Basti, Ramkhera, Tehsil Purwa, Distt. Unnao - 209088
+UHID: [REDACTED_ID]        IPD No: [REDACTED_ID]
+[REDACTED_RELATIVE_NAME]: [GENERALIZED_LOCATION], Ward 2, Mohalla Harijan Basti, Ramkhera, Tehsil Purwa, Distt. Unnao - 209088
 Mobile: [GENERALIZED_LOCATION]
 ABHA No: 91-[REDACTED_AADHAAR]
 Consultant: Dr. Sameer Rizvi (DM Neurology)
 Ward/Bed: Ward 3 (Neurology) / Bed 24
 Date of Admission: 08/06/2026
 Date of Discharge: 18/06/2026
-DOB: 23/07/1990
+DOB: [REDACTED_DATE]
 
 Diagnosis: Bell's palsy (G51.0); Type 2 diabetes mellitus without complications (E11.9); 
 Presenting complaints: [REDACTED_RELATIVE_NAME] 4 days, generalised weakness.

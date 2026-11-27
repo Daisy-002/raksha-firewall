@@ -2,15 +2,15 @@ SANJEEVANI MULTISPECIALITY HOSPITAL, LUCKNOW
 DISCHARGE SUMMARY
 
 Patient Name: [REDACTED_NAME]
-UHID: SNJ/26/064545        IPD No: IPD-2026-00474
-[REDACTED_RELATIVE_NAME]: House 127, Ward 13, Mohalla Pathan Tola, Vill. Bhimganj, Tehsil Malihabad, Distt. Lucknow - 226183
+UHID: [REDACTED_ID]        IPD No: [REDACTED_ID]
+[REDACTED_RELATIVE_NAME]: [GENERALIZED_LOCATION], Ward 13, Mohalla Pathan Tola, Vill. Bhimganj, Tehsil Malihabad, Distt. Lucknow - 226183
 Mobile: [GENERALIZED_LOCATION]
 ABHA No: 91-[REDACTED_AADHAAR]
 Consultant: Dr. Imtiaz Ahmed (MS Surgery)
 Ward/Bed: Ward 3 (Surgery) / Bed 4
 Date of Admission: 04/02/2026
 Date of Discharge: 12/02/2026
-DOB: 19/10/1998
+DOB: [REDACTED_DATE]
 
 Diagnosis: Typhoid fever (A01.0); Anaemia, unspecified (D64.9); 
 Presenting complaints: [REDACTED_RELATIVE_NAME] 8 days, generalised weakness.

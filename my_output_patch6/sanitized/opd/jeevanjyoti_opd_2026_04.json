@@ -10,7 +10,7 @@
     {
       "visit_id": "[REDACTED_ID]",
       "patient_ref": "PSN-G94FQRT9",
-      "visit_date": "14-04-2026",
+      "visit_date": "02-08-2026",
       "department": "Medicine",
       "doctor": "Dr. Vandana Kulshrestha",
       "complaints": "[REDACTED_RELATIVE_NAME] x 6 days",
@@ -36,7 +36,7 @@
           "duration": "30 days"
         }
       ],
-      "notes": "Geeta didi ka BP 134/84, bukhar utar gaya hai. Review after 2 weeks.",
+      "notes": "[REDACTED_NAME] ka BP 134/84, bukhar utar gaya hai. Review after 2 weeks.",
       "patient": {
         "name": "[REDACTED_NAME]",
         "age_sex": "53/F",
@@ -46,7 +46,7 @@
     {
       "visit_id": "[REDACTED_ID]",
       "patient_ref": "PSN-G94FQRT9",
-      "visit_date": "28-04-2026",
+      "visit_date": "16-08-2026",
       "department": "Medicine",
       "doctor": "Dr. Vandana Kulshrestha",
       "complaints": "[REDACTED_RELATIVE_NAME] x 5 days",
@@ -72,7 +72,7 @@
           "duration": "7 days"
         }
       ],
-      "notes": "Geeta ka BP 120/78, BP abhi bhi high hai. Review after 2 weeks.",
+      "notes": "[REDACTED_NAME] ka BP 120/78, BP abhi bhi high hai. Review after 2 weeks.",
       "patient": {
         "name": "[REDACTED_NAME]",
         "age_sex": "53/F",
@@ -82,7 +82,7 @@
     {
       "visit_id": "[REDACTED_ID]",
       "patient_ref": "PSN-H9GN0NMA",
-      "visit_date": "12-04-2026",
+      "visit_date": "08-05-2026",
       "department": "Medicine",
       "doctor": "Dr. Vandana Kulshrestha",
       "complaints": "[REDACTED_RELATIVE_NAME] x 6 days",
@@ -108,7 +108,7 @@
           "duration": "14 days"
         }
       ],
-      "notes": "Harish sahab ka BP 129/85, sugar control nahi hai. Review after 2 weeks.",
+      "notes": "[REDACTED_NAME] ka BP 129/85, sugar control nahi hai. Review after 2 weeks.",
       "patient": {
         "name": "[REDACTED_NAME]",
         "age_sex": "60/M",

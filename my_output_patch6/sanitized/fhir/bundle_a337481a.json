@@ -30,8 +30,8 @@
           ]
         },
         "subject": {
-          "reference": "urn:uuid:e5dc2942-d7c1-4361-9770-12a29de9d235",
-          "display": "Sunil Mishra"
+          "reference": "PSN-80RH3HHR",
+          "display": "[REDACTED_NAME]"
         },
         "encounter": {
           "reference": "urn:uuid:4eec21ea-c930-4c36-84b0-5d4d77fe97bb"
@@ -89,7 +89,7 @@
         "id": "e5dc2942-d7c1-4361-9770-12a29de9d235",
         "text": {
           "status": "generated",
-          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Sunil Mishra, 69 yrs, male, SNJ/26/064511</div>"
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">[REDACTED_NAME], 69 yrs, male, [REDACTED_ID]</div>"
         },
         "identifier": [
           {
@@ -103,7 +103,7 @@
               ]
             },
             "system": "https://sanjeevani.hospital.example/uhid",
-            "value": "SNJ/26/064511"
+            "value": "[REDACTED_ID]"
           }
         ],
         "name": [
@@ -127,13 +127,13 @@
         "address": [
           {
             "line": [
-              "House 33, Tehsil Malihabad, Distt. Lucknow"
+              "[GENERALIZED_LOCATION]"
             ],
             "city": "[GENERALIZED_LOCATION]",
             "district": "[GENERALIZED_LOCATION]",
-            "state": "Uttar Pradesh",
+            "state": "[GENERALIZED_LOCATION]",
             "postalCode": "[GENERALIZED_LOCATION]",
-            "country": "IN"
+            "country": "[GENERALIZED_LOCATION]"
           }
         ],
         "contact": [
@@ -185,8 +185,8 @@
         "address": [
           {
             "city": "[GENERALIZED_LOCATION]",
-            "state": "Uttar Pradesh",
-            "country": "IN"
+            "state": "[GENERALIZED_LOCATION]",
+            "country": "[GENERALIZED_LOCATION]"
           }
         ]
       }
@@ -205,11 +205,11 @@
         "identifier": [
           {
             "system": "https://sanjeevani.hospital.example/ipd",
-            "value": "IPD-2026-00470"
+            "value": "[REDACTED_ID]"
           }
         ],
         "subject": {
-          "reference": "urn:uuid:e5dc2942-d7c1-4361-9770-12a29de9d235"
+          "reference": "PSN-80RH3HHR"
         },
         "period": {
           "start": "2026-05-29T08:30:00+05:30",
@@ -251,7 +251,7 @@
           "text": "Essential (primary) hypertension"
         },
         "subject": {
-          "reference": "urn:uuid:e5dc2942-d7c1-4361-9770-12a29de9d235"
+          "reference": "PSN-80RH3HHR"
         },
         "encounter": {
           "reference": "urn:uuid:4eec21ea-c930-4c36-84b0-5d4d77fe97bb"
@@ -283,7 +283,7 @@
           "text": "Chronic kidney disease, stage 3"
         },
         "subject": {
-          "reference": "urn:uuid:e5dc2942-d7c1-4361-9770-12a29de9d235"
+          "reference": "PSN-80RH3HHR"
         },
         "encounter": {
           "reference": "urn:uuid:4eec21ea-c930-4c36-84b0-5d4d77fe97bb"
@@ -315,7 +315,7 @@
           "text": "Infectious gastroenteritis and colitis, unspecified"
         },
         "subject": {
-          "reference": "urn:uuid:e5dc2942-d7c1-4361-9770-12a29de9d235"
+          "reference": "PSN-80RH3HHR"
         },
         "encounter": {
           "reference": "urn:uuid:4eec21ea-c930-4c36-84b0-5d4d77fe97bb"
@@ -339,7 +339,7 @@
           ]
         },
         "subject": {
-          "reference": "urn:uuid:e5dc2942-d7c1-4361-9770-12a29de9d235"
+          "reference": "PSN-80RH3HHR"
         },
         "effectiveDateTime": "2026-05-29T08:30:00+05:30",
         "component": [
@@ -397,7 +397,7 @@
           "text": "Haemoglobin"
         },
         "subject": {
-          "reference": "urn:uuid:e5dc2942-d7c1-4361-9770-12a29de9d235"
+          "reference": "PSN-80RH3HHR"
         },
         "effectiveDateTime": "2026-05-29T08:30:00+05:30",
         "valueQuantity": {
@@ -423,7 +423,7 @@
           "text": "Random Blood Sugar"
         },
         "subject": {
-          "reference": "urn:uuid:e5dc2942-d7c1-4361-9770-12a29de9d235"
+          "reference": "PSN-80RH3HHR"
         },
         "effectiveDateTime": "2026-05-29T08:30:00+05:30",
         "valueQuantity": {
@@ -449,7 +449,7 @@
           "text": "Serum Creatinine"
         },
         "subject": {
-          "reference": "urn:uuid:e5dc2942-d7c1-4361-9770-12a29de9d235"
+          "reference": "PSN-80RH3HHR"
         },
         "effectiveDateTime": "2026-05-29T08:30:00+05:30",
         "valueQuantity": {
@@ -475,7 +475,7 @@
           "text": "Total WBC Count"
         },
         "subject": {
-          "reference": "urn:uuid:e5dc2942-d7c1-4361-9770-12a29de9d235"
+          "reference": "PSN-80RH3HHR"
         },
         "effectiveDateTime": "2026-05-29T08:30:00+05:30",
         "valueQuantity": {
@@ -501,7 +501,7 @@
           "text": "Serum Sodium"
         },
         "subject": {
-          "reference": "urn:uuid:e5dc2942-d7c1-4361-9770-12a29de9d235"
+          "reference": "PSN-80RH3HHR"
         },
         "effectiveDateTime": "2026-05-29T08:30:00+05:30",
         "valueQuantity": {
@@ -521,7 +521,7 @@
           "text": "Amlodipine 5 mg"
         },
         "subject": {
-          "reference": "urn:uuid:e5dc2942-d7c1-4361-9770-12a29de9d235"
+          "reference": "PSN-80RH3HHR"
         },
         "authoredOn": "2026-06-08",
         "dosageInstruction": [
@@ -542,7 +542,7 @@
           "text": "Telmisartan 40 mg"
         },
         "subject": {
-          "reference": "urn:uuid:e5dc2942-d7c1-4361-9770-12a29de9d235"
+          "reference": "PSN-80RH3HHR"
         },
         "authoredOn": "2026-06-08",
         "dosageInstruction": [
@@ -563,7 +563,7 @@
           "text": "Ramipril 5 mg"
         },
         "subject": {
-          "reference": "urn:uuid:e5dc2942-d7c1-4361-9770-12a29de9d235"
+          "reference": "PSN-80RH3HHR"
         },
         "authoredOn": "2026-06-08",
         "dosageInstruction": [
@@ -584,7 +584,7 @@
           "text": "ORS 1 sachet"
         },
         "subject": {
-          "reference": "urn:uuid:e5dc2942-d7c1-4361-9770-12a29de9d235"
+          "reference": "PSN-80RH3HHR"
         },
         "authoredOn": "2026-06-08",
         "dosageInstruction": [
@@ -605,7 +605,7 @@
           "text": "Pantoprazole 40 mg"
         },
         "subject": {
-          "reference": "urn:uuid:e5dc2942-d7c1-4361-9770-12a29de9d235"
+          "reference": "PSN-80RH3HHR"
         },
         "authoredOn": "2026-06-08",
         "dosageInstruction": [

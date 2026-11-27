@@ -2,8 +2,8 @@ JEEVAN JYOTI CHARITABLE HOSPITAL, BARABANKI
 DISCHARGE SUMMARY
 
 Patient Name: [REDACTED_NAME]
-UHID: JJH-0077243        IPD No: IP/26/00134
-[REDACTED_RELATIVE_NAME]: Makan No. 354, Rasooldih Kalan, Tehsil Fatehpur, Distt. Barabanki - 225728
+UHID: [REDACTED_ID]        IPD No: IP/26/00134
+[REDACTED_RELATIVE_NAME]: [GENERALIZED_LOCATION], Rasooldih Kalan, Tehsil Fatehpur, Distt. Barabanki - 225728
 Mobile: [GENERALIZED_LOCATION]
 Consultant: Dr. Vandana Kulshrestha (MD Medicine)
 Ward/Bed: Ward 9 (Medicine) / Bed 16

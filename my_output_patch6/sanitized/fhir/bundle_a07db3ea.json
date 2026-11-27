@@ -30,8 +30,8 @@
           ]
         },
         "subject": {
-          "reference": "urn:uuid:00bde1ad-6a9a-4961-a90b-5b7caf34b202",
-          "display": "Zainab Siddiqui"
+          "reference": "PSN-WA6QAW30",
+          "display": "[REDACTED_NAME]"
         },
         "encounter": {
           "reference": "urn:uuid:ca5d167b-bd32-4999-9cd8-d9a67ca3bcc3"
@@ -71,7 +71,7 @@
         "id": "00bde1ad-6a9a-4961-a90b-5b7caf34b202",
         "text": {
           "status": "generated",
-          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Zainab Siddiqui, 23 yrs, female, JJH-0077112</div>"
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">[REDACTED_NAME], 23 yrs, female, [REDACTED_ID]</div>"
         },
         "identifier": [
           {
@@ -85,7 +85,7 @@
               ]
             },
             "system": "https://jeevanjyoti.hospital.example/uhid",
-            "value": "JJH-0077112"
+            "value": "[REDACTED_ID]"
           }
         ],
         "name": [
@@ -109,13 +109,13 @@
         "address": [
           {
             "line": [
-              "H.No. 86, Ward 18, Mohalla Kashiram Colony, near Gurudwara, Tehsil Nanpara, Distt. Bahraich"
+              "[GENERALIZED_LOCATION]"
             ],
             "city": "[GENERALIZED_LOCATION]",
             "district": "[GENERALIZED_LOCATION]",
-            "state": "Uttar Pradesh",
+            "state": "[GENERALIZED_LOCATION]",
             "postalCode": "[GENERALIZED_LOCATION]",
-            "country": "IN"
+            "country": "[GENERALIZED_LOCATION]"
           }
         ],
         "contact": [
@@ -173,8 +173,8 @@
         "address": [
           {
             "city": "[GENERALIZED_LOCATION]",
-            "state": "Uttar Pradesh",
-            "country": "IN"
+            "state": "[GENERALIZED_LOCATION]",
+            "country": "[GENERALIZED_LOCATION]"
           }
         ]
       }
@@ -197,7 +197,7 @@
           }
         ],
         "subject": {
-          "reference": "urn:uuid:00bde1ad-6a9a-4961-a90b-5b7caf34b202"
+          "reference": "PSN-WA6QAW30"
         },
         "period": {
           "start": "2026-04-21T17:15:00+05:30",
@@ -239,7 +239,7 @@
           "text": "Hypothyroidism, unspecified"
         },
         "subject": {
-          "reference": "urn:uuid:00bde1ad-6a9a-4961-a90b-5b7caf34b202"
+          "reference": "PSN-WA6QAW30"
         },
         "encounter": {
           "reference": "urn:uuid:ca5d167b-bd32-4999-9cd8-d9a67ca3bcc3"
@@ -263,7 +263,7 @@
           ]
         },
         "subject": {
-          "reference": "urn:uuid:00bde1ad-6a9a-4961-a90b-5b7caf34b202"
+          "reference": "PSN-WA6QAW30"
         },
         "effectiveDateTime": "2026-04-21T17:15:00+05:30",
         "component": [
@@ -321,7 +321,7 @@
           "text": "Haemoglobin"
         },
         "subject": {
-          "reference": "urn:uuid:00bde1ad-6a9a-4961-a90b-5b7caf34b202"
+          "reference": "PSN-WA6QAW30"
         },
         "effectiveDateTime": "2026-04-21T17:15:00+05:30",
         "valueQuantity": {
@@ -347,7 +347,7 @@
           "text": "HbA1c"
         },
         "subject": {
-          "reference": "urn:uuid:00bde1ad-6a9a-4961-a90b-5b7caf34b202"
+          "reference": "PSN-WA6QAW30"
         },
         "effectiveDateTime": "2026-04-21T17:15:00+05:30",
         "valueQuantity": {
@@ -373,7 +373,7 @@
           "text": "Random Blood Sugar"
         },
         "subject": {
-          "reference": "urn:uuid:00bde1ad-6a9a-4961-a90b-5b7caf34b202"
+          "reference": "PSN-WA6QAW30"
         },
         "effectiveDateTime": "2026-04-21T17:15:00+05:30",
         "valueQuantity": {
@@ -399,7 +399,7 @@
           "text": "Serum Creatinine"
         },
         "subject": {
-          "reference": "urn:uuid:00bde1ad-6a9a-4961-a90b-5b7caf34b202"
+          "reference": "PSN-WA6QAW30"
         },
         "effectiveDateTime": "2026-04-21T17:15:00+05:30",
         "valueQuantity": {
@@ -425,7 +425,7 @@
           "text": "TSH"
         },
         "subject": {
-          "reference": "urn:uuid:00bde1ad-6a9a-4961-a90b-5b7caf34b202"
+          "reference": "PSN-WA6QAW30"
         },
         "effectiveDateTime": "2026-04-21T17:15:00+05:30",
         "valueQuantity": {
@@ -451,7 +451,7 @@
           "text": "Total WBC Count"
         },
         "subject": {
-          "reference": "urn:uuid:00bde1ad-6a9a-4961-a90b-5b7caf34b202"
+          "reference": "PSN-WA6QAW30"
         },
         "effectiveDateTime": "2026-04-21T17:15:00+05:30",
         "valueQuantity": {
@@ -477,7 +477,7 @@
           "text": "Serum Sodium"
         },
         "subject": {
-          "reference": "urn:uuid:00bde1ad-6a9a-4961-a90b-5b7caf34b202"
+          "reference": "PSN-WA6QAW30"
         },
         "effectiveDateTime": "2026-04-21T17:15:00+05:30",
         "valueQuantity": {
@@ -497,7 +497,7 @@
           "text": "Levothyroxine 50 mcg"
         },
         "subject": {
-          "reference": "urn:uuid:00bde1ad-6a9a-4961-a90b-5b7caf34b202"
+          "reference": "PSN-WA6QAW30"
         },
         "authoredOn": "2026-04-23",
         "dosageInstruction": [
@@ -517,14 +517,14 @@
           "text": "Referral letter"
         },
         "subject": {
-          "reference": "urn:uuid:00bde1ad-6a9a-4961-a90b-5b7caf34b202"
+          "reference": "PSN-WA6QAW30"
         },
         "content": [
           {
             "attachment": {
               "contentType": "text/plain",
               "language": "en",
-              "data": "UmVmZXJyYWw6IFphaW5hYiBTaWRkaXF1aSAoSkpILTAwNzcxMTIpLCBtb2JpbGUgNzMxMjIwMDQwNiwgcmVmZXJyZWQgZm9yIGZvbGxvdy11cCBvZiBIeXBvdGh5cm9pZGlzbSwgdW5zcGVjaWZpZWQu",
+              "data": "UmVmZXJyYWw6IFphaW5hYiBTaWRkaXF1aSAoW1JFREFDVEVEX0lEXSksIG1vYmlsZSBbUkVEQUNURURfUEhPTkVdLCByZWZlcnJlZCBmb3IgZm9sbG93LXVwIG9mIEh5cG90aHlyb2lkaXNtLCB1bnNwZWNpZmllZC4=",
               "title": "Referral letter"
             }
           }

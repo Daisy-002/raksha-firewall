@@ -28,6 +28,44 @@ PII_FILENAME_PATTERNS = [
     ),
 ]
 
+FILENAME_NAME_CONTEXT = re.compile(
+    r"(?<![A-Z0-9])"
+    r"(?:patient(?:[\s._-]*name)?|name|relative|guardian|father|"
+    r"mother|spouse|attender|naam|नाम|रोगी|मरीज)"
+    r"[\s._-]+"
+    r"(?P<name>(?:[A-Z][A-Z.'-]{1,}|[\u0900-\u097f]{2,})"
+    r"(?:[\s_-]+(?:[A-Z][A-Z.'-]{1,}|[\u0900-\u097f]{2,})){1,2})"
+    r"(?![A-Z0-9])",
+    re.I,
+)
+
+FILENAME_MRN_CONTEXT = re.compile(
+    r"(?i)(?<![A-Z0-9])"
+    r"(?:mrn|mr[\s._-]*(?:no|number)?|"
+    r"medical[\s._-]*record(?:[\s._-]*(?:id|number|no))?|"
+    r"patient[\s._-]*(?:id|number|no)|"
+    r"hospital[\s._-]*(?:id|number|no)|uhid|"
+    r"chart[\s._-]*(?:id|number|no)|"
+    r"registration[\s._-]*(?:id|number|no)|reg[\s._-]*no)"
+    r"[\s._#:-]+(?=[A-Z0-9./_-]*\d)"
+    r"[A-Z0-9](?:[A-Z0-9./_-]{1,}[A-Z0-9])(?![A-Z0-9])"
+)
+
+FILENAME_ADDRESS_CONTEXT = re.compile(
+    r"(?i)(?<![A-Z0-9])"
+    r"(?P<label>address|addr|house(?:[\s._-]*(?:no|number))?|"
+    r"flat(?:[\s._-]*(?:no|number))?|building|street|locality|"
+    r"landmark|area|neighbou?rhood|colony|village|gaon|gram|"
+    r"mohalla|district|tehsil|block|ward|post[\s._-]*office|"
+    r"postal[\s._-]*code|pin(?:[\s._-]*code)?|"
+    r"पता|गांव|गाँव|ग्राम|मोहल्ला|मकान|घर|इलाका|क्षेत्र|"
+    r"जिला|तहसील|डाकघर|वार्ड)"
+    r"[\s._#:-]+"
+    r"(?P<value>[A-Z0-9\u0900-\u097f][A-Z0-9\u0900-\u097f.'-]*"
+    r"(?:[\s_-]+[A-Z0-9\u0900-\u097f][A-Z0-9\u0900-\u097f.'-]*){0,3})"
+    r"(?![A-Z0-9])",
+)
+
 GENERIC_FILENAME_WORDS = {
     "admission", "ambulance", "arogya", "billing", "blood", "census",
     "claim", "clean", "consent", "discharge", "dengue", "dhhardoi",
@@ -35,7 +73,13 @@ GENERIC_FILENAME_WORDS = {
     "hospital", "jeevanjyoti", "lab", "management", "misc", "note",
     "opd", "pathkind", "prescription", "protocol", "range", "registration",
     "report", "result", "sanjeevani", "summary", "ward",
+    "patient", "name", "record", "records", "document", "data", "file",
+    "template", "example", "input", "output", "test", "tests", "sample",
+    "clinical", "note", "notes", "form", "screening", "case",
+    "txt", "json", "csv", "tsv", "pdf", "xml", "html", "md",
 }
+
+FILENAME_EXTENSIONS = {"txt", "json", "csv", "tsv", "pdf", "xml", "html", "md"}
 
 
 def filename_contains_pii(name: str) -> bool:
@@ -47,12 +91,51 @@ def filename_contains_pii(name: str) -> bool:
     if BASE64_CANDIDATE.search(normalized):
         return True
 
+    for match in FILENAME_NAME_CONTEXT.finditer(normalized):
+        words = re.split(r"[\s._-]+", match.group("name"))
+        if words and words[-1].casefold() in FILENAME_EXTENSIONS:
+            words.pop()
+        if len(words) >= 2 and not any(
+            word.casefold() in GENERIC_FILENAME_WORDS
+            for word in words
+        ):
+            return True
+
+    if FILENAME_MRN_CONTEXT.search(normalized):
+        return True
+
+    for match in FILENAME_ADDRESS_CONTEXT.finditer(normalized):
+        words = re.split(r"[\s._-]+", match.group("value"))
+        if words and words[-1].casefold() in FILENAME_EXTENSIONS:
+            words.pop()
+        if match.group("label").casefold().startswith("house") and not any(
+            any(character.isdigit() for character in word)
+            for word in words
+        ):
+            continue
+        if any(any(character.isdigit() for character in word) for word in words):
+            return True
+        if words and not any(
+            word.casefold() in GENERIC_FILENAME_WORDS
+            for word in words
+        ):
+            return True
+
     stem = normalized.rsplit(".", 1)[0]
     parts = re.split(r"[_\s-]+", stem)
     for size in range(2, min(4, len(parts)) + 1):
         for start in range(len(parts) - size + 1):
             candidate = parts[start:start + size]
-            if not all(re.fullmatch(r"[A-Z][a-z]{2,}", part) for part in candidate):
+            if not all(
+                re.fullmatch(r"[A-Za-z][A-Za-z.'-]{1,}", part)
+                for part in candidate
+            ):
+                continue
+            if not any(
+                character.isupper()
+                for part in candidate
+                for character in part
+            ):
                 continue
             if not any(
                 part.casefold() in GENERIC_FILENAME_WORDS

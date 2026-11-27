@@ -1,9 +1,9 @@
 Sanjeevani Multispeciality Hospital, Lucknow
 डिस्चार्ज सारांश
 
-मरीज़ का नाम: [GENERALIZED_LOCATION]
-पिता का नाम: [GENERALIZED_LOCATION]
-पंजीकरण सं.: SNJ/26/064511    आईपीडी सं.: IPD-2026-00470
+मरीज़ का नाम: [REDACTED_NAME]
+पिता का नाम: [REDACTED_NAME]
+पंजीकरण सं.: [REDACTED_ID]    आईपीडी सं.: [REDACTED_ID]
 पता: [GENERALIZED_LOCATION], पंचायत भवन के पास, ग्राम गोविंदखेड़ा कलां, तहसील मलिहाबाद, जिला लखनऊ - 226099
 मोबाइल: [GENERALIZED_LOCATION]
 भर्ती की तारीख: 29/05/2026

@@ -2,14 +2,14 @@ SANJEEVANI MULTISPECIALITY HOSPITAL, LUCKNOW
 DISCHARGE SUMMARY
 
 Patient Name: [REDACTED_NAME]
-UHID: SNJ/26/064508        IPD No: IPD-2026-00461
-[REDACTED_RELATIVE_NAME]: Makan No. 143, near Kali Mata Mandir, Vill. Jalalnagar Khurd, Tehsil Dalmau, Distt. Rae Bareli - 229678
+UHID: [REDACTED_ID]        IPD No: [REDACTED_ID]
+[REDACTED_RELATIVE_NAME]: [GENERALIZED_LOCATION], near Kali Mata Mandir, Vill. Jalalnagar Khurd, Tehsil Dalmau, Distt. Rae Bareli - 229678
 Mobile: [GENERALIZED_LOCATION]
 Consultant: Dr. Vandana Kulshrestha (MD Medicine)
 Ward/Bed: Ward 4 (Medicine) / Bed 29
 Date of Admission: 07/02/2026
 Date of Discharge: 19/02/2026
-DOB: 30/10/1973
+DOB: [REDACTED_DATE]
 
 Diagnosis: Urinary tract infection, site not specified (N39.0); 
 Presenting complaints: [REDACTED_RELATIVE_NAME] 6 days, generalised weakness.

@@ -30,8 +30,8 @@
           ]
         },
         "subject": {
-          "reference": "urn:uuid:b440e201-0bcd-4070-b027-96db5c7de680",
-          "display": "Mahesh Chauhan"
+          "reference": "PSN-32HEBXAG",
+          "display": "[REDACTED_NAME]"
         },
         "encounter": {
           "reference": "urn:uuid:eb9874f6-fda9-49bf-bf1f-703b378a2403"
@@ -92,7 +92,7 @@
         "id": "b440e201-0bcd-4070-b027-96db5c7de680",
         "text": {
           "status": "generated",
-          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Mahesh Chauhan, 49 yrs, male, SNJ/26/064127</div>"
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">[REDACTED_NAME], 49 yrs, male, [REDACTED_ID]</div>"
         },
         "identifier": [
           {
@@ -106,7 +106,7 @@
               ]
             },
             "system": "https://sanjeevani.hospital.example/uhid",
-            "value": "SNJ/26/064127"
+            "value": "[REDACTED_ID]"
           },
           {
             "system": "https://healthid.abdm.gov.in",
@@ -134,13 +134,13 @@
         "address": [
           {
             "line": [
-              "Makan No. 364, Ward 20, Mohalla Raja Bazar, near Pani Tanki, Tehsil Lalganj, Distt. Rae Bareli"
+              "[GENERALIZED_LOCATION]"
             ],
             "city": "[GENERALIZED_LOCATION]",
             "district": "[GENERALIZED_LOCATION]",
-            "state": "Uttar Pradesh",
+            "state": "[GENERALIZED_LOCATION]",
             "postalCode": "[GENERALIZED_LOCATION]",
-            "country": "IN"
+            "country": "[GENERALIZED_LOCATION]"
           }
         ],
         "contact": [
@@ -198,8 +198,8 @@
         "address": [
           {
             "city": "[GENERALIZED_LOCATION]",
-            "state": "Uttar Pradesh",
-            "country": "IN"
+            "state": "[GENERALIZED_LOCATION]",
+            "country": "[GENERALIZED_LOCATION]"
           }
         ]
       }
@@ -218,11 +218,11 @@
         "identifier": [
           {
             "system": "https://sanjeevani.hospital.example/ipd",
-            "value": "IPD-2026-00432"
+            "value": "[REDACTED_ID]"
           }
         ],
         "subject": {
-          "reference": "urn:uuid:b440e201-0bcd-4070-b027-96db5c7de680"
+          "reference": "PSN-32HEBXAG"
         },
         "period": {
           "start": "2026-09-24T19:30:00+05:30",
@@ -264,7 +264,7 @@
           "text": "Typhoid fever"
         },
         "subject": {
-          "reference": "urn:uuid:b440e201-0bcd-4070-b027-96db5c7de680"
+          "reference": "PSN-32HEBXAG"
         },
         "encounter": {
           "reference": "urn:uuid:eb9874f6-fda9-49bf-bf1f-703b378a2403"
@@ -296,7 +296,7 @@
           "text": "Type 2 diabetes mellitus without complications"
         },
         "subject": {
-          "reference": "urn:uuid:b440e201-0bcd-4070-b027-96db5c7de680"
+          "reference": "PSN-32HEBXAG"
         },
         "encounter": {
           "reference": "urn:uuid:eb9874f6-fda9-49bf-bf1f-703b378a2403"
@@ -328,7 +328,7 @@
           "text": "Anaemia, unspecified"
         },
         "subject": {
-          "reference": "urn:uuid:b440e201-0bcd-4070-b027-96db5c7de680"
+          "reference": "PSN-32HEBXAG"
         },
         "encounter": {
           "reference": "urn:uuid:eb9874f6-fda9-49bf-bf1f-703b378a2403"
@@ -352,7 +352,7 @@
           ]
         },
         "subject": {
-          "reference": "urn:uuid:b440e201-0bcd-4070-b027-96db5c7de680"
+          "reference": "PSN-32HEBXAG"
         },
         "effectiveDateTime": "2026-09-24T19:30:00+05:30",
         "component": [
@@ -410,7 +410,7 @@
           "text": "Haemoglobin"
         },
         "subject": {
-          "reference": "urn:uuid:b440e201-0bcd-4070-b027-96db5c7de680"
+          "reference": "PSN-32HEBXAG"
         },
         "effectiveDateTime": "2026-09-24T19:30:00+05:30",
         "valueQuantity": {
@@ -436,7 +436,7 @@
           "text": "HbA1c"
         },
         "subject": {
-          "reference": "urn:uuid:b440e201-0bcd-4070-b027-96db5c7de680"
+          "reference": "PSN-32HEBXAG"
         },
         "effectiveDateTime": "2026-09-24T19:30:00+05:30",
         "valueQuantity": {
@@ -462,7 +462,7 @@
           "text": "Random Blood Sugar"
         },
         "subject": {
-          "reference": "urn:uuid:b440e201-0bcd-4070-b027-96db5c7de680"
+          "reference": "PSN-32HEBXAG"
         },
         "effectiveDateTime": "2026-09-24T19:30:00+05:30",
         "valueQuantity": {
@@ -488,7 +488,7 @@
           "text": "Serum Creatinine"
         },
         "subject": {
-          "reference": "urn:uuid:b440e201-0bcd-4070-b027-96db5c7de680"
+          "reference": "PSN-32HEBXAG"
         },
         "effectiveDateTime": "2026-09-24T19:30:00+05:30",
         "valueQuantity": {
@@ -514,7 +514,7 @@
           "text": "Platelet Count"
         },
         "subject": {
-          "reference": "urn:uuid:b440e201-0bcd-4070-b027-96db5c7de680"
+          "reference": "PSN-32HEBXAG"
         },
         "effectiveDateTime": "2026-09-24T19:30:00+05:30",
         "valueQuantity": {
@@ -540,7 +540,7 @@
           "text": "Total WBC Count"
         },
         "subject": {
-          "reference": "urn:uuid:b440e201-0bcd-4070-b027-96db5c7de680"
+          "reference": "PSN-32HEBXAG"
         },
         "effectiveDateTime": "2026-09-24T19:30:00+05:30",
         "valueQuantity": {
@@ -566,7 +566,7 @@
           "text": "Serum Sodium"
         },
         "subject": {
-          "reference": "urn:uuid:b440e201-0bcd-4070-b027-96db5c7de680"
+          "reference": "PSN-32HEBXAG"
         },
         "effectiveDateTime": "2026-09-24T19:30:00+05:30",
         "valueQuantity": {
@@ -586,7 +586,7 @@
           "text": "Ceftriaxone 1 g"
         },
         "subject": {
-          "reference": "urn:uuid:b440e201-0bcd-4070-b027-96db5c7de680"
+          "reference": "PSN-32HEBXAG"
         },
         "authoredOn": "2026-09-26",
         "dosageInstruction": [
@@ -607,7 +607,7 @@
           "text": "Paracetamol 650 mg"
         },
         "subject": {
-          "reference": "urn:uuid:b440e201-0bcd-4070-b027-96db5c7de680"
+          "reference": "PSN-32HEBXAG"
         },
         "authoredOn": "2026-09-26",
         "dosageInstruction": [
@@ -628,7 +628,7 @@
           "text": "Metformin 500 mg"
         },
         "subject": {
-          "reference": "urn:uuid:b440e201-0bcd-4070-b027-96db5c7de680"
+          "reference": "PSN-32HEBXAG"
         },
         "authoredOn": "2026-09-26",
         "dosageInstruction": [
@@ -649,7 +649,7 @@
           "text": "Glimepiride 1 mg"
         },
         "subject": {
-          "reference": "urn:uuid:b440e201-0bcd-4070-b027-96db5c7de680"
+          "reference": "PSN-32HEBXAG"
         },
         "authoredOn": "2026-09-26",
         "dosageInstruction": [
@@ -670,7 +670,7 @@
           "text": "Ferrous sulphate + Folic acid 100 mg + 0.5 mg"
         },
         "subject": {
-          "reference": "urn:uuid:b440e201-0bcd-4070-b027-96db5c7de680"
+          "reference": "PSN-32HEBXAG"
         },
         "authoredOn": "2026-09-26",
         "dosageInstruction": [
@@ -691,7 +691,7 @@
           "text": "Pantoprazole 40 mg"
         },
         "subject": {
-          "reference": "urn:uuid:b440e201-0bcd-4070-b027-96db5c7de680"
+          "reference": "PSN-32HEBXAG"
         },
         "authoredOn": "2026-09-26",
         "dosageInstruction": [

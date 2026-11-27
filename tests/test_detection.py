@@ -66,6 +66,46 @@ class DetectionTests(unittest.TestCase):
                 result = sanitize_value(field, "POLICY-784512")
                 self.assertNotIn("POLICY-784512", result)
 
+    def test_mrn_field_aliases_and_labeled_values_are_redacted(self):
+        for field in (
+            "patient_number",
+            "medical_record_id",
+            "MR No",
+            "chart_number",
+            "hospital_id",
+        ):
+            with self.subTest(field=field):
+                result = sanitize_value(field, "MRN-2026-001234")
+                self.assertNotIn("MRN-2026-001234", result)
+
+        for note in (
+            "MRN: 2026001234",
+            "Medical Record No. 2026-001234",
+            "Patient ID: OPD/26/05/00112",
+            "Chart No: 7834129",
+        ):
+            with self.subTest(note=note):
+                result = sanitize_value("clinical_note", note)
+                self.assertNotIn(note.split()[-1], result)
+                self.assertIn("[REDACTED_ID]", result)
+
+    def test_address_component_labels_are_generalized(self):
+        note = (
+            "House No: 32, Locality: Amarganj, Landmark: Bus Stand, "
+            "PIN Code: 225127"
+        )
+        result = sanitize_value("clinical_note", note)
+        for value in ("32", "Amarganj", "Bus Stand", "225127"):
+            self.assertNotIn(value, result)
+        self.assertGreaterEqual(result.count("[GENERALIZED_LOCATION]"), 4)
+
+        self.assertEqual(
+            sanitize_value("house_number", "House 32"),
+            "[GENERALIZED_LOCATION]",
+        )
+        clinical = "Patient has pain near the lower abdomen; no address given."
+        self.assertEqual(sanitize_value("clinical_note", clinical), clinical)
+
     def test_generic_family_fields_are_not_blindly_redacted(self):
         value = "Family history: diabetes; given dosage: 5 mg"
         self.assertEqual(sanitize_value("family_history", value), value)
@@ -115,15 +155,31 @@ class DetectionTests(unittest.TestCase):
 
     def test_hinglish_patient_name_contexts(self):
         examples = (
-            "Irfan ka BP is 128/72",
-            "Ramesh Kumar ko 6 din se bukhar hai",
-            "Harish sahab ka blood pressure is elevated",
+            ("Irfan ka BP is 128/72", "Irfan"),
+            ("Ramesh Kumar ko 6 din se bukhar hai", "Ramesh Kumar"),
+            ("Harish sahab ka blood pressure is elevated", "Harish"),
+            ("ramesh kumar ko 6 din se fever hai", "ramesh kumar"),
+            ("RaMeSh Kumar ki sugar high hai", "RaMeSh Kumar"),
+            ("Bukhar hai, ramesh kumar ko lekar aaye", "ramesh kumar"),
+            ("BP high tha, RAMESH ko dikhaya", "RAMESH"),
         )
-        for text in examples:
+        for text, name in examples:
             with self.subTest(text=text):
                 result = sanitize_value("clinical_note", text)
                 self.assertIn("[REDACTED_NAME]", result)
-                self.assertNotIn(text.split()[0], result)
+                self.assertNotIn(name.casefold(), result.casefold())
+
+    def test_hinglish_context_requires_person_and_clinical_cues(self):
+        for text in (
+            "Patient ko 6 din se bukhar hai",
+            "BP high hai; follow up in 6 days",
+            "Ramesh was discharged after fever treatment",
+        ):
+            with self.subTest(text=text):
+                self.assertEqual(
+                    sanitize_value("clinical_note", text),
+                    text,
+                )
 
     def test_hindi_name_before_symptom_duration(self):
         result = sanitize_value(

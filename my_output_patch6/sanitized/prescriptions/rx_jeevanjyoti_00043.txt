@@ -1,8 +1,8 @@
 Jeevan Jyoti Charitable Hospital - ओपीडी पर्चा
-नाम: [GENERALIZED_LOCATION]
+नाम: [REDACTED_NAME]
 ग्राम: [GENERALIZED_LOCATION]
 तारीख: 13-10-2026
-कमल ठाकुर को 9 दिन से बुखार है।
+[REDACTED_NAME] को 9 दिन से बुखार है।
 Rx
 1. Tab Artesunate 100 mg 1-0-1 x 5 days
 2. Tab Paracetamol 650mg 1-1-1 x 2 wks

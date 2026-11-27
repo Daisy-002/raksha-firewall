@@ -6,7 +6,7 @@
     "profile": [
       "https://nrces.in/ndhm/fhir/r4/StructureDefinition/DocumentBundle"
     ],
-    "source": "#SNJ/26/064423"
+    "source": "#[REDACTED_ID]"
   },
   "identifier": {
     "system": "https://sanjeevani.hospital.example/bundles",
@@ -31,8 +31,8 @@
           ]
         },
         "subject": {
-          "reference": "urn:uuid:f1077ec3-f73b-4930-ba4a-d2156518d290",
-          "display": "Sukhwinder Kaur"
+          "reference": "PSN-2W1JBB9C",
+          "display": "[REDACTED_NAME]"
         },
         "encounter": {
           "reference": "urn:uuid:4766170e-ea5d-4e9b-ba11-06018583cfc7"
@@ -87,7 +87,7 @@
         "id": "f1077ec3-f73b-4930-ba4a-d2156518d290",
         "text": {
           "status": "generated",
-          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Sukhwinder Kaur, 44 yrs, female, SNJ/26/064423</div>"
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">[REDACTED_NAME], 44 yrs, female, [REDACTED_ID]</div>"
         },
         "identifier": [
           {
@@ -101,7 +101,7 @@
               ]
             },
             "system": "https://sanjeevani.hospital.example/uhid",
-            "value": "SNJ/26/064423"
+            "value": "[REDACTED_ID]"
           },
           {
             "system": "https://healthid.abdm.gov.in",
@@ -129,13 +129,13 @@
         "address": [
           {
             "line": [
-              "House 55, Ward 10, Mohalla Tilak Nagar, behind Jama Masjid, Tehsil Lalganj, Distt. Rae Bareli"
+              "[GENERALIZED_LOCATION]"
             ],
             "city": "[GENERALIZED_LOCATION]",
             "district": "[GENERALIZED_LOCATION]",
-            "state": "Uttar Pradesh",
+            "state": "[GENERALIZED_LOCATION]",
             "postalCode": "[GENERALIZED_LOCATION]",
-            "country": "IN"
+            "country": "[GENERALIZED_LOCATION]"
           }
         ],
         "contact": [
@@ -187,8 +187,8 @@
         "address": [
           {
             "city": "[GENERALIZED_LOCATION]",
-            "state": "Uttar Pradesh",
-            "country": "IN"
+            "state": "[GENERALIZED_LOCATION]",
+            "country": "[GENERALIZED_LOCATION]"
           }
         ]
       }
@@ -207,11 +207,11 @@
         "identifier": [
           {
             "system": "https://sanjeevani.hospital.example/ipd",
-            "value": "IPD-2026-00454"
+            "value": "[REDACTED_ID]"
           }
         ],
         "subject": {
-          "reference": "urn:uuid:f1077ec3-f73b-4930-ba4a-d2156518d290"
+          "reference": "PSN-2W1JBB9C"
         },
         "period": {
           "start": "2026-04-15T10:45:00+05:30",
@@ -253,7 +253,7 @@
           "text": "Dengue, unspecified"
         },
         "subject": {
-          "reference": "urn:uuid:f1077ec3-f73b-4930-ba4a-d2156518d290"
+          "reference": "PSN-2W1JBB9C"
         },
         "encounter": {
           "reference": "urn:uuid:4766170e-ea5d-4e9b-ba11-06018583cfc7"
@@ -285,7 +285,7 @@
           "text": "Type 2 diabetes mellitus without complications"
         },
         "subject": {
-          "reference": "urn:uuid:f1077ec3-f73b-4930-ba4a-d2156518d290"
+          "reference": "PSN-2W1JBB9C"
         },
         "encounter": {
           "reference": "urn:uuid:4766170e-ea5d-4e9b-ba11-06018583cfc7"
@@ -317,7 +317,7 @@
           "text": "Addison's disease"
         },
         "subject": {
-          "reference": "urn:uuid:f1077ec3-f73b-4930-ba4a-d2156518d290"
+          "reference": "PSN-2W1JBB9C"
         },
         "encounter": {
           "reference": "urn:uuid:4766170e-ea5d-4e9b-ba11-06018583cfc7"
@@ -341,7 +341,7 @@
           ]
         },
         "subject": {
-          "reference": "urn:uuid:f1077ec3-f73b-4930-ba4a-d2156518d290"
+          "reference": "PSN-2W1JBB9C"
         },
         "effectiveDateTime": "2026-04-15T10:45:00+05:30",
         "component": [
@@ -399,7 +399,7 @@
           "text": "Haemoglobin"
         },
         "subject": {
-          "reference": "urn:uuid:f1077ec3-f73b-4930-ba4a-d2156518d290"
+          "reference": "PSN-2W1JBB9C"
         },
         "effectiveDateTime": "2026-04-15T10:45:00+05:30",
         "valueQuantity": {
@@ -425,7 +425,7 @@
           "text": "HbA1c"
         },
         "subject": {
-          "reference": "urn:uuid:f1077ec3-f73b-4930-ba4a-d2156518d290"
+          "reference": "PSN-2W1JBB9C"
         },
         "effectiveDateTime": "2026-04-15T10:45:00+05:30",
         "valueQuantity": {
@@ -451,7 +451,7 @@
           "text": "Random Blood Sugar"
         },
         "subject": {
-          "reference": "urn:uuid:f1077ec3-f73b-4930-ba4a-d2156518d290"
+          "reference": "PSN-2W1JBB9C"
         },
         "effectiveDateTime": "2026-04-15T10:45:00+05:30",
         "valueQuantity": {
@@ -477,7 +477,7 @@
           "text": "Serum Creatinine"
         },
         "subject": {
-          "reference": "urn:uuid:f1077ec3-f73b-4930-ba4a-d2156518d290"
+          "reference": "PSN-2W1JBB9C"
         },
         "effectiveDateTime": "2026-04-15T10:45:00+05:30",
         "valueQuantity": {
@@ -503,7 +503,7 @@
           "text": "Platelet Count"
         },
         "subject": {
-          "reference": "urn:uuid:f1077ec3-f73b-4930-ba4a-d2156518d290"
+          "reference": "PSN-2W1JBB9C"
         },
         "effectiveDateTime": "2026-04-15T10:45:00+05:30",
         "valueQuantity": {
@@ -529,7 +529,7 @@
           "text": "Total WBC Count"
         },
         "subject": {
-          "reference": "urn:uuid:f1077ec3-f73b-4930-ba4a-d2156518d290"
+          "reference": "PSN-2W1JBB9C"
         },
         "effectiveDateTime": "2026-04-15T10:45:00+05:30",
         "valueQuantity": {
@@ -555,7 +555,7 @@
           "text": "Serum Sodium"
         },
         "subject": {
-          "reference": "urn:uuid:f1077ec3-f73b-4930-ba4a-d2156518d290"
+          "reference": "PSN-2W1JBB9C"
         },
         "effectiveDateTime": "2026-04-15T10:45:00+05:30",
         "valueQuantity": {
@@ -575,7 +575,7 @@
           "text": "Paracetamol 650 mg"
         },
         "subject": {
-          "reference": "urn:uuid:f1077ec3-f73b-4930-ba4a-d2156518d290"
+          "reference": "PSN-2W1JBB9C"
         },
         "authoredOn": "2026-04-24",
         "dosageInstruction": [
@@ -596,7 +596,7 @@
           "text": "Metformin 500 mg"
         },
         "subject": {
-          "reference": "urn:uuid:f1077ec3-f73b-4930-ba4a-d2156518d290"
+          "reference": "PSN-2W1JBB9C"
         },
         "authoredOn": "2026-04-24",
         "dosageInstruction": [
@@ -617,7 +617,7 @@
           "text": "Glimepiride 1 mg"
         },
         "subject": {
-          "reference": "urn:uuid:f1077ec3-f73b-4930-ba4a-d2156518d290"
+          "reference": "PSN-2W1JBB9C"
         },
         "authoredOn": "2026-04-24",
         "dosageInstruction": [
@@ -638,7 +638,7 @@
           "text": "Pantoprazole 40 mg"
         },
         "subject": {
-          "reference": "urn:uuid:f1077ec3-f73b-4930-ba4a-d2156518d290"
+          "reference": "PSN-2W1JBB9C"
         },
         "authoredOn": "2026-04-24",
         "dosageInstruction": [

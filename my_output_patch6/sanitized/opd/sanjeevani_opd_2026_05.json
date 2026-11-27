@@ -51,7 +51,7 @@
           "duration": "5 days"
         }
       ],
-      "notes": "Zainab ka BP 123/76, ulti band ho gayi. Review after 2 weeks.",
+      "notes": "[REDACTED_NAME] ka BP 123/76, ulti band ho gayi. Review after 2 weeks.",
       "patient": {
         "name": "[REDACTED_NAME]",
         "age_sex": "35/F",
@@ -87,7 +87,7 @@
           "duration": "7 days"
         }
       ],
-      "notes": "Vikas ka BP 105/82, ulti band ho gayi. Review after 2 weeks.",
+      "notes": "[REDACTED_NAME] ka BP 105/82, ulti band ho gayi. Review after 2 weeks.",
       "patient": {
         "name": "[REDACTED_NAME]",
         "age_sex": "54/M",
@@ -149,7 +149,7 @@
           "duration": "30 days"
         }
       ],
-      "notes": "Sukhwinder didi ka BP 132/69, bukhar utar gaya hai. Review after 2 weeks."
+      "notes": "[REDACTED_NAME] ka BP 132/69, bukhar utar gaya hai. Review after 2 weeks."
     },
     {
       "visit_id": "[REDACTED_ID]",
@@ -180,7 +180,7 @@
           "duration": "30 days"
         }
       ],
-      "notes": "Vijay babu ka BP 136/77, raat ko neend theek se aayi. Review after 2 weeks.",
+      "notes": "[REDACTED_NAME] ka BP 136/77, [REDACTED_NAME] ko neend theek se aayi. Review after 2 weeks.",
       "patient": {
         "name": "[REDACTED_NAME]",
         "age_sex": "44/M",
@@ -228,7 +228,7 @@
           "duration": "30 days"
         }
       ],
-      "notes": "Sunita behenji ka BP 107/69, dawai time pe le rahe hain. Review after 2 weeks.",
+      "notes": "[REDACTED_NAME] ka BP 107/69, dawai time pe le rahe hain. Review after 2 weeks.",
       "patient": {
         "name": "[REDACTED_NAME]",
         "age_sex": "69/F",
@@ -268,7 +268,7 @@
           "duration": "7 days"
         }
       ],
-      "notes": "Farida ji ka BP 121/73, dawai time pe le rahe hain. Review after 2 weeks."
+      "notes": "[REDACTED_NAME] ka BP 121/73, dawai time pe le rahe hain. Review after 2 weeks."
     },
     {
       "visit_id": "[REDACTED_ID]",
@@ -299,7 +299,7 @@
           "duration": "7 days"
         }
       ],
-      "notes": "Shyam ka BP 120/86, BP abhi bhi high hai. Review after 2 weeks."
+      "notes": "[REDACTED_NAME] ka BP 120/86, BP abhi bhi high hai. Review after 2 weeks."
     }
   ]
 }

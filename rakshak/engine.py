@@ -94,6 +94,7 @@ def _clean_record(
     name_context=False,
     reference_context=False,
     narrative_context=False,
+    address_context=False,
 ):
     cleaned = {}
     patient_id = pseudonym(patient_key) if patient_key else None
@@ -111,6 +112,7 @@ def _clean_record(
         nested_name_context = name_context or normalized == "name"
         nested_reference_context = reference_context or normalized == "subject"
         nested_narrative_context = narrative_context or normalized == "text"
+        nested_address_context = address_context or normalized == "address"
         if reference_context and normalized == "display":
             field_to_clean = "name"
         elif reference_context and normalized == "reference":
@@ -121,6 +123,11 @@ def _clean_record(
             "text", "given", "family", "prefix", "suffix"
         }:
             field_to_clean = "name"
+        elif address_context and normalized in {
+            "line", "text", "city", "district", "state", "postalcode",
+            "country",
+        }:
+            field_to_clean = "address"
         else:
             field_to_clean = key_string
 
@@ -133,6 +140,7 @@ def _clean_record(
                 nested_name_context,
                 nested_reference_context,
                 nested_narrative_context,
+                nested_address_context,
             )
 
         elif isinstance(value, list):
@@ -145,6 +153,7 @@ def _clean_record(
                     nested_name_context,
                     nested_reference_context,
                     nested_narrative_context,
+                    nested_address_context,
                 )
                 if isinstance(x, dict)
                 else sanitize_value(field_to_clean, x, stats)
@@ -287,7 +296,18 @@ def _process_json(text, relative, records, stats, maximum_shift):
             continue
 
         key = canonical_patient_key(record)
-        cleaned = _clean_record(record, key, stats, maximum_shift)
+        address_context = any(
+            normalize_key(part.replace("~1", "/").replace("~0", "~"))
+            in {"address", "addresses"}
+            for part in locator.split("/")
+        )
+        cleaned = _clean_record(
+            record,
+            key,
+            stats,
+            maximum_shift,
+            address_context=address_context,
+        )
 
         # Replace the record in its original location.
         if locator == "doc":

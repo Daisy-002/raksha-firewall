@@ -62,7 +62,7 @@
           "duration": "7 days"
         }
       ],
-      "notes": "Sukhwinder didi ka BP 114/67, ulti band ho gayi. Review after 2 weeks."
+      "notes": "[REDACTED_NAME] ka BP 114/67, ulti band ho gayi. Review after 2 weeks."
     },
     {
       "visit_id": "[REDACTED_ID]",
@@ -93,7 +93,7 @@
           "duration": "30 days"
         }
       ],
-      "notes": "Ramesh bhai ka BP 117/68, khana kam kha rahe hain. Review after 2 weeks."
+      "notes": "[REDACTED_NAME] ka BP 117/68, khana kam kha rahe hain. Review after 2 weeks."
     },
     {
       "visit_id": "[REDACTED_ID]",
@@ -146,7 +146,7 @@
           "duration": "14 days"
         }
       ],
-      "notes": "Dinesh ka BP 165/97, sugar control nahi hai. Review after 2 weeks.",
+      "notes": "[REDACTED_NAME] ka BP 165/97, sugar control nahi hai. Review after 2 weeks.",
       "patient": {
         "name": "[REDACTED_NAME]",
         "age_sex": "5/M",
@@ -182,7 +182,7 @@
           "duration": "5 days"
         }
       ],
-      "notes": "Ramesh bhai ka BP 125/69, dawai time pe le rahe hain. Review after 2 weeks.",
+      "notes": "[REDACTED_NAME] ka BP 125/69, dawai time pe le rahe hain. Review after 2 weeks.",
       "patient": {
         "name": "[REDACTED_NAME]",
         "age_sex": "31/M",
@@ -230,7 +230,7 @@
           "duration": "7 days"
         }
       ],
-      "notes": "Rajan ka BP 117/68, khana kam kha rahe hain. Review after 2 weeks."
+      "notes": "[REDACTED_NAME] ka BP 117/68, khana kam kha rahe hain. Review after 2 weeks."
     }
   ]
 }

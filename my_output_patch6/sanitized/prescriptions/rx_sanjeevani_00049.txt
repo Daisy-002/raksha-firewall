@@ -1,8 +1,8 @@
 Sanjeevani Multispeciality Hospital - ओपीडी पर्चा
-नाम: [GENERALIZED_LOCATION]
+नाम: [REDACTED_NAME]
 ग्राम: [GENERALIZED_LOCATION]
 तारीख: 19/01/2026
-कविता पांडे को 4 दिन से बुखार है।
+[REDACTED_NAME] को 4 दिन से बुखार है।
 Rx
 1. Tab Amlodipine 5mg 0-0-1 x 5 days
 2. Tab Telmisartan 40mg 1-0-0 x 1 month

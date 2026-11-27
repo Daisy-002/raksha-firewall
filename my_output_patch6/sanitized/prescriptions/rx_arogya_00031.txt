@@ -1,8 +1,8 @@
 Arogya Seva Sadan - ओपीडी पर्चा
-नाम: [GENERALIZED_LOCATION]
+नाम: [REDACTED_NAME]
 ग्राम: [GENERALIZED_LOCATION]
 तारीख: 10/22/2026
-मोहम्मद शाहिद को 9 दिन से बुखार है।
+[REDACTED_NAME] को 9 दिन से बुखार है।
 Rx
 1. Inj Ceftriaxone 1 g IV x 1 month
 2. Tab Paracetamol 650mg 1-1-1 x 2 wks

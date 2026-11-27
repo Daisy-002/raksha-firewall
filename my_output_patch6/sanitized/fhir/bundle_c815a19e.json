@@ -6,7 +6,7 @@
     "profile": [
       "https://nrces.in/ndhm/fhir/r4/StructureDefinition/DocumentBundle"
     ],
-    "source": "#JJH-0077157"
+    "source": "#[REDACTED_ID]"
   },
   "identifier": {
     "system": "https://jeevanjyoti.hospital.example/bundles",
@@ -31,8 +31,8 @@
           ]
         },
         "subject": {
-          "reference": "urn:uuid:8b47cf22-97d1-41a9-ab31-3dcc30a2555f",
-          "display": "Jaspreet Singh"
+          "reference": "PSN-KRWVC96X",
+          "display": "[REDACTED_NAME]"
         },
         "encounter": {
           "reference": "urn:uuid:bd8087ca-62ed-464a-9971-5f186d72caa8"
@@ -78,7 +78,7 @@
         "id": "8b47cf22-97d1-41a9-ab31-3dcc30a2555f",
         "text": {
           "status": "generated",
-          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Jaspreet Singh, 46 yrs, male, JJH-0077157</div>"
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">[REDACTED_NAME], 46 yrs, male, [REDACTED_ID]</div>"
         },
         "identifier": [
           {
@@ -92,7 +92,7 @@
               ]
             },
             "system": "https://jeevanjyoti.hospital.example/uhid",
-            "value": "JJH-0077157"
+            "value": "[REDACTED_ID]"
           }
         ],
         "name": [
@@ -116,13 +116,13 @@
         "address": [
           {
             "line": [
-              "House 12, Tehsil Haidergarh, Distt. Barabanki"
+              "[GENERALIZED_LOCATION]"
             ],
             "city": "[GENERALIZED_LOCATION]",
             "district": "[GENERALIZED_LOCATION]",
-            "state": "Uttar Pradesh",
+            "state": "[GENERALIZED_LOCATION]",
             "postalCode": "[GENERALIZED_LOCATION]",
-            "country": "IN"
+            "country": "[GENERALIZED_LOCATION]"
           }
         ],
         "contact": [
@@ -180,8 +180,8 @@
         "address": [
           {
             "city": "[GENERALIZED_LOCATION]",
-            "state": "Uttar Pradesh",
-            "country": "IN"
+            "state": "[GENERALIZED_LOCATION]",
+            "country": "[GENERALIZED_LOCATION]"
           }
         ]
       }
@@ -204,7 +204,7 @@
           }
         ],
         "subject": {
-          "reference": "urn:uuid:8b47cf22-97d1-41a9-ab31-3dcc30a2555f"
+          "reference": "PSN-KRWVC96X"
         },
         "period": {
           "start": "2026-05-15T18:00:00+05:30",
@@ -246,7 +246,7 @@
           "text": "Typhoid fever"
         },
         "subject": {
-          "reference": "urn:uuid:8b47cf22-97d1-41a9-ab31-3dcc30a2555f"
+          "reference": "PSN-KRWVC96X"
         },
         "encounter": {
           "reference": "urn:uuid:bd8087ca-62ed-464a-9971-5f186d72caa8"
@@ -270,7 +270,7 @@
           ]
         },
         "subject": {
-          "reference": "urn:uuid:8b47cf22-97d1-41a9-ab31-3dcc30a2555f"
+          "reference": "PSN-KRWVC96X"
         },
         "effectiveDateTime": "2026-05-15T18:00:00+05:30",
         "component": [
@@ -328,7 +328,7 @@
           "text": "Haemoglobin"
         },
         "subject": {
-          "reference": "urn:uuid:8b47cf22-97d1-41a9-ab31-3dcc30a2555f"
+          "reference": "PSN-KRWVC96X"
         },
         "effectiveDateTime": "2026-05-15T18:00:00+05:30",
         "valueQuantity": {
@@ -354,7 +354,7 @@
           "text": "Random Blood Sugar"
         },
         "subject": {
-          "reference": "urn:uuid:8b47cf22-97d1-41a9-ab31-3dcc30a2555f"
+          "reference": "PSN-KRWVC96X"
         },
         "effectiveDateTime": "2026-05-15T18:00:00+05:30",
         "valueQuantity": {
@@ -380,7 +380,7 @@
           "text": "Serum Creatinine"
         },
         "subject": {
-          "reference": "urn:uuid:8b47cf22-97d1-41a9-ab31-3dcc30a2555f"
+          "reference": "PSN-KRWVC96X"
         },
         "effectiveDateTime": "2026-05-15T18:00:00+05:30",
         "valueQuantity": {
@@ -406,7 +406,7 @@
           "text": "Platelet Count"
         },
         "subject": {
-          "reference": "urn:uuid:8b47cf22-97d1-41a9-ab31-3dcc30a2555f"
+          "reference": "PSN-KRWVC96X"
         },
         "effectiveDateTime": "2026-05-15T18:00:00+05:30",
         "valueQuantity": {
@@ -432,7 +432,7 @@
           "text": "Total WBC Count"
         },
         "subject": {
-          "reference": "urn:uuid:8b47cf22-97d1-41a9-ab31-3dcc30a2555f"
+          "reference": "PSN-KRWVC96X"
         },
         "effectiveDateTime": "2026-05-15T18:00:00+05:30",
         "valueQuantity": {
@@ -458,7 +458,7 @@
           "text": "Serum Sodium"
         },
         "subject": {
-          "reference": "urn:uuid:8b47cf22-97d1-41a9-ab31-3dcc30a2555f"
+          "reference": "PSN-KRWVC96X"
         },
         "effectiveDateTime": "2026-05-15T18:00:00+05:30",
         "valueQuantity": {
@@ -478,7 +478,7 @@
           "text": "Ceftriaxone 1 g"
         },
         "subject": {
-          "reference": "urn:uuid:8b47cf22-97d1-41a9-ab31-3dcc30a2555f"
+          "reference": "PSN-KRWVC96X"
         },
         "authoredOn": "2026-05-23",
         "dosageInstruction": [
@@ -499,7 +499,7 @@
           "text": "Paracetamol 650 mg"
         },
         "subject": {
-          "reference": "urn:uuid:8b47cf22-97d1-41a9-ab31-3dcc30a2555f"
+          "reference": "PSN-KRWVC96X"
         },
         "authoredOn": "2026-05-23",
         "dosageInstruction": [
@@ -520,7 +520,7 @@
           "text": "Pantoprazole 40 mg"
         },
         "subject": {
-          "reference": "urn:uuid:8b47cf22-97d1-41a9-ab31-3dcc30a2555f"
+          "reference": "PSN-KRWVC96X"
         },
         "authoredOn": "2026-05-23",
         "dosageInstruction": [

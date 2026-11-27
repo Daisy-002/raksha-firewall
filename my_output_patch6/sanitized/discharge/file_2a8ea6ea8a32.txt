@@ -1,9 +1,9 @@
 Jeevan Jyoti Charitable Hospital, Barabanki
 डिस्चार्ज सारांश
 
-मरीज़ का नाम: [GENERALIZED_LOCATION]
-पिता का नाम: [GENERALIZED_LOCATION]
-पंजीकरण सं.: JJH-0077508    आईपीडी सं.: IP/26/00159
+मरीज़ का नाम: [REDACTED_NAME]
+पिता का नाम: [REDACTED_NAME]
+पंजीकरण सं.: [REDACTED_ID]    आईपीडी सं.: IP/26/00159
 पता: [GENERALIZED_LOCATION], ग्राम गोपालगंज खुर्द, तहसील नवाबगंज, जिला बाराबंकी - 225035
 मोबाइल: [GENERALIZED_LOCATION]
 भर्ती की तारीख: 08-10-2026

@@ -145,6 +145,37 @@ class PipelineTests(unittest.TestCase):
             self.assertNotIn("by_name", result)
             self.assertIn('"reference": "PSN-', result)
 
+    def test_fhir_address_components_are_sanitized_in_context(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "input"
+            output = root / "output"
+            source.mkdir()
+            payload = {
+                "resourceType": "Patient",
+                "address": [{
+                    "use": "home",
+                    "line": ["22 Main Road"],
+                    "city": "Hardoi",
+                    "state": "Uttar Pradesh",
+                    "postalCode": "225127",
+                }],
+                "observation": {"line": "left arm"},
+            }
+            (source / "patient.json").write_text(
+                json.dumps(payload), encoding="utf-8"
+            )
+
+            run_pipeline(source, output)
+
+            result = (output / "sanitized" / "patient.json").read_text(
+                encoding="utf-8"
+            )
+            for value in ("22 Main Road", "Hardoi", "Uttar Pradesh", "225127"):
+                self.assertNotIn(value, result)
+            self.assertIn('"use": "home"', result)
+            self.assertIn('"line": "left arm"', result)
+
     def test_patient_names_in_csv_headers_are_renamed(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
@@ -215,6 +246,50 @@ class PipelineTests(unittest.TestCase):
             self.assertIn("Dengue_Management_Protocol.txt", output_files)
             self.assertNotIn("Jane_Doe.txt", output_files)
             self.assertTrue(any(name.startswith("file_") for name in output_files))
+
+    def test_contextual_filename_pii_is_rewritten(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "input"
+            output = root / "output"
+            source.mkdir()
+
+            private_names = (
+                "patient_ramesh_kumar.txt",
+                "patient_name_raMeSh_KuMaR.txt",
+                "mrn_84572319.csv",
+                "landmark_bus_stand.txt",
+                "locality_Amarganj.txt",
+            )
+            for name in private_names:
+                (source / name).write_text(
+                    "Routine clinical summary", encoding="utf-8"
+                )
+            (source / "patient_summary_report.txt").write_text(
+                "Routine clinical summary with medication details",
+                encoding="utf-8",
+            )
+            for name in (
+                "patient_test_record.txt",
+                "housekeeping_guide.txt",
+                "house_keeping_guide.txt",
+            ):
+                (source / name).write_text(
+                    "General reference material", encoding="utf-8"
+                )
+
+            run_pipeline(source, output)
+
+            output_names = {
+                path.name for path in (output / "sanitized").iterdir()
+            }
+            for name in private_names:
+                with self.subTest(name=name):
+                    self.assertNotIn(name, output_names)
+            self.assertIn("patient_summary_report.txt", output_names)
+            self.assertIn("patient_test_record.txt", output_names)
+            self.assertIn("housekeeping_guide.txt", output_names)
+            self.assertIn("house_keeping_guide.txt", output_names)
 
 
 if __name__ == "__main__":

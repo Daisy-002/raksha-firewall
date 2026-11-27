@@ -36,7 +36,7 @@
           "duration": "14 days"
         }
       ],
-      "notes": "Vijay ji ka BP 135/74, dawai time pe le rahe hain. Review after 2 weeks."
+      "notes": "[REDACTED_NAME] ka BP 135/74, dawai time pe le rahe hain. Review after 2 weeks."
     },
     {
       "visit_id": "[REDACTED_ID]",
@@ -93,7 +93,7 @@
           "duration": "14 days"
         }
       ],
-      "notes": "Sukhwinder didi ka BP 116/78, ulti band ho gayi. Review after 2 weeks."
+      "notes": "[REDACTED_NAME] ka BP 116/78, ulti band ho gayi. Review after 2 weeks."
     },
     {
       "visit_id": "[REDACTED_ID]",
@@ -136,7 +136,7 @@
           "duration": "5 days"
         }
       ],
-      "notes": "Usha ka BP 127/73, dawai time pe le rahe hain. Review after 2 weeks.",
+      "notes": "[REDACTED_NAME] ka BP 127/73, dawai time pe le rahe hain. Review after 2 weeks.",
       "patient": {
         "name": "[REDACTED_NAME]",
         "age_sex": "55/F",
@@ -184,7 +184,7 @@
           "duration": "14 days"
         }
       ],
-      "notes": "Usha didi ka BP 117/83, khana kam kha rahe hain. Review after 2 weeks.",
+      "notes": "[REDACTED_NAME] ka BP 117/83, khana kam kha rahe hain. Review after 2 weeks.",
       "patient": {
         "name": "[REDACTED_NAME]",
         "age_sex": "55/F",
@@ -220,7 +220,7 @@
           "duration": "7 days"
         }
       ],
-      "notes": "Fatima behenji ka BP 125/74, khana kam kha rahe hain. Review after 2 weeks.",
+      "notes": "[REDACTED_NAME] ka BP 125/74, khana kam kha rahe hain. Review after 2 weeks.",
       "patient": {
         "name": "[REDACTED_NAME]",
         "age_sex": "52/F",

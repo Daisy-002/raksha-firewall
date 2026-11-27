@@ -1,8 +1,8 @@
 Jeevan Jyoti Charitable Hospital - ओपीडी पर्चा
-नाम: [GENERALIZED_LOCATION]
+नाम: [REDACTED_NAME]
 ग्राम: [GENERALIZED_LOCATION]
 तारीख: 02-08-2026
-रुख़साना सिद्दीक़ी को 2 दिन से बुखार है।
+[REDACTED_NAME] को 2 दिन से बुखार है।
 Rx
 1. Tab Ferrous sulphate + Folic acid 100 mg + 0.5 mg 0-1-0 x 2 wks
 2. Tab Azithromycin 500 mg 1-0-0 x 2 wks

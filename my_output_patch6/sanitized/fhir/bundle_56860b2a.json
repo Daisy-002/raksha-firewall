@@ -30,8 +30,8 @@
           ]
         },
         "subject": {
-          "reference": "urn:uuid:8140a431-e922-4a1d-8d6f-e273e56f8579",
-          "display": "Fatima Bano"
+          "reference": "PSN-W4MXQ1QN",
+          "display": "[REDACTED_NAME]"
         },
         "encounter": {
           "reference": "urn:uuid:607761d1-7003-4e1a-9af6-7e7dc621e28f"
@@ -71,7 +71,7 @@
         "id": "8140a431-e922-4a1d-8d6f-e273e56f8579",
         "text": {
           "status": "generated",
-          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Fatima Bano, 52 yrs, female, SNJ/26/064508</div>"
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">[REDACTED_NAME], 52 yrs, female, [REDACTED_ID]</div>"
         },
         "identifier": [
           {
@@ -85,7 +85,7 @@
               ]
             },
             "system": "https://sanjeevani.hospital.example/uhid",
-            "value": "SNJ/26/064508"
+            "value": "[REDACTED_ID]"
           }
         ],
         "name": [
@@ -109,13 +109,13 @@
         "address": [
           {
             "line": [
-              "House 143, Tehsil Dalmau, Distt. Rae Bareli"
+              "[GENERALIZED_LOCATION]"
             ],
             "city": "[GENERALIZED_LOCATION]",
             "district": "[GENERALIZED_LOCATION]",
-            "state": "Uttar Pradesh",
+            "state": "[GENERALIZED_LOCATION]",
             "postalCode": "[GENERALIZED_LOCATION]",
-            "country": "IN"
+            "country": "[GENERALIZED_LOCATION]"
           }
         ],
         "contact": [
@@ -173,8 +173,8 @@
         "address": [
           {
             "city": "[GENERALIZED_LOCATION]",
-            "state": "Uttar Pradesh",
-            "country": "IN"
+            "state": "[GENERALIZED_LOCATION]",
+            "country": "[GENERALIZED_LOCATION]"
           }
         ]
       }
@@ -193,11 +193,11 @@
         "identifier": [
           {
             "system": "https://sanjeevani.hospital.example/ipd",
-            "value": "IPD-2026-00461"
+            "value": "[REDACTED_ID]"
           }
         ],
         "subject": {
-          "reference": "urn:uuid:8140a431-e922-4a1d-8d6f-e273e56f8579"
+          "reference": "PSN-W4MXQ1QN"
         },
         "period": {
           "start": "2026-02-07T13:15:00+05:30",
@@ -239,7 +239,7 @@
           "text": "Urinary tract infection, site not specified"
         },
         "subject": {
-          "reference": "urn:uuid:8140a431-e922-4a1d-8d6f-e273e56f8579"
+          "reference": "PSN-W4MXQ1QN"
         },
         "encounter": {
           "reference": "urn:uuid:607761d1-7003-4e1a-9af6-7e7dc621e28f"
@@ -263,7 +263,7 @@
           ]
         },
         "subject": {
-          "reference": "urn:uuid:8140a431-e922-4a1d-8d6f-e273e56f8579"
+          "reference": "PSN-W4MXQ1QN"
         },
         "effectiveDateTime": "2026-02-07T13:15:00+05:30",
         "component": [
@@ -321,7 +321,7 @@
           "text": "Haemoglobin"
         },
         "subject": {
-          "reference": "urn:uuid:8140a431-e922-4a1d-8d6f-e273e56f8579"
+          "reference": "PSN-W4MXQ1QN"
         },
         "effectiveDateTime": "2026-02-07T13:15:00+05:30",
         "valueQuantity": {
@@ -347,7 +347,7 @@
           "text": "Random Blood Sugar"
         },
         "subject": {
-          "reference": "urn:uuid:8140a431-e922-4a1d-8d6f-e273e56f8579"
+          "reference": "PSN-W4MXQ1QN"
         },
         "effectiveDateTime": "2026-02-07T13:15:00+05:30",
         "valueQuantity": {
@@ -373,7 +373,7 @@
           "text": "Serum Creatinine"
         },
         "subject": {
-          "reference": "urn:uuid:8140a431-e922-4a1d-8d6f-e273e56f8579"
+          "reference": "PSN-W4MXQ1QN"
         },
         "effectiveDateTime": "2026-02-07T13:15:00+05:30",
         "valueQuantity": {
@@ -399,7 +399,7 @@
           "text": "Platelet Count"
         },
         "subject": {
-          "reference": "urn:uuid:8140a431-e922-4a1d-8d6f-e273e56f8579"
+          "reference": "PSN-W4MXQ1QN"
         },
         "effectiveDateTime": "2026-02-07T13:15:00+05:30",
         "valueQuantity": {
@@ -425,7 +425,7 @@
           "text": "Total WBC Count"
         },
         "subject": {
-          "reference": "urn:uuid:8140a431-e922-4a1d-8d6f-e273e56f8579"
+          "reference": "PSN-W4MXQ1QN"
         },
         "effectiveDateTime": "2026-02-07T13:15:00+05:30",
         "valueQuantity": {
@@ -451,7 +451,7 @@
           "text": "Serum Sodium"
         },
         "subject": {
-          "reference": "urn:uuid:8140a431-e922-4a1d-8d6f-e273e56f8579"
+          "reference": "PSN-W4MXQ1QN"
         },
         "effectiveDateTime": "2026-02-07T13:15:00+05:30",
         "valueQuantity": {
@@ -471,7 +471,7 @@
           "text": "Doxycycline 100 mg"
         },
         "subject": {
-          "reference": "urn:uuid:8140a431-e922-4a1d-8d6f-e273e56f8579"
+          "reference": "PSN-W4MXQ1QN"
         },
         "authoredOn": "2026-02-19",
         "dosageInstruction": [

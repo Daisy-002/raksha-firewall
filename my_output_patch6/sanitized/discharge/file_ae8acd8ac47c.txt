@@ -2,14 +2,14 @@ JEEVAN JYOTI CHARITABLE HOSPITAL, BARABANKI
 DISCHARGE SUMMARY
 
 Patient Name: [REDACTED_NAME]
-UHID: JJH-0077305        IPD No: IP/26/00136
-[REDACTED_RELATIVE_NAME]: Makan No. 32, behind Jama Masjid, Amarganj Khurd, Tehsil Nawabganj, Distt. Barabanki - 225127
+UHID: [REDACTED_ID]        IPD No: IP/26/00136
+[REDACTED_RELATIVE_NAME]: [GENERALIZED_LOCATION], behind Jama Masjid, Amarganj Khurd, Tehsil Nawabganj, Distt. Barabanki - 225127
 Mobile: [GENERALIZED_LOCATION]
 Consultant: Dr. Imtiaz Ahmed (MS Surgery)
 Ward/Bed: Ward 1 (Surgery) / Bed 11
 Date of Admission: 30-10-2026
 Date of Discharge: 03-11-2026
-DOB: 29-07-1978
+DOB: [REDACTED_DATE]
 
 Diagnosis: Infectious gastroenteritis and colitis, unspecified (A09); 
 Presenting complaints: [REDACTED_RELATIVE_NAME] 4 days, generalised weakness.

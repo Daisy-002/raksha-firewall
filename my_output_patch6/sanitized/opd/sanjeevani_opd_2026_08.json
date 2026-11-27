@@ -58,7 +58,7 @@
           "duration": "14 days"
         }
       ],
-      "notes": "Kamal babu ka BP 130/82, sugar control nahi hai. Review after 2 weeks."
+      "notes": "Kamal [REDACTED_NAME] ka BP 130/82, sugar control nahi hai. Review after 2 weeks."
     },
     {
       "visit_id": "[REDACTED_ID]",
@@ -93,7 +93,7 @@
           "duration": "7 days"
         }
       ],
-      "notes": "Naresh ji ka BP 121/74, chal phir sakte hain. Review after 2 weeks.",
+      "notes": "[REDACTED_NAME] ka BP 121/74, chal phir sakte hain. Review after 2 weeks.",
       "patient": {
         "name": "[REDACTED_NAME]",
         "age_sex": "95/M",
@@ -161,7 +161,7 @@
           "duration": "7 days"
         }
       ],
-      "notes": "Sunil sahab ka BP 142/104, khana kam kha rahe hain. Review after 2 weeks.",
+      "notes": "[REDACTED_NAME] ka BP 142/104, khana kam kha rahe hain. Review after 2 weeks.",
       "patient": {
         "name": "[REDACTED_NAME]",
         "age_sex": "70/M",
@@ -223,7 +223,7 @@
           "duration": "14 days"
         }
       ],
-      "notes": "Sukhwinder ji ka BP 112/74, khana kam kha rahe hain. Review after 2 weeks."
+      "notes": "[REDACTED_NAME] ka BP 112/74, khana kam kha rahe hain. Review after 2 weeks."
     },
     {
       "visit_id": "[REDACTED_ID]",
@@ -258,7 +258,7 @@
           "duration": "5 days"
         }
       ],
-      "notes": "Naresh babu ka BP 123/84, chal phir sakte hain. Review after 2 weeks."
+      "notes": "[REDACTED_NAME] ka BP 123/84, chal phir sakte hain. Review after 2 weeks."
     },
     {
       "visit_id": "[REDACTED_ID]",
@@ -301,7 +301,7 @@
           "duration": "7 days"
         }
       ],
-      "notes": "Jaspreet ka BP 126/85, khana kam kha rahe hain. Review after 2 weeks."
+      "notes": "[REDACTED_NAME] ka BP 126/85, khana kam kha rahe hain. Review after 2 weeks."
     }
   ]
 }

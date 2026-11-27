@@ -6,7 +6,7 @@
     "profile": [
       "https://nrces.in/ndhm/fhir/r4/StructureDefinition/DocumentBundle"
     ],
-    "source": "#JJH-0077243"
+    "source": "#[REDACTED_ID]"
   },
   "identifier": {
     "system": "https://jeevanjyoti.hospital.example/bundles",
@@ -31,8 +31,8 @@
           ]
         },
         "subject": {
-          "reference": "urn:uuid:00ee2e36-7d77-48a8-b5f3-af6c26726c3d",
-          "display": "Brijesh Yadav"
+          "reference": "PSN-RXG83KGQ",
+          "display": "[REDACTED_NAME]"
         },
         "encounter": {
           "reference": "urn:uuid:d2d5b50f-3eed-4e96-9839-e20dde247375"
@@ -78,7 +78,7 @@
         "id": "00ee2e36-7d77-48a8-b5f3-af6c26726c3d",
         "text": {
           "status": "generated",
-          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Brijesh Yadav, 27 yrs, male, JJH-0077243</div>"
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">[REDACTED_NAME], 27 yrs, male, [REDACTED_ID]</div>"
         },
         "identifier": [
           {
@@ -92,7 +92,7 @@
               ]
             },
             "system": "https://jeevanjyoti.hospital.example/uhid",
-            "value": "JJH-0077243"
+            "value": "[REDACTED_ID]"
           }
         ],
         "name": [
@@ -116,13 +116,13 @@
         "address": [
           {
             "line": [
-              "H.No. 354, near Panchayat Bhawan, Tehsil Fatehpur, Distt. Barabanki"
+              "[GENERALIZED_LOCATION]"
             ],
             "city": "[GENERALIZED_LOCATION]",
             "district": "[GENERALIZED_LOCATION]",
-            "state": "Uttar Pradesh",
+            "state": "[GENERALIZED_LOCATION]",
             "postalCode": "[GENERALIZED_LOCATION]",
-            "country": "IN"
+            "country": "[GENERALIZED_LOCATION]"
           }
         ],
         "contact": [
@@ -180,8 +180,8 @@
         "address": [
           {
             "city": "[GENERALIZED_LOCATION]",
-            "state": "Uttar Pradesh",
-            "country": "IN"
+            "state": "[GENERALIZED_LOCATION]",
+            "country": "[GENERALIZED_LOCATION]"
           }
         ]
       }
@@ -204,7 +204,7 @@
           }
         ],
         "subject": {
-          "reference": "urn:uuid:00ee2e36-7d77-48a8-b5f3-af6c26726c3d"
+          "reference": "PSN-RXG83KGQ"
         },
         "period": {
           "start": "2026-10-16T08:15:00+05:30",
@@ -246,7 +246,7 @@
           "text": "Typhoid fever"
         },
         "subject": {
-          "reference": "urn:uuid:00ee2e36-7d77-48a8-b5f3-af6c26726c3d"
+          "reference": "PSN-RXG83KGQ"
         },
         "encounter": {
           "reference": "urn:uuid:d2d5b50f-3eed-4e96-9839-e20dde247375"
@@ -270,7 +270,7 @@
           ]
         },
         "subject": {
-          "reference": "urn:uuid:00ee2e36-7d77-48a8-b5f3-af6c26726c3d"
+          "reference": "PSN-RXG83KGQ"
         },
         "effectiveDateTime": "2026-10-16T08:15:00+05:30",
         "component": [
@@ -328,7 +328,7 @@
           "text": "Haemoglobin"
         },
         "subject": {
-          "reference": "urn:uuid:00ee2e36-7d77-48a8-b5f3-af6c26726c3d"
+          "reference": "PSN-RXG83KGQ"
         },
         "effectiveDateTime": "2026-10-16T08:15:00+05:30",
         "valueQuantity": {
@@ -354,7 +354,7 @@
           "text": "Random Blood Sugar"
         },
         "subject": {
-          "reference": "urn:uuid:00ee2e36-7d77-48a8-b5f3-af6c26726c3d"
+          "reference": "PSN-RXG83KGQ"
         },
         "effectiveDateTime": "2026-10-16T08:15:00+05:30",
         "valueQuantity": {
@@ -380,7 +380,7 @@
           "text": "Serum Creatinine"
         },
         "subject": {
-          "reference": "urn:uuid:00ee2e36-7d77-48a8-b5f3-af6c26726c3d"
+          "reference": "PSN-RXG83KGQ"
         },
         "effectiveDateTime": "2026-10-16T08:15:00+05:30",
         "valueQuantity": {
@@ -406,7 +406,7 @@
           "text": "Platelet Count"
         },
         "subject": {
-          "reference": "urn:uuid:00ee2e36-7d77-48a8-b5f3-af6c26726c3d"
+          "reference": "PSN-RXG83KGQ"
         },
         "effectiveDateTime": "2026-10-16T08:15:00+05:30",
         "valueQuantity": {
@@ -432,7 +432,7 @@
           "text": "Total WBC Count"
         },
         "subject": {
-          "reference": "urn:uuid:00ee2e36-7d77-48a8-b5f3-af6c26726c3d"
+          "reference": "PSN-RXG83KGQ"
         },
         "effectiveDateTime": "2026-10-16T08:15:00+05:30",
         "valueQuantity": {
@@ -458,7 +458,7 @@
           "text": "Serum Sodium"
         },
         "subject": {
-          "reference": "urn:uuid:00ee2e36-7d77-48a8-b5f3-af6c26726c3d"
+          "reference": "PSN-RXG83KGQ"
         },
         "effectiveDateTime": "2026-10-16T08:15:00+05:30",
         "valueQuantity": {
@@ -478,7 +478,7 @@
           "text": "Ceftriaxone 1 g"
         },
         "subject": {
-          "reference": "urn:uuid:00ee2e36-7d77-48a8-b5f3-af6c26726c3d"
+          "reference": "PSN-RXG83KGQ"
         },
         "authoredOn": "2026-10-25",
         "dosageInstruction": [
@@ -499,7 +499,7 @@
           "text": "Paracetamol 650 mg"
         },
         "subject": {
-          "reference": "urn:uuid:00ee2e36-7d77-48a8-b5f3-af6c26726c3d"
+          "reference": "PSN-RXG83KGQ"
         },
         "authoredOn": "2026-10-25",
         "dosageInstruction": [
@@ -520,7 +520,7 @@
           "text": "Pantoprazole 40 mg"
         },
         "subject": {
-          "reference": "urn:uuid:00ee2e36-7d77-48a8-b5f3-af6c26726c3d"
+          "reference": "PSN-RXG83KGQ"
         },
         "authoredOn": "2026-10-25",
         "dosageInstruction": [
@@ -540,14 +540,14 @@
           "text": "Referral letter"
         },
         "subject": {
-          "reference": "urn:uuid:00ee2e36-7d77-48a8-b5f3-af6c26726c3d"
+          "reference": "PSN-RXG83KGQ"
         },
         "content": [
           {
             "attachment": {
               "contentType": "text/plain",
               "language": "en",
-              "data": "UmVmZXJyYWw6IEJyaWplc2ggWWFkYXYgKEpKSC0wMDc3MjQzKSwgbW9iaWxlIDY5Mzk4MjE0NDYsIHJlZmVycmVkIGZvciBmb2xsb3ctdXAgb2YgVHlwaG9pZCBmZXZlci4=",
+              "data": "UmVmZXJyYWw6IEJyaWplc2ggWWFkYXYgKFtSRURBQ1RFRF9JRF0pLCBtb2JpbGUgW1JFREFDVEVEX1BIT05FXSwgcmVmZXJyZWQgZm9yIGZvbGxvdy11cCBvZiBUeXBob2lkIGZldmVyLg==",
               "title": "Referral letter"
             }
           }

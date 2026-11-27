@@ -1,9 +1,9 @@
 District Hospital Hardoi, Hardoi
 डिस्चार्ज सारांश
 
-मरीज़ का नाम: [GENERALIZED_LOCATION]
-पिता का नाम: [GENERALIZED_LOCATION]
-पंजीकरण सं.: DHH2026-084999    आईपीडी सं.: DHH-IPD-00591
+मरीज़ का नाम: [REDACTED_NAME]
+पिता का नाम: [REDACTED_NAME]
+पंजीकरण सं.: DHH2026-084999    आईपीडी सं.: DHH-[REDACTED_ID]
 पता: [GENERALIZED_LOCATION], मोहल्ला चौक कोतवाली, ग्राम भीमपुर, तहसील बिलग्राम, जिला हरदोई - 241606
 मोबाइल: [GENERALIZED_LOCATION]
 भर्ती की तारीख: 26.10.2026
@@ -21,7 +21,7 @@ Medications on discharge:
 
 Address (attendant): [REDACTED_RELATIVE_NAME], Ward 1
 OPD: [REDACTED_RELATIVE_NAME] 8 days
-Ward: 4 (Medicine)
+Ward: [GENERALIZED_LOCATION]
 Medicine: Ramipril 5 mg
 Dr. Ramesh Srivastava reviewed the patient.
 

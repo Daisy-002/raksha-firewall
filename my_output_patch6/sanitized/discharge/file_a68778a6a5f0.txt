@@ -2,14 +2,14 @@ AROGYA SEVA SADAN, SITAPUR
 DISCHARGE SUMMARY
 
 Patient Name: [REDACTED_NAME]
-UHID: UHID-010607        IPD No: ADM000161
-[REDACTED_RELATIVE_NAME]: House 101, Ward 10, Mohalla Harijan Basti, Vill. Mohanganj Kalan, Tehsil Biswan, Distt. Sitapur - 261167
+UHID: [REDACTED_ID]        IPD No: ADM000161
+[REDACTED_RELATIVE_NAME]: [GENERALIZED_LOCATION], Ward 10, Mohalla Harijan Basti, Vill. Mohanganj Kalan, Tehsil Biswan, Distt. Sitapur - 261167
 Mobile: [GENERALIZED_LOCATION]
 Consultant: Dr. Ramesh Srivastava (MD Medicine)
 Ward/Bed: Ward 9 (Medicine) / Bed 18
 Date of Admission: 01/13/2026
 Date of Discharge: 01/18/2026
-DOB: 05/30/1986
+DOB: [REDACTED_DATE]
 
 Diagnosis: Addison's disease (E27.1); Typhoid fever (A01.0); 
 Presenting complaints: [REDACTED_RELATIVE_NAME] 9 days, generalised weakness.

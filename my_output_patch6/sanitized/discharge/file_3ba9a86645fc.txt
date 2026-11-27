@@ -1,9 +1,9 @@
 Sanjeevani Multispeciality Hospital, Lucknow
 डिस्चार्ज सारांश
 
-मरीज़ का नाम: [GENERALIZED_LOCATION]
-पति का नाम: [GENERALIZED_LOCATION]
-पंजीकरण सं.: SNJ/26/064279    आईपीडी सं.: IPD-2026-00438
+मरीज़ का नाम: [REDACTED_NAME]
+पति का नाम: [REDACTED_NAME]
+पंजीकरण सं.: [REDACTED_ID]    आईपीडी सं.: [REDACTED_ID]
 पता: [GENERALIZED_LOCATION], मोहल्ला चौक कोतवाली, पंचायत भवन के पास, ग्राम माधवपुरवा कलां, तहसील सफ़ीपुर, जिला उन्नाव - 209482
 मोबाइल: [GENERALIZED_LOCATION]
 भर्ती की तारीख: 23/02/2026

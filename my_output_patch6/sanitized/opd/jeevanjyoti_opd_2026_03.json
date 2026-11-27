@@ -10,7 +10,7 @@
     {
       "visit_id": "[REDACTED_ID]",
       "patient_ref": "PSN-XW7YC775",
-      "visit_date": "24-03-2026",
+      "visit_date": "06-11-2025",
       "department": "Medicine",
       "doctor": "Dr. Vandana Kulshrestha",
       "complaints": "pet mein dard 2 din se",
@@ -68,7 +68,7 @@
     {
       "visit_id": "[REDACTED_ID]",
       "patient_ref": "PSN-6BC96SNG",
-      "visit_date": "02-03-2026",
+      "visit_date": "11-08-2026",
       "department": "Medicine",
       "doctor": "Dr. Ramesh Srivastava",
       "complaints": "[REDACTED_RELATIVE_NAME] x 2 weeks",
@@ -94,7 +94,7 @@
           "duration": "5 days"
         }
       ],
-      "notes": "Vikas sahab ka BP 120/77, raat ko neend theek se aayi. Review after 2 weeks.",
+      "notes": "[REDACTED_NAME] ka BP 120/77, [REDACTED_NAME] ko neend theek se aayi. Review after 2 weeks.",
       "patient": {
         "name": "[REDACTED_NAME]",
         "age_sex": "54/M",
@@ -104,7 +104,7 @@
     {
       "visit_id": "[REDACTED_ID]",
       "patient_ref": "PSN-JHK6YMH4",
-      "visit_date": "10-03-2026",
+      "visit_date": "12-03-2026",
       "department": "Medicine",
       "doctor": "Dr. Vandana Kulshrestha",
       "complaints": "kamzori 2 hafte se",
@@ -148,7 +148,7 @@
           "duration": "7 days"
         }
       ],
-      "notes": "Sunil ka BP 172/104, sugar control nahi hai. Review after 2 weeks.",
+      "notes": "[REDACTED_NAME] ka BP 172/104, sugar control nahi hai. Review after 2 weeks.",
       "patient": {
         "name": "[REDACTED_NAME]",
         "age_sex": "31/M",

@@ -1,9 +1,9 @@
 Arogya Seva Sadan, Sitapur
 डिस्चार्ज सारांश
 
-मरीज़ का नाम: [GENERALIZED_LOCATION]
-पति का नाम: [GENERALIZED_LOCATION]
-पंजीकरण सं.: UHID-010660    आईपीडी सं.: ADM000178
+मरीज़ का नाम: [REDACTED_NAME]
+पति का नाम: [REDACTED_NAME]
+पंजीकरण सं.: [REDACTED_ID]    आईपीडी सं.: ADM000178
 पता: [GENERALIZED_LOCATION], ग्राम रामडीह, तहसील महमूदाबाद, जिला सीतापुर - 261454
 मोबाइल: [GENERALIZED_LOCATION]
 भर्ती की तारीख: 10/11/2026

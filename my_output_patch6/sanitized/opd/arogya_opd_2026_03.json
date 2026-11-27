@@ -52,7 +52,7 @@
           "duration": "7 days"
         }
       ],
-      "notes": "Shahid babu ka BP 105/77, raat ko neend theek se aayi. Review after 2 weeks."
+      "notes": "[REDACTED_NAME] ka BP 105/77, [REDACTED_NAME] ko neend theek se aayi. Review after 2 weeks."
     },
     {
       "visit_id": "[REDACTED_ID]",
@@ -105,7 +105,7 @@
           "duration": "14 days"
         }
       ],
-      "notes": "Dinesh ka BP 166/103, sugar control nahi hai. Review after 2 weeks."
+      "notes": "[REDACTED_NAME] ka BP 166/103, sugar control nahi hai. Review after 2 weeks."
     }
   ]
 }

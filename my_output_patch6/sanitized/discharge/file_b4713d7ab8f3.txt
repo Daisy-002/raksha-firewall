@@ -1,9 +1,9 @@
 Jeevan Jyoti Charitable Hospital, Barabanki
 डिस्चार्ज सारांश
 
-मरीज़ का नाम: [GENERALIZED_LOCATION]
-पिता का नाम: [GENERALIZED_LOCATION]
-पंजीकरण सं.: JJH-0076928    आईपीडी सं.: IP/26/00117
+मरीज़ का नाम: [REDACTED_NAME]
+पिता का नाम: [REDACTED_NAME]
+पंजीकरण सं.: [REDACTED_ID]    आईपीडी सं.: IP/26/00117
 पता: [GENERALIZED_LOCATION], ग्राम भीमनगर, तहसील कादीपुर, जिला सुल्तानपुर - 228076
 मोबाइल: [GENERALIZED_LOCATION]
 भर्ती की तारीख: 11-09-2026

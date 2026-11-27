@@ -6,7 +6,7 @@
     "profile": [
       "https://nrces.in/ndhm/fhir/r4/StructureDefinition/DocumentBundle"
     ],
-    "source": "#UHID-010610"
+    "source": "#[REDACTED_ID]"
   },
   "identifier": {
     "system": "https://arogya.hospital.example/bundles",
@@ -31,8 +31,8 @@
           ]
         },
         "subject": {
-          "reference": "urn:uuid:4efb450e-0e76-4512-84ed-230a4cb1962b",
-          "display": "Ashok Patel"
+          "reference": "PSN-AVVB3QTT",
+          "display": "[REDACTED_NAME]"
         },
         "encounter": {
           "reference": "urn:uuid:10544200-8d7c-47f6-9d8c-014aaada8597"
@@ -72,7 +72,7 @@
         "id": "4efb450e-0e76-4512-84ed-230a4cb1962b",
         "text": {
           "status": "generated",
-          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Ashok Patel, 46 yrs, male, UHID-010610</div>"
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">[REDACTED_NAME], 46 yrs, male, [REDACTED_ID]</div>"
         },
         "identifier": [
           {
@@ -86,7 +86,7 @@
               ]
             },
             "system": "https://arogya.hospital.example/uhid",
-            "value": "UHID-010610"
+            "value": "[REDACTED_ID]"
           },
           {
             "system": "https://healthid.abdm.gov.in",
@@ -114,13 +114,13 @@
         "address": [
           {
             "line": [
-              "Makan No. 180, Ward 20, Mohalla Subhash Nagar, near Panchayat Bhawan, Tehsil Misrikh, Distt. Sitapur"
+              "[GENERALIZED_LOCATION]"
             ],
             "city": "[GENERALIZED_LOCATION]",
             "district": "[GENERALIZED_LOCATION]",
-            "state": "Uttar Pradesh",
+            "state": "[GENERALIZED_LOCATION]",
             "postalCode": "[GENERALIZED_LOCATION]",
-            "country": "IN"
+            "country": "[GENERALIZED_LOCATION]"
           }
         ],
         "contact": [
@@ -178,8 +178,8 @@
         "address": [
           {
             "city": "[GENERALIZED_LOCATION]",
-            "state": "Uttar Pradesh",
-            "country": "IN"
+            "state": "[GENERALIZED_LOCATION]",
+            "country": "[GENERALIZED_LOCATION]"
           }
         ]
       }
@@ -202,7 +202,7 @@
           }
         ],
         "subject": {
-          "reference": "urn:uuid:4efb450e-0e76-4512-84ed-230a4cb1962b"
+          "reference": "PSN-AVVB3QTT"
         },
         "period": {
           "start": "2026-02-01T14:00:00+05:30",
@@ -244,7 +244,7 @@
           "text": "Anaemia, unspecified"
         },
         "subject": {
-          "reference": "urn:uuid:4efb450e-0e76-4512-84ed-230a4cb1962b"
+          "reference": "PSN-AVVB3QTT"
         },
         "encounter": {
           "reference": "urn:uuid:10544200-8d7c-47f6-9d8c-014aaada8597"
@@ -268,7 +268,7 @@
           ]
         },
         "subject": {
-          "reference": "urn:uuid:4efb450e-0e76-4512-84ed-230a4cb1962b"
+          "reference": "PSN-AVVB3QTT"
         },
         "effectiveDateTime": "2026-02-01T14:00:00+05:30",
         "component": [
@@ -326,7 +326,7 @@
           "text": "Haemoglobin"
         },
         "subject": {
-          "reference": "urn:uuid:4efb450e-0e76-4512-84ed-230a4cb1962b"
+          "reference": "PSN-AVVB3QTT"
         },
         "effectiveDateTime": "2026-02-01T14:00:00+05:30",
         "valueQuantity": {
@@ -352,7 +352,7 @@
           "text": "Random Blood Sugar"
         },
         "subject": {
-          "reference": "urn:uuid:4efb450e-0e76-4512-84ed-230a4cb1962b"
+          "reference": "PSN-AVVB3QTT"
         },
         "effectiveDateTime": "2026-02-01T14:00:00+05:30",
         "valueQuantity": {
@@ -378,7 +378,7 @@
           "text": "Serum Creatinine"
         },
         "subject": {
-          "reference": "urn:uuid:4efb450e-0e76-4512-84ed-230a4cb1962b"
+          "reference": "PSN-AVVB3QTT"
         },
         "effectiveDateTime": "2026-02-01T14:00:00+05:30",
         "valueQuantity": {
@@ -404,7 +404,7 @@
           "text": "Total WBC Count"
         },
         "subject": {
-          "reference": "urn:uuid:4efb450e-0e76-4512-84ed-230a4cb1962b"
+          "reference": "PSN-AVVB3QTT"
         },
         "effectiveDateTime": "2026-02-01T14:00:00+05:30",
         "valueQuantity": {
@@ -430,7 +430,7 @@
           "text": "Serum Sodium"
         },
         "subject": {
-          "reference": "urn:uuid:4efb450e-0e76-4512-84ed-230a4cb1962b"
+          "reference": "PSN-AVVB3QTT"
         },
         "effectiveDateTime": "2026-02-01T14:00:00+05:30",
         "valueQuantity": {
@@ -450,7 +450,7 @@
           "text": "Ferrous sulphate + Folic acid 100 mg + 0.5 mg"
         },
         "subject": {
-          "reference": "urn:uuid:4efb450e-0e76-4512-84ed-230a4cb1962b"
+          "reference": "PSN-AVVB3QTT"
         },
         "authoredOn": "2026-02-06",
         "dosageInstruction": [
@@ -470,7 +470,7 @@
           "text": "Cataract surgery (phacoemulsification)"
         },
         "subject": {
-          "reference": "urn:uuid:4efb450e-0e76-4512-84ed-230a4cb1962b"
+          "reference": "PSN-AVVB3QTT"
         },
         "performedDateTime": "2026-02-01"
       }

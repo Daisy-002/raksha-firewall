@@ -1,9 +1,9 @@
 Jeevan Jyoti Charitable Hospital, Barabanki
 डिस्चार्ज सारांश
 
-मरीज़ का नाम: [GENERALIZED_LOCATION]
-पिता का नाम: [GENERALIZED_LOCATION]
-पंजीकरण सं.: JJH-0077463    आईपीडी सं.: IP/26/00149
+मरीज़ का नाम: [REDACTED_NAME]
+पिता का नाम: [REDACTED_NAME]
+पंजीकरण सं.: [REDACTED_ID]    आईपीडी सं.: IP/26/00149
 पता: [GENERALIZED_LOCATION], मोहल्ला पुरानी बस्ती, हनुमान मंदिर के पास, ग्राम इंद्रपुरवा खुर्द, तहसील नवाबगंज, जिला बाराबंकी - 225127
 मोबाइल: [GENERALIZED_LOCATION]
 भर्ती की तारीख: 02-03-2026

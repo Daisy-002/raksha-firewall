@@ -47,7 +47,7 @@
           "duration": "14 days"
         }
       ],
-      "notes": "Sunita ka BP 117/66, dawai time pe le rahe hain. Review after 2 weeks."
+      "notes": "[REDACTED_NAME] ka BP 117/66, dawai time pe le rahe hain. Review after 2 weeks."
     },
     {
       "visit_id": "[REDACTED_ID]",
@@ -104,7 +104,7 @@
           "duration": "7 days"
         }
       ],
-      "notes": "Salma behenji ka BP 104/76, khana kam kha rahe hain. Review after 2 weeks."
+      "notes": "[REDACTED_NAME] ka BP 104/76, khana kam kha rahe hain. Review after 2 weeks."
     },
     {
       "visit_id": "[REDACTED_ID]",
@@ -135,7 +135,7 @@
           "duration": "30 days"
         }
       ],
-      "notes": "Fatima amma ka BP 127/76, raat ko neend theek se aayi. Review after 2 weeks."
+      "notes": "[REDACTED_NAME] ka BP 127/76, [REDACTED_NAME] ko neend theek se aayi. Review after 2 weeks."
     },
     {
       "visit_id": "[REDACTED_ID]",
@@ -192,7 +192,7 @@
           "duration": "30 days"
         }
       ],
-      "notes": "Salma ka BP 106/86, ulti band ho gayi. Review after 2 weeks.",
+      "notes": "[REDACTED_NAME] ka BP 106/86, ulti band ho gayi. Review after 2 weeks.",
       "patient": {
         "name": "[REDACTED_NAME]",
         "age_sex": "45/F",

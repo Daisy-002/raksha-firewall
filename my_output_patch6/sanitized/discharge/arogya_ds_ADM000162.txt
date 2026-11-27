@@ -2,8 +2,8 @@ AROGYA SEVA SADAN, SITAPUR
 DISCHARGE SUMMARY
 
 Patient Name: [REDACTED_NAME]
-UHID: UHID-010610        IPD No: ADM000162
-[REDACTED_RELATIVE_NAME]: House 180, Ward 20, Mohalla Subhash Nagar, near Panchayat Bhawan, Gram Gopaldih, Tehsil Misrikh, Distt. Sitapur - 261715
+UHID: [REDACTED_ID]        IPD No: ADM000162
+[REDACTED_RELATIVE_NAME]: [GENERALIZED_LOCATION], Ward 20, Mohalla Subhash Nagar, near Panchayat Bhawan, Gram Gopaldih, Tehsil Misrikh, Distt. Sitapur - 261715
 Mobile: [GENERALIZED_LOCATION]
 ABHA No: 91-[REDACTED_AADHAAR]
 Consultant: Dr. Imtiaz Ahmed (MS Surgery)

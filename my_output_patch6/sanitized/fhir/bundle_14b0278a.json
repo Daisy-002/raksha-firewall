@@ -30,8 +30,8 @@
           ]
         },
         "subject": {
-          "reference": "urn:uuid:2c03b9d9-d0db-4445-afd4-9a290a6a132c",
-          "display": "Fatima Khatoon"
+          "reference": "PSN-4C4AZ216",
+          "display": "[REDACTED_NAME]"
         },
         "encounter": {
           "reference": "urn:uuid:94da07fe-5a0f-4a81-bf84-dc36f75b6cf0"
@@ -89,7 +89,7 @@
         "id": "2c03b9d9-d0db-4445-afd4-9a290a6a132c",
         "text": {
           "status": "generated",
-          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Fatima Khatoon, 46 yrs, female, JJH-0077357</div>"
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">[REDACTED_NAME], 46 yrs, female, [REDACTED_ID]</div>"
         },
         "identifier": [
           {
@@ -103,7 +103,7 @@
               ]
             },
             "system": "https://jeevanjyoti.hospital.example/uhid",
-            "value": "JJH-0077357"
+            "value": "[REDACTED_ID]"
           },
           {
             "system": "https://healthid.abdm.gov.in",
@@ -131,13 +131,13 @@
         "address": [
           {
             "line": [
-              "Makan No. 41, near Hanuman Mandir, Tehsil Nanpara, Distt. Bahraich"
+              "[GENERALIZED_LOCATION]"
             ],
             "city": "[GENERALIZED_LOCATION]",
             "district": "[GENERALIZED_LOCATION]",
-            "state": "Uttar Pradesh",
+            "state": "[GENERALIZED_LOCATION]",
             "postalCode": "[GENERALIZED_LOCATION]",
-            "country": "IN"
+            "country": "[GENERALIZED_LOCATION]"
           }
         ],
         "contact": [
@@ -195,8 +195,8 @@
         "address": [
           {
             "city": "[GENERALIZED_LOCATION]",
-            "state": "Uttar Pradesh",
-            "country": "IN"
+            "state": "[GENERALIZED_LOCATION]",
+            "country": "[GENERALIZED_LOCATION]"
           }
         ]
       }
@@ -219,7 +219,7 @@
           }
         ],
         "subject": {
-          "reference": "urn:uuid:2c03b9d9-d0db-4445-afd4-9a290a6a132c"
+          "reference": "PSN-4C4AZ216"
         },
         "period": {
           "start": "2026-06-04T08:45:00+05:30",
@@ -261,7 +261,7 @@
           "text": "Type 2 diabetes mellitus without complications"
         },
         "subject": {
-          "reference": "urn:uuid:2c03b9d9-d0db-4445-afd4-9a290a6a132c"
+          "reference": "PSN-4C4AZ216"
         },
         "encounter": {
           "reference": "urn:uuid:94da07fe-5a0f-4a81-bf84-dc36f75b6cf0"
@@ -293,7 +293,7 @@
           "text": "Essential (primary) hypertension"
         },
         "subject": {
-          "reference": "urn:uuid:2c03b9d9-d0db-4445-afd4-9a290a6a132c"
+          "reference": "PSN-4C4AZ216"
         },
         "encounter": {
           "reference": "urn:uuid:94da07fe-5a0f-4a81-bf84-dc36f75b6cf0"
@@ -317,7 +317,7 @@
           ]
         },
         "subject": {
-          "reference": "urn:uuid:2c03b9d9-d0db-4445-afd4-9a290a6a132c"
+          "reference": "PSN-4C4AZ216"
         },
         "effectiveDateTime": "2026-06-04T08:45:00+05:30",
         "component": [
@@ -375,7 +375,7 @@
           "text": "Haemoglobin"
         },
         "subject": {
-          "reference": "urn:uuid:2c03b9d9-d0db-4445-afd4-9a290a6a132c"
+          "reference": "PSN-4C4AZ216"
         },
         "effectiveDateTime": "2026-06-04T08:45:00+05:30",
         "valueQuantity": {
@@ -401,7 +401,7 @@
           "text": "HbA1c"
         },
         "subject": {
-          "reference": "urn:uuid:2c03b9d9-d0db-4445-afd4-9a290a6a132c"
+          "reference": "PSN-4C4AZ216"
         },
         "effectiveDateTime": "2026-06-04T08:45:00+05:30",
         "valueQuantity": {
@@ -427,7 +427,7 @@
           "text": "Random Blood Sugar"
         },
         "subject": {
-          "reference": "urn:uuid:2c03b9d9-d0db-4445-afd4-9a290a6a132c"
+          "reference": "PSN-4C4AZ216"
         },
         "effectiveDateTime": "2026-06-04T08:45:00+05:30",
         "valueQuantity": {
@@ -453,7 +453,7 @@
           "text": "Serum Creatinine"
         },
         "subject": {
-          "reference": "urn:uuid:2c03b9d9-d0db-4445-afd4-9a290a6a132c"
+          "reference": "PSN-4C4AZ216"
         },
         "effectiveDateTime": "2026-06-04T08:45:00+05:30",
         "valueQuantity": {
@@ -479,7 +479,7 @@
           "text": "Total WBC Count"
         },
         "subject": {
-          "reference": "urn:uuid:2c03b9d9-d0db-4445-afd4-9a290a6a132c"
+          "reference": "PSN-4C4AZ216"
         },
         "effectiveDateTime": "2026-06-04T08:45:00+05:30",
         "valueQuantity": {
@@ -505,7 +505,7 @@
           "text": "Serum Sodium"
         },
         "subject": {
-          "reference": "urn:uuid:2c03b9d9-d0db-4445-afd4-9a290a6a132c"
+          "reference": "PSN-4C4AZ216"
         },
         "effectiveDateTime": "2026-06-04T08:45:00+05:30",
         "valueQuantity": {
@@ -525,7 +525,7 @@
           "text": "Metformin 500 mg"
         },
         "subject": {
-          "reference": "urn:uuid:2c03b9d9-d0db-4445-afd4-9a290a6a132c"
+          "reference": "PSN-4C4AZ216"
         },
         "authoredOn": "2026-06-14",
         "dosageInstruction": [
@@ -546,7 +546,7 @@
           "text": "Glimepiride 1 mg"
         },
         "subject": {
-          "reference": "urn:uuid:2c03b9d9-d0db-4445-afd4-9a290a6a132c"
+          "reference": "PSN-4C4AZ216"
         },
         "authoredOn": "2026-06-14",
         "dosageInstruction": [
@@ -567,7 +567,7 @@
           "text": "Amlodipine 5 mg"
         },
         "subject": {
-          "reference": "urn:uuid:2c03b9d9-d0db-4445-afd4-9a290a6a132c"
+          "reference": "PSN-4C4AZ216"
         },
         "authoredOn": "2026-06-14",
         "dosageInstruction": [
@@ -588,7 +588,7 @@
           "text": "Telmisartan 40 mg"
         },
         "subject": {
-          "reference": "urn:uuid:2c03b9d9-d0db-4445-afd4-9a290a6a132c"
+          "reference": "PSN-4C4AZ216"
         },
         "authoredOn": "2026-06-14",
         "dosageInstruction": [
@@ -609,7 +609,7 @@
           "text": "Ramipril 5 mg"
         },
         "subject": {
-          "reference": "urn:uuid:2c03b9d9-d0db-4445-afd4-9a290a6a132c"
+          "reference": "PSN-4C4AZ216"
         },
         "authoredOn": "2026-06-14",
         "dosageInstruction": [
@@ -630,7 +630,7 @@
           "text": "Pantoprazole 40 mg"
         },
         "subject": {
-          "reference": "urn:uuid:2c03b9d9-d0db-4445-afd4-9a290a6a132c"
+          "reference": "PSN-4C4AZ216"
         },
         "authoredOn": "2026-06-14",
         "dosageInstruction": [
